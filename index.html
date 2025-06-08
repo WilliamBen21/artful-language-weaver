@@ -331,15 +331,18 @@
         .ai-video {
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            background: linear-gradient(135deg, var(--dark-bg) 0%, rgba(16, 17, 22, 0.95) 100%);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
-            text-align: center;
-            color: #fff;
             position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .ai-video:hover {
+            background: linear-gradient(135deg, rgba(16, 17, 22, 0.95) 0%, var(--dark-bg) 100%);
         }
 
         .ai-video::before {
@@ -350,22 +353,17 @@
             right: 0;
             bottom: 0;
             background: 
-                radial-gradient(circle at 30% 40%, rgba(255, 107, 107, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 70% 60%, rgba(78, 205, 196, 0.1) 0%, transparent 50%);
+                radial-gradient(circle at 30% 40%, rgba(99, 102, 241, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 70% 60%, rgba(236, 72, 153, 0.05) 0%, transparent 50%);
+            pointer-events: none;
         }
 
         .video-overlay {
             position: absolute;
-            bottom: 24px;
-            left: 24px;
+            top: 24px;
             right: 24px;
             z-index: 10;
             transition: all 0.3s ease;
-        }
-
-        .video-section.shrunk .video-overlay {
-            opacity: 0.8;
-            transform: scale(0.9);
         }
 
         .ai-badge {
@@ -375,15 +373,28 @@
             border-radius: 50px;
             font-size: 12px;
             font-weight: 600;
-            margin-bottom: 12px;
             display: inline-flex;
             align-items: center;
             border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            transition: all 0.3s ease;
         }
 
-        .ai-badge::before {
-            content: '✨';
-            margin-right: 6px;
+        .ai-badge:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-1px);
+        }
+
+        .video-section.shrunk .video-overlay {
+            opacity: 0.8;
+            transform: scale(0.9);
+        }
+
+        @media (max-width: 768px) {
+            .video-overlay {
+                top: 16px;
+                right: 16px;
+            }
         }
 
         .video-prompt {
@@ -1437,6 +1448,18 @@
             border-color: #6366F1;
             box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
         }
+
+        /* Add styles for video preview icon */
+        .video-preview-icon {
+            font-size: 32px;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+
+        .video-section:hover .video-preview-icon {
+            transform: scale(1.1);
+            opacity: 1;
+        }
     </style>
 </head>
 <body>
@@ -1517,13 +1540,11 @@
                         <div class="video-container">
                             <div class="ai-video">
                                 <div style="position: relative; z-index: 5;">
-                                    🎬 AI-Generated Video<br>
-                                    <small>A dark cabin at night, flickering flashlight, mysterious shadows</small>
+                                    <span class="video-preview-icon">🎬</span>
                                 </div>
                             </div>
                             <div class="video-overlay">
-                                <div class="ai-badge">AI Generated</div>
-                                <div class="video-prompt">A young woman with a flickering flashlight enters a dark wooden cabin at night. Eerie atmosphere, cold lighting, cinematic horror style.</div>
+                                <div class="ai-badge">AI Generated ✨</div>
                             </div>
                         </div>
                     </div>
@@ -1571,13 +1592,11 @@
                         <div class="video-container">
                             <div class="ai-video">
                                 <div style="position: relative; z-index: 5;">
-                                    🎬 AI-Generated Video<br>
-                                    <small>Two people sitting at a café, golden hour lighting, romantic atmosphere</small>
+                                    <span class="video-preview-icon">🎬</span>
                                 </div>
                             </div>
                             <div class="video-overlay">
-                                <div class="ai-badge">AI Generated</div>
-                                <div class="video-prompt">Two people at a cozy café during golden hour, warm lighting, intimate conversation, cinematic romance style.</div>
+                                <div class="ai-badge">AI Generated ✨</div>
                             </div>
                         </div>
                     </div>
@@ -1622,13 +1641,11 @@
                         <div class="video-container">
                             <div class="ai-video">
                                 <div style="position: relative; z-index: 5;">
-                                    🎬 AI-Generated Video<br>
-                                    <small>Futuristic cityscape, holographic displays, neon lights reflecting on wet streets</small>
+                                    <span class="video-preview-icon">🎬</span>
                                 </div>
                             </div>
                             <div class="video-overlay">
-                                <div class="ai-badge">AI Generated</div>
-                                <div class="video-prompt">Cyberpunk cityscape at night, holographic advertisements floating in the air, rain-soaked streets reflecting neon lights.</div>
+                                <div class="ai-badge">AI Generated ✨</div>
                             </div>
                         </div>
                     </div>
