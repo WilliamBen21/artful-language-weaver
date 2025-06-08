@@ -281,8 +281,9 @@
         .main-feed {
             height: 100vh;
             overflow-y: scroll;
-            scroll-snap-type: y mandatory;
+            scroll-snap-type: none; /* Removed snap scrolling */
             scrollbar-width: none;
+            scroll-behavior: smooth;
         }
 
         .main-feed::-webkit-scrollbar {
@@ -297,22 +298,24 @@
             background: var(--card-bg);
             backdrop-filter: blur(20px);
             border: 1px solid var(--border-color);
-            transition: all 0.3s ease;
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); /* Smoother easing */
         }
 
         .video-section {
             width: 60%;
             position: relative;
             background: #111;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
             transform-origin: center center;
+            will-change: transform;
+            opacity: 0.95;
         }
 
         .video-section.shrunk {
-            transform: scale(0.75) translateX(-15%);
-            border-radius: 24px;
-            overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            transform: scale(0.98) translateX(-2%); /* Even gentler transform */
+            border-radius: 16px;
+            opacity: 0.85;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
 
         .video-container {
@@ -321,7 +324,10 @@
             position: relative;
             overflow: hidden;
             border-radius: 0 24px 24px 0;
-            transition: border-radius 0.4s ease;
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform;
+            backface-visibility: hidden;
+            transform: translateZ(0);
         }
 
         .video-section.shrunk .video-container {
@@ -416,12 +422,14 @@
             display: flex;
             flex-direction: column;
             border-left: 1px solid var(--border-color);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            opacity: 0.9;
         }
 
         .video-section.shrunk + .story-section {
-            width: 55%;
-            transform: translateX(-5%);
+            width: 42%; /* Minimal width change */
+            transform: translateX(-1%); /* Minimal movement */
+            opacity: 1;
         }
 
         .story-header {
@@ -536,7 +544,7 @@
         .action-btn:hover {
             color: var(--text-primary);
             background: var(--glass-bg);
-            transform: translateY(-2px);
+            transform: translateY(-1px);
             box-shadow: 0 8px 24px rgba(99, 102, 241, 0.15);
         }
 
@@ -560,7 +568,7 @@
         }
 
         .continue-story-btn:hover {
-            transform: translateY(-2px);
+            transform: translateY(-1px);
             box-shadow: 0 8px 32px rgba(99, 102, 241, 0.4);
         }
 
@@ -872,7 +880,7 @@
         }
 
         .primary-action-btn:hover {
-            transform: translateY(-2px);
+            transform: translateY(-1px);
             box-shadow: 0 8px 32px rgba(99, 102, 241, 0.4);
         }
 
@@ -1275,15 +1283,18 @@
             left: 320px;
             right: 0;
             height: 3px;
-            background: rgba(102, 126, 234, 0.2);
+            background: rgba(102, 126, 234, 0.1);
             z-index: 300;
+            transform: translateZ(0);
+            will-change: transform;
         }
 
         .scroll-progress-bar {
             height: 100%;
             background: var(--primary-gradient);
             width: 0%;
-            transition: width 0.1s ease;
+            transition: width 0.3s ease;
+            will-change: width;
         }
 
         @media (max-width: 768px) {
@@ -1427,7 +1438,7 @@
         /* Update button hover states */
         .action-btn:hover {
             background: var(--glass-bg);
-            transform: translateY(-2px);
+            transform: translateY(-1px);
             box-shadow: 0 8px 24px rgba(99, 102, 241, 0.15);
         }
 
@@ -1437,7 +1448,7 @@
         }
 
         .primary-action-btn:hover {
-            transform: translateY(-2px);
+            transform: translateY(-1px);
             box-shadow: 0 8px 32px rgba(99, 102, 241, 0.4);
         }
 
@@ -1457,8 +1468,102 @@
         }
 
         .video-section:hover .video-preview-icon {
-            transform: scale(1.1);
+            transform: scale(1.05); /* Reduced scale effect */
             opacity: 1;
+        }
+
+        /* Reduced Motion Preferences */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.001ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.001ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+
+        .main-feed {
+            height: 100vh;
+            overflow-y: scroll;
+            scroll-snap-type: none; /* Removed snap scrolling */
+            scrollbar-width: none;
+            scroll-behavior: smooth;
+        }
+
+        .video-section {
+            width: 60%;
+            position: relative;
+            background: #111;
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            transform-origin: center center;
+            will-change: transform;
+            opacity: 0.95;
+        }
+
+        .video-section.shrunk {
+            transform: scale(0.98) translateX(-2%); /* Even gentler transform */
+            border-radius: 16px;
+            opacity: 0.85;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .story-section {
+            width: 40%;
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            padding: 24px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            border-left: 1px solid var(--border-color);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            opacity: 0.9;
+        }
+
+        .video-section.shrunk + .story-section {
+            width: 42%; /* Minimal width change */
+            transform: translateX(-1%); /* Minimal movement */
+            opacity: 1;
+        }
+
+        /* Smoother header transitions */
+        .dynamic-header {
+            transform: translateY(0);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+        }
+
+        .dynamic-header.visible {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        /* Gentler hover effects */
+        .action-btn:hover {
+            transform: translateY(-1px);
+            background: var(--glass-bg);
+        }
+
+        .primary-action-btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .video-preview-icon {
+            transition: transform 0.4s ease;
+        }
+
+        .video-section:hover .video-preview-icon {
+            transform: scale(1.05); /* Reduced scale effect */
+        }
+
+        /* Update scroll progress to be more subtle */
+        .scroll-progress {
+            opacity: 0.7;
+        }
+
+        .scroll-progress-bar {
+            transition: width 0.4s ease;
         }
     </style>
 </head>
@@ -1535,7 +1640,7 @@
             <!-- Main Feed -->
             <div class="main-feed" id="mainFeed">
                 <!-- Story Card 1 -->
-                <div class="story-card" data-author="@storyteller_maya" data-story-title="The Cabin's Secret">
+                <div class="story-card" data-author="@storyteller_maya" data-story-title="The Cabin\'s Secret">
                     <div class="video-section">
                         <div class="video-container">
                             <div class="ai-video">
@@ -1890,43 +1995,60 @@ Describe what you see and bring it to life with your words!"
             updateHeader(0);
         }
 
-        // Handle scroll events
+        // Handle scroll events with reduced motion
         function handleScroll() {
             const mainFeed = document.getElementById('mainFeed');
             const scrollY = mainFeed.scrollTop;
             const feedHeight = mainFeed.scrollHeight - mainFeed.clientHeight;
             
-            // Update scroll progress
-            updateScrollProgress(scrollY, feedHeight);
-            
-            // Determine scroll direction
-            isScrollingUp = scrollY < lastScrollY;
-            lastScrollY = scrollY;
-            
-            // Calculate which story is currently visible
-            const storyHeight = window.innerHeight;
-            const newStoryIndex = Math.floor(scrollY / storyHeight);
-            
-            // Update header if story changed
-            if (newStoryIndex !== currentStoryIndex && newStoryIndex < storyCards.length) {
-                currentStoryIndex = newStoryIndex;
-                updateHeader(currentStoryIndex);
+            // Debounce scroll updates with longer delay
+            if (!mainFeed.scrollTimeout) {
+                mainFeed.scrollTimeout = setTimeout(() => {
+                    updateScrollProgress(scrollY, feedHeight);
+                    mainFeed.scrollTimeout = null;
+                }, 20);
             }
             
-            // Show/hide header based on scroll position
+            // Determine scroll direction with larger threshold
+            const newScrollY = mainFeed.scrollTop;
+            isScrollingUp = newScrollY < lastScrollY;
+            
+            // Only update if scroll difference is more significant
+            if (Math.abs(newScrollY - lastScrollY) > 100) {
+                lastScrollY = newScrollY;
+                
+                const storyHeight = window.innerHeight;
+                const newStoryIndex = Math.floor((scrollY + (storyHeight * 0.4)) / storyHeight);
+                
+                if (newStoryIndex !== currentStoryIndex && newStoryIndex < storyCards.length) {
+                    currentStoryIndex = newStoryIndex;
+                    updateHeader(currentStoryIndex);
+                }
+            }
+            
+            // Smoother header visibility
             const dynamicHeader = document.getElementById('dynamicHeader');
             const mainContent = document.getElementById('mainContent');
             
-            if (scrollY > 100) {
-                dynamicHeader.classList.add('visible');
-                mainContent.classList.add('header-visible');
-            } else {
+            if (scrollY > 200) {
+                if (!dynamicHeader.classList.contains('visible')) {
+                    dynamicHeader.classList.add('visible');
+                    mainContent.classList.add('header-visible');
+                }
+            } else if (scrollY < 100) {
                 dynamicHeader.classList.remove('visible');
                 mainContent.classList.remove('header-visible');
             }
             
-            // Apply video scaling effect
-            applyVideoScaling();
+            // Throttle video scaling updates
+            if (!mainFeed.scaleTimeout) {
+                mainFeed.scaleTimeout = setTimeout(() => {
+                    requestAnimationFrame(() => {
+                        applyVideoScaling(scrollY);
+                    });
+                    mainFeed.scaleTimeout = null;
+                }, 50);
+            }
         }
 
         // Update scroll progress bar
@@ -1956,37 +2078,26 @@ Describe what you see and bring it to life with your words!"
             }
         }
 
-        // Apply video scaling based on scroll position and direction
-        function applyVideoScaling() {
-            const mainFeed = document.getElementById('mainFeed');
+        // Even gentler video scaling
+        function applyVideoScaling(scrollY) {
             const storyCards = document.querySelectorAll('.story-card');
-            const scrollY = mainFeed.scrollTop;
             const viewportHeight = window.innerHeight;
             
             storyCards.forEach((card, index) => {
                 const videoSection = card.querySelector('.video-section');
                 const cardTop = index * viewportHeight;
-                const cardBottom = cardTop + viewportHeight;
                 const cardCenter = cardTop + (viewportHeight / 2);
                 
-                // Calculate how much of the card is visible
                 const distanceFromCenter = Math.abs(scrollY + (viewportHeight / 2) - cardCenter);
-                const maxDistance = viewportHeight / 2;
+                const maxDistance = viewportHeight * 0.8; // Even larger threshold
                 const visibility = Math.max(0, 1 - (distanceFromCenter / maxDistance));
                 
-                // Apply scaling based on visibility and scroll direction
-                if (visibility < 0.7 && isScrollingUp) {
-                    videoSection.classList.add('shrunk');
-                } else if (visibility > 0.8) {
+                if (visibility < 0.3 && isScrollingUp) {
+                    if (!videoSection.classList.contains('shrunk')) {
+                        videoSection.classList.add('shrunk');
+                    }
+                } else if (visibility > 0.2) {
                     videoSection.classList.remove('shrunk');
-                }
-                
-                // Smooth opacity transition for video overlay
-                const overlay = card.querySelector('.video-overlay');
-                if (videoSection.classList.contains('shrunk')) {
-                    overlay.style.opacity = '0.7';
-                } else {
-                    overlay.style.opacity = '1';
                 }
             });
         }
