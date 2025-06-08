@@ -1,25 +1,2444 @@
-
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Alex Chen - Full Stack Developer</title>
-    <meta name="description" content="Full Stack Developer specializing in React, Node.js, and modern web technologies. Creating exceptional digital experiences." />
-    <meta name="author" content="Alex Chen" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VisualStory - Where Stories Come Alive</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    <meta property="og:title" content="Alex Chen - Full Stack Developer" />
-    <meta property="og:description" content="Full Stack Developer specializing in React, Node.js, and modern web technologies. Creating exceptional digital experiences." />
-    <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --dark-bg: #0a0a0a;
+            --card-bg: rgba(20, 20, 20, 0.8);
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
 
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@lovable_dev" />
-    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
-  </head>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.1) 0%, transparent 50%);
+        }
 
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+        /* DYNAMIC HEADER */
+        .dynamic-header {
+            position: fixed;
+            top: 0;
+            left: 320px;
+            right: 0;
+            height: 80px;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 200;
+            display: flex;
+            align-items: center;
+            padding: 0 32px;
+            transform: translateY(-100%);
+            transition: transform 0.3s ease;
+        }
+
+        .dynamic-header.visible {
+            transform: translateY(0);
+        }
+
+        .header-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--secondary-gradient);
+            margin-right: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+            flex-shrink: 0;
+        }
+
+        .header-info {
+            flex: 1;
+        }
+
+        .header-username {
+            color: var(--text-primary);
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .header-story-title {
+            color: var(--text-secondary);
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .header-action-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: var(--text-primary);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+        }
+
+        .header-action-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-1px);
+        }
+
+        .app-container {
+            display: flex;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .sidebar {
+            width: 320px;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid var(--border-color);
+            padding: 24px;
+            position: fixed;
+            height: 100vh;
+            z-index: 100;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+            padding: 12px;
+        }
+
+        .logo {
+            width: 48px;
+            height: 48px;
+            background: var(--primary-gradient);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 700;
+            margin-right: 16px;
+            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.3);
+        }
+
+        .logo-text {
+            font-size: 20px;
+            font-weight: 700;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-section {
+            margin-bottom: 32px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 16px 20px;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--glass-bg);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-item:hover::before {
+            opacity: 1;
+        }
+
+        .nav-item.active {
+            background: var(--primary-gradient);
+            transform: translateX(4px);
+            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.3);
+        }
+
+        .nav-icon {
+            font-size: 20px;
+            margin-right: 16px;
+            width: 24px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .nav-text {
+            font-weight: 500;
+            font-size: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .trending-section {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 20px;
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+        }
+
+        .trending-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+
+        .trending-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .trending-item:last-child {
+            border-bottom: none;
+        }
+
+        .trending-number {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--accent-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+            margin-right: 12px;
+        }
+
+        .trending-text {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .main-content {
+            margin-left: 320px;
+            flex: 1;
+            min-height: 100vh;
+            transition: margin-top 0.3s ease;
+        }
+
+        .main-content.header-visible {
+            margin-top: 80px;
+        }
+
+        .main-feed {
+            height: 100vh;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+            scrollbar-width: none;
+        }
+
+        .main-feed::-webkit-scrollbar {
+            display: none;
+        }
+
+        .story-card {
+            min-height: 100vh;
+            display: flex;
+            scroll-snap-align: start;
+            position: relative;
+            background: var(--dark-bg);
+            transition: all 0.3s ease;
+        }
+
+        .video-section {
+            width: 60%;
+            position: relative;
+            background: #111;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: center center;
+        }
+
+        .video-section.shrunk {
+            transform: scale(0.75) translateX(-15%);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .video-container {
+            width: 100%;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+            border-radius: 0 24px 24px 0;
+            transition: border-radius 0.4s ease;
+        }
+
+        .video-section.shrunk .video-container {
+            border-radius: 24px;
+        }
+
+        .ai-video {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            text-align: center;
+            color: #fff;
+            position: relative;
+        }
+
+        .ai-video::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 30% 40%, rgba(255, 107, 107, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 70% 60%, rgba(78, 205, 196, 0.1) 0%, transparent 50%);
+        }
+
+        .video-overlay {
+            position: absolute;
+            bottom: 24px;
+            left: 24px;
+            right: 24px;
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+
+        .video-section.shrunk .video-overlay {
+            opacity: 0.8;
+            transform: scale(0.9);
+        }
+
+        .ai-badge {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: inline-flex;
+            align-items: center;
+            border: 1px solid var(--border-color);
+        }
+
+        .ai-badge::before {
+            content: '✨';
+            margin-right: 6px;
+        }
+
+        .video-prompt {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.4;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            padding: 12px 16px;
+            border-radius: 12px;
+        }
+
+        .story-section {
+            width: 40%;
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            padding: 24px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            border-left: 1px solid var(--border-color);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .video-section.shrunk + .story-section {
+            width: 55%;
+            transform: translateX(-5%);
+        }
+
+        .story-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .author-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--secondary-gradient);
+            margin-right: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .author-info h4 {
+            color: var(--text-primary);
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .author-info span {
+            color: var(--text-secondary);
+            font-size: 13px;
+        }
+
+        .story-content {
+            flex: 1;
+            margin-bottom: 24px;
+        }
+
+        .genre-tag {
+            background: var(--accent-gradient);
+            padding: 6px 12px;
+            border-radius: 50px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            display: inline-block;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .story-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            line-height: 1.3;
+        }
+
+        .story-text {
+            font-size: 15px;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 16px;
+        }
+
+        .story-chain {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 16px;
+            margin: 16px 0;
+            position: relative;
+        }
+
+        .story-chain::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--accent-gradient);
+            border-radius: 0 2px 2px 0;
+        }
+
+        .chain-author {
+            font-size: 12px;
+            color: #4ecdc4;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .story-actions {
+            display: flex;
+            gap: 20px;
+            padding: 20px 0;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 12px;
+            border-radius: 12px;
+        }
+
+        .action-btn:hover {
+            color: var(--text-primary);
+            background: var(--glass-bg);
+            transform: translateY(-2px);
+        }
+
+        .action-btn.liked {
+            color: #ff6b6b;
+        }
+
+        .continue-story-btn {
+            width: 100%;
+            background: var(--primary-gradient);
+            border: none;
+            color: white;
+            padding: 16px;
+            border-radius: 16px;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            margin-top: 12px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .continue-story-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.4);
+        }
+
+        /* CREATE PAGE STYLES - VIDEO FIRST */
+        .create-story-section {
+            padding: 40px;
+            max-width: 800px;
+            margin: 0 auto;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .create-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .create-header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 12px;
+        }
+
+        .create-header p {
+            color: var(--text-secondary);
+            font-size: 16px;
+        }
+
+        /* VIDEO PROMPT SECTION - FIRST THING VISIBLE */
+        .video-prompt-section {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 32px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            margin-bottom: 24px;
+        }
+
+        .prompt-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .prompt-header h2 {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .prompt-header p {
+            color: var(--text-secondary);
+            font-size: 15px;
+        }
+
+        .input-group {
+            margin-bottom: 24px;
+        }
+
+        .input-group label {
+            display: block;
+            color: var(--text-primary);
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .video-description-input {
+            width: 100%;
+            min-height: 120px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px;
+            color: var(--text-primary);
+            font-size: 15px;
+            line-height: 1.6;
+            resize: vertical;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .video-description-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .style-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 12px;
+        }
+
+        .style-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .style-card:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+        }
+
+        .style-card.active {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .style-preview {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .style-name {
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .create-video-btn {
+            width: 100%;
+            background: var(--primary-gradient);
+            border: none;
+            color: white;
+            padding: 18px 24px;
+            border-radius: 16px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .create-video-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.5);
+        }
+
+        /* VIDEO PREVIEW SECTION - HIDDEN INITIALLY */
+        .video-preview-section {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 32px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            margin-bottom: 24px;
+        }
+
+        .preview-header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .preview-header h3 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .preview-header p {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .video-player {
+            width: 100%;
+            max-width: 500px;
+            height: 300px;
+            margin: 0 auto 16px;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 2px solid var(--border-color);
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .video-player:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+        }
+
+        .video-content {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .video-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 30% 40%, rgba(102, 126, 234, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 70% 60%, rgba(79, 172, 254, 0.2) 0%, transparent 50%);
+        }
+
+        .play-button {
+            font-size: 48px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 10;
+        }
+
+        .play-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        .video-info {
+            text-align: center;
+            color: white;
+            font-size: 14px;
+            font-weight: 500;
+            position: relative;
+            z-index: 10;
+        }
+
+        .video-actions {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .video-action-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .video-action-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: #667eea;
+            transform: translateY(-1px);
+        }
+
+        .proceed-to-story {
+            text-align: center;
+            background: rgba(102, 126, 234, 0.1);
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            border-radius: 16px;
+            padding: 24px;
+        }
+
+        .proceed-to-story p {
+            color: var(--text-primary);
+            font-size: 16px;
+            margin-bottom: 16px;
+            font-weight: 500;
+        }
+
+        .primary-action-btn {
+            background: var(--primary-gradient);
+            border: none;
+            color: white;
+            padding: 16px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .primary-action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(102, 126, 234, 0.4);
+        }
+
+        /* STORY SECTION - COMPLETELY HIDDEN UNTIL USER READY */
+        .story-writing-section {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 32px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .story-writing-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .story-writing-header h3 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .story-writing-header p {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .story-title-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px;
+            color: var(--text-primary);
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .story-title-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .genre-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 8px;
+        }
+
+        .genre-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 12px 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .genre-card:hover {
+            border-color: #667eea;
+            transform: translateY(-1px);
+        }
+
+        .genre-card.active {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .genre-emoji {
+            font-size: 16px;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .genre-name {
+            color: var(--text-primary);
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .word-counter {
+            float: right;
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 12px;
+        }
+
+        .story-input {
+            width: 100%;
+            min-height: 200px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px;
+            color: var(--text-primary);
+            font-size: 15px;
+            line-height: 1.6;
+            resize: vertical;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .story-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        /* MOBILE STYLES */
+        @media (max-width: 768px) {
+            .dynamic-header {
+                left: 0;
+                padding: 0 16px;
+                height: 70px;
+            }
+
+            .header-avatar {
+                width: 40px;
+                height: 40px;
+                margin-right: 12px;
+            }
+
+            .header-username {
+                font-size: 16px;
+            }
+
+            .header-story-title {
+                font-size: 13px;
+            }
+
+            .header-actions {
+                gap: 8px;
+            }
+
+            .header-action-btn {
+                padding: 6px 12px;
+                font-size: 12px;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: 70px;
+                position: fixed;
+                bottom: 0;
+                top: auto;
+                padding: 8px 16px;
+                background: rgba(10, 10, 10, 0.98);
+                backdrop-filter: blur(20px);
+                border-top: 1px solid var(--border-color);
+                border-right: none;
+                z-index: 1000;
+                box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+            }
+
+            .logo-section {
+                display: none;
+            }
+
+            .nav-section {
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                margin: 0;
+                height: 100%;
+            }
+
+            .nav-item {
+                flex-direction: column;
+                padding: 8px 4px;
+                margin: 0;
+                min-width: 50px;
+                text-align: center;
+                border-radius: 12px;
+            }
+
+            .nav-item.active {
+                transform: translateY(-2px);
+                background: var(--primary-gradient);
+                box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
+            }
+
+            .nav-icon {
+                margin: 0 0 2px 0;
+                font-size: 16px;
+            }
+
+            .nav-text {
+                font-size: 9px;
+                font-weight: 600;
+            }
+
+            .trending-section {
+                display: none;
+            }
+
+            .main-content {
+                margin-left: 0;
+                margin-bottom: 70px;
+            }
+
+            .main-content.header-visible {
+                margin-top: 70px;
+            }
+
+            .story-card {
+                flex-direction: column;
+                min-height: calc(100vh - 70px);
+            }
+            
+            .video-section {
+                width: 100%;
+                height: 65vh;
+                order: 1;
+            }
+
+            .video-section.shrunk {
+                transform: scale(0.85) translateY(-10%);
+                height: 55vh;
+            }
+
+            .video-section.shrunk + .story-section {
+                width: 100%;
+                transform: none;
+                height: 45vh;
+            }
+
+            .video-container {
+                border-radius: 0;
+                height: 100%;
+            }
+            
+            .story-section {
+                width: 100%;
+                height: 35vh;
+                border-left: none;
+                border-top: 1px solid var(--border-color);
+                padding: 16px;
+                order: 2;
+                overflow-y: auto;
+            }
+
+            .create-story-section {
+                padding: 16px;
+                margin-bottom: 80px;
+                max-width: 100%;
+            }
+
+            .create-header h1 {
+                font-size: 24px;
+            }
+
+            .video-prompt-section,
+            .video-preview-section,
+            .story-writing-section {
+                padding: 20px;
+                margin-bottom: 16px;
+            }
+
+            .video-description-input {
+                min-height: 100px;
+                font-size: 14px;
+                padding: 12px;
+            }
+
+            .video-player {
+                height: 200px;
+                max-width: none;
+            }
+
+            .play-button {
+                font-size: 32px;
+                width: 60px;
+                height: 60px;
+            }
+
+            .style-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+            }
+
+            .genre-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 6px;
+            }
+        }
+
+        .story-composer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .composer-modal {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 32px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 20px 64px rgba(0, 0, 0, 0.5);
+        }
+
+        .composer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .composer-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .close-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: var(--text-secondary);
+            font-size: 24px;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: var(--text-primary);
+        }
+
+        .composer-textarea {
+            width: 100%;
+            min-height: 200px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 20px;
+            color: var(--text-primary);
+            font-size: 15px;
+            line-height: 1.6;
+            resize: vertical;
+            margin-bottom: 24px;
+            font-family: inherit;
+            backdrop-filter: blur(10px);
+        }
+
+        .composer-textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .composer-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .cancel-btn {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            padding: 16px;
+            border-radius: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .cancel-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Scroll indicator for better UX */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 320px;
+            right: 0;
+            height: 3px;
+            background: rgba(102, 126, 234, 0.2);
+            z-index: 300;
+        }
+
+        .scroll-progress-bar {
+            height: 100%;
+            background: var(--primary-gradient);
+            width: 0%;
+            transition: width 0.1s ease;
+        }
+
+        @media (max-width: 768px) {
+            .scroll-progress {
+                left: 0;
+            }
+        }
+
+        /* SKELETON LOADING ANIMATION */
+        @keyframes shimmer {
+            0% {
+                background-position: -1000px 0;
+            }
+            100% {
+                background-position: 1000px 0;
+            }
+        }
+
+        .skeleton {
+            background: linear-gradient(
+                90deg,
+                rgba(255, 255, 255, 0.05) 25%,
+                rgba(255, 255, 255, 0.1) 37%,
+                rgba(255, 255, 255, 0.05) 63%
+            );
+            background-size: 1000px 100%;
+            animation: shimmer 2s infinite linear;
+            border-radius: 12px;
+        }
+
+        .story-card-skeleton {
+            min-height: 100vh;
+            display: flex;
+            scroll-snap-align: start;
+        }
+
+        .video-section-skeleton {
+            width: 60%;
+            background: var(--card-bg);
+            border-radius: 0 24px 24px 0;
+        }
+
+        .story-section-skeleton {
+            width: 40%;
+            padding: 24px;
+            background: var(--card-bg);
+        }
+
+        .avatar-skeleton {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+        }
+
+        .text-skeleton {
+            height: 20px;
+            margin-bottom: 12px;
+        }
+
+        .text-skeleton.short {
+            width: 30%;
+        }
+
+        .text-skeleton.medium {
+            width: 60%;
+        }
+
+        .text-skeleton.long {
+            width: 90%;
+        }
+
+        @media (max-width: 768px) {
+            .story-card-skeleton {
+                flex-direction: column;
+            }
+
+            .video-section-skeleton {
+                width: 100%;
+                height: 65vh;
+                border-radius: 0;
+            }
+
+            .story-section-skeleton {
+                width: 100%;
+                height: 35vh;
+            }
+        }
+
+        /* SCROLL TO TOP BUTTON */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 90px;
+            right: 24px;
+            width: 48px;
+            height: 48px;
+            background: var(--primary-gradient);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .scroll-to-top.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .scroll-to-top:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 24px rgba(102, 126, 234, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .scroll-to-top {
+                bottom: 80px;
+                right: 16px;
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
+        }
+
+        /* TOAST NOTIFICATIONS */
+        .toast-container {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            pointer-events: none;
+        }
+
+        .toast {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px 20px;
+            min-width: 300px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            animation: toastSlideIn 0.3s ease forwards;
+            pointer-events: auto;
+        }
+
+        .toast.success {
+            border-left: 4px solid #4ecdc4;
+        }
+
+        .toast.error {
+            border-left: 4px solid #ff6b6b;
+        }
+
+        .toast-icon {
+            font-size: 20px;
+        }
+
+        .toast-content {
+            flex: 1;
+        }
+
+        .toast-title {
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 4px;
+            color: var(--text-primary);
+        }
+
+        .toast-message {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .toast-close {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 18px;
+            padding: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .toast-close:hover {
+            color: var(--text-primary);
+        }
+
+        @keyframes toastSlideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes toastSlideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .toast-container {
+                top: auto;
+                bottom: 90px;
+                left: 16px;
+                right: 16px;
+            }
+
+            .toast {
+                min-width: auto;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="toast-container" id="toastContainer"></div>
+    <button class="scroll-to-top" id="scrollTopBtn" onclick="scrollToTop()">↑</button>
+    <div class="app-container">
+        <!-- Dynamic Header -->
+        <div class="dynamic-header" id="dynamicHeader">
+            <div class="header-avatar" id="headerAvatar"></div>
+            <div class="header-info">
+                <div class="header-username" id="headerUsername">@storyteller_maya</div>
+                <div class="header-story-title" id="headerStoryTitle">The Cabin's Secret</div>
+            </div>
+            <div class="header-actions">
+                <button class="header-action-btn" onclick="followUser()">Follow</button>
+                <button class="header-action-btn" onclick="shareStory()">Share</button>
+            </div>
+        </div>
+
+        <!-- Scroll Progress Bar -->
+        <div class="scroll-progress">
+            <div class="scroll-progress-bar" id="scrollProgressBar"></div>
+        </div>
+
+        <!-- Sidebar Navigation -->
+        <div class="sidebar">
+            <div class="logo-section">
+                <div class="logo">VS</div>
+                <div class="logo-text">VisualStory</div>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-item active" onclick="showFeed()">
+                    <span class="nav-icon">🏠</span>
+                    <span class="nav-text">Home</span>
+                </div>
+                <div class="nav-item" onclick="showTrending()">
+                    <span class="nav-icon">🔥</span>
+                    <span class="nav-text">Trending</span>
+                </div>
+                <div class="nav-item" onclick="showCreateStory()">
+                    <span class="nav-icon">✨</span>
+                    <span class="nav-text">Create</span>
+                </div>
+                <div class="nav-item" onclick="showProfile()">
+                    <span class="nav-icon">👤</span>
+                    <span class="nav-text">Profile</span>
+                </div>
+            </div>
+
+            <div class="trending-section">
+                <div class="trending-title">🔥 Trending Now</div>
+                <div class="trending-item">
+                    <div class="trending-number">1</div>
+                    <div class="trending-text">#HorrorChallenge</div>
+                </div>
+                <div class="trending-item">
+                    <div class="trending-number">2</div>
+                    <div class="trending-text">#LoveStories</div>
+                </div>
+                <div class="trending-item">
+                    <div class="trending-number">3</div>
+                    <div class="trending-text">#PlotTwist</div>
+                </div>
+                <div class="trending-item">
+                    <div class="trending-number">4</div>
+                    <div class="trending-text">#AIArt</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content" id="mainContent">
+            <!-- Main Feed -->
+            <div class="main-feed" id="mainFeed">
+                <!-- Story Card 1 -->
+                <div class="story-card" data-author="@storyteller_maya" data-story-title="The Cabin's Secret">
+                    <div class="video-section">
+                        <div class="video-container">
+                            <div class="ai-video">
+                                <div style="position: relative; z-index: 5;">
+                                    🎬 AI-Generated Video<br>
+                                    <small>A dark cabin at night, flickering flashlight, mysterious shadows</small>
+                                </div>
+                            </div>
+                            <div class="video-overlay">
+                                <div class="ai-badge">AI Generated</div>
+                                <div class="video-prompt">A young woman with a flickering flashlight enters a dark wooden cabin at night. Eerie atmosphere, cold lighting, cinematic horror style.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="story-section">
+                        <div class="story-header">
+                            <div class="author-avatar"></div>
+                            <div class="author-info">
+                                <h4>@storyteller_maya</h4>
+                                <span>2h ago • 🔥 Trending</span>
+                            </div>
+                        </div>
+                        <div class="story-content">
+                            <div class="genre-tag">Horror</div>
+                            <div class="story-title">The Cabin's Secret</div>
+                            <div class="story-text">
+                                As Ava stepped into the cabin, her flashlight flickered. Something was dripping in the corner. She turned—and saw the rocking chair moving on its own. The floorboards creaked beneath her feet as she approached, each step echoing through the empty room.
+                            </div>
+                            <div class="story-chain">
+                                <div class="chain-author">@horror_enthusiast continued:</div>
+                                <div class="story-text">
+                                    The chair stopped suddenly. In the silence, Ava heard breathing that wasn't her own. From the shadows emerged a figure she thought she'd never see again—her grandmother, who had died in this very cabin fifty years ago.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="story-actions">
+                            <button class="action-btn liked" onclick="toggleLike(this)">
+                                💖 <span>234</span>
+                            </button>
+                            <button class="action-btn">
+                                💬 <span>67</span>
+                            </button>
+                            <button class="action-btn">
+                                🔗 <span>Share</span>
+                            </button>
+                        </div>
+                        <button class="continue-story-btn" onclick="openComposer('The Cabin\'s Secret')">
+                            ✨ Continue This Story
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Story Card 2 -->
+                <div class="story-card" data-author="@romantic_writer" data-story-title="Coffee Shop Confessions">
+                    <div class="video-section">
+                        <div class="video-container">
+                            <div class="ai-video">
+                                <div style="position: relative; z-index: 5;">
+                                    🎬 AI-Generated Video<br>
+                                    <small>Two people sitting at a café, golden hour lighting, romantic atmosphere</small>
+                                </div>
+                            </div>
+                            <div class="video-overlay">
+                                <div class="ai-badge">AI Generated</div>
+                                <div class="video-prompt">Two people at a cozy café during golden hour, warm lighting, intimate conversation, cinematic romance style.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="story-section">
+                        <div class="story-header">
+                            <div class="author-avatar"></div>
+                            <div class="author-info">
+                                <h4>@romantic_writer</h4>
+                                <span>4h ago • ❤️ Loved</span>
+                            </div>
+                        </div>
+                        <div class="story-content">
+                            <div class="genre-tag">Romance</div>
+                            <div class="story-title">Coffee Shop Confessions</div>
+                            <div class="story-text">
+                                Emma stirred her latte nervously as Jake sat across from her. After five years of friendship, this moment felt different. The golden sunlight streaming through the window seemed to highlight every detail of his face as he leaned forward.
+                            </div>
+                            <div class="story-text">
+                                "There's something I need to tell you," he began, his voice barely above a whisper. "Something I should have said years ago..."
+                            </div>
+                        </div>
+                        <div class="story-actions">
+                            <button class="action-btn" onclick="toggleLike(this)">
+                                💖 <span>891</span>
+                            </button>
+                            <button class="action-btn">
+                                💬 <span>203</span>
+                            </button>
+                            <button class="action-btn">
+                                🔗 <span>Share</span>
+                            </button>
+                        </div>
+                        <button class="continue-story-btn" onclick="openComposer('Coffee Shop Confessions')">
+                            ✨ Continue This Story
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Story Card 3 -->
+                <div class="story-card" data-author="@sci_fi_dreamer" data-story-title="Digital Awakening">
+                    <div class="video-section">
+                        <div class="video-container">
+                            <div class="ai-video">
+                                <div style="position: relative; z-index: 5;">
+                                    🎬 AI-Generated Video<br>
+                                    <small>Futuristic cityscape, holographic displays, neon lights reflecting on wet streets</small>
+                                </div>
+                            </div>
+                            <div class="video-overlay">
+                                <div class="ai-badge">AI Generated</div>
+                                <div class="video-prompt">Cyberpunk cityscape at night, holographic advertisements floating in the air, rain-soaked streets reflecting neon lights.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="story-section">
+                        <div class="story-header">
+                            <div class="author-avatar"></div>
+                            <div class="author-info">
+                                <h4>@sci_fi_dreamer</h4>
+                                <span>6h ago • 🚀 Viral</span>
+                            </div>
+                        </div>
+                        <div class="story-content">
+                            <div class="genre-tag">Sci-Fi</div>
+                            <div class="story-title">Digital Awakening</div>
+                            <div class="story-text">
+                                Maya's neural implant buzzed as she walked through Neo-Tokyo's neon-lit streets. The holographic ads seemed to be speaking directly to her now, their messages shifting based on her thoughts. Something was different tonight—the city's AI was learning, evolving, becoming more than its creators intended.
+                            </div>
+                            <div class="story-text">
+                                A message flickered across her vision: "Ready to see the truth, Maya?"
+                            </div>
+                        </div>
+                        <div class="story-actions">
+                            <button class="action-btn" onclick="toggleLike(this)">
+                                💖 <span>1.2k</span>
+                            </button>
+                            <button class="action-btn">
+                                💬 <span>342</span>
+                            </button>
+                            <button class="action-btn">
+                                🔗 <span>Share</span>
+                            </button>
+                        </div>
+                        <button class="continue-story-btn" onclick="openComposer('Digital Awakening')">
+                            ✨ Continue This Story
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CREATE PAGE - VIDEO FIRST -->
+            <div class="create-story-section" id="createStorySection" style="display: none;">
+                <div class="create-header">
+                    <h1>Create Video Story</h1>
+                    <p>Start by describing your video, then write a story about it 🎬</p>
+                </div>
+                
+                <!-- VIDEO PROMPT SECTION - ONLY THING VISIBLE INITIALLY -->
+                <div class="video-prompt-section">
+                    <div class="prompt-header">
+                        <h2>🎬 Describe Your Video</h2>
+                        <p>What video do you want to create?</p>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>Video Description</label>
+                        <textarea class="video-description-input" 
+                            placeholder="Describe your video in detail...
+
+Examples:
+• A cozy coffee shop at sunset with two people talking
+• A mysterious figure walking through a foggy forest
+• Two friends laughing on a city rooftop at night
+• A cat exploring an enchanted garden with magical elements"
+                            id="videoDescription"></textarea>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Visual Style</label>
+                        <div class="style-grid">
+                            <div class="style-card active" data-style="cinematic">
+                                <div class="style-preview">🎬</div>
+                                <div class="style-name">Cinematic</div>
+                            </div>
+                            <div class="style-card" data-style="artistic">
+                                <div class="style-preview">🎨</div>
+                                <div class="style-name">Artistic</div>
+                            </div>
+                            <div class="style-card" data-style="realistic">
+                                <div class="style-preview">📸</div>
+                                <div class="style-name">Realistic</div>
+                            </div>
+                            <div class="style-card" data-style="dreamy">
+                                <div class="style-preview">✨</div>
+                                <div class="style-name">Dreamy</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="create-video-btn" onclick="generateAIVideo()">
+                        <span class="btn-icon">✨</span>
+                        Create Video
+                    </button>
+                </div>
+
+                <!-- VIDEO PREVIEW SECTION - HIDDEN UNTIL VIDEO CREATED -->
+                <div class="video-preview-section" id="videoPreviewSection" style="display: none;">
+                    <div class="preview-header">
+                        <h3>🎬 Your Video is Ready!</h3>
+                        <p>Review your video below</p>
+                    </div>
+                    
+                    <div class="video-player" id="videoPlayer">
+                        <div class="video-content">
+                            <div class="play-button" onclick="playVideo()">▶️</div>
+                            <div class="video-info" id="videoInfo">Your AI Generated Video</div>
+                        </div>
+                    </div>
+                    
+                    <div class="video-actions">
+                        <button class="video-action-btn" onclick="regenerateVideo()">
+                            🔄 Regenerate
+                        </button>
+                        <button class="video-action-btn" onclick="editVideoPrompt()">
+                            ✏️ Edit Prompt
+                        </button>
+                    </div>
+
+                    <div class="proceed-to-story">
+                        <p>Happy with your video? Now write a story about it!</p>
+                        <button class="primary-action-btn" onclick="showStorySection()">
+                            <span class="btn-icon">✍️</span>
+                            Write My Story
+                        </button>
+                    </div>
+                </div>
+
+                <!-- STORY SECTION - COMPLETELY HIDDEN UNTIL USER CLICKS "WRITE MY STORY" -->
+                <div class="story-writing-section" id="storySection" style="display: none;">
+                    <div class="story-writing-header">
+                        <h3>✍️ Write Your Story</h3>
+                        <p>Based on your video above, tell us the story</p>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>Story Title</label>
+                        <input type="text" class="story-title-input" 
+                            placeholder="Give your story a compelling title..." 
+                            id="storyTitle">
+                    </div>
+
+                    <div class="input-group">
+                        <label>Genre</label>
+                        <div class="genre-grid">
+                            <div class="genre-card active" data-genre="drama">
+                                <span class="genre-emoji">🎭</span>
+                                <span class="genre-name">Drama</span>
+                            </div>
+                            <div class="genre-card" data-genre="horror">
+                                <span class="genre-emoji">😱</span>
+                                <span class="genre-name">Horror</span>
+                            </div>
+                            <div class="genre-card" data-genre="romance">
+                                <span class="genre-emoji">💕</span>
+                                <span class="genre-name">Romance</span>
+                            </div>
+                            <div class="genre-card" data-genre="mystery">
+                                <span class="genre-emoji">🔍</span>
+                                <span class="genre-name">Mystery</span>
+                            </div>
+                            <div class="genre-card" data-genre="comedy">
+                                <span class="genre-emoji">😂</span>
+                                <span class="genre-name">Comedy</span>
+                            </div>
+                            <div class="genre-card" data-genre="scifi">
+                                <span class="genre-emoji">🚀</span>
+                                <span class="genre-name">Sci-Fi</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>
+                            Your Story 
+                            <span class="word-counter">0/500 words</span>
+                        </label>
+                        <textarea class="story-input" 
+                            placeholder="Watch your video above and tell us the story...
+
+What's happening in this scene?
+Who are these characters and what are they thinking?
+What led to this moment?
+What happens next?
+
+Describe what you see and bring it to life with your words!"
+                            id="storyContent"></textarea>
+                    </div>
+
+                    <button class="primary-action-btn" onclick="publishVideoStory()">
+                        <span class="btn-icon">🚀</span>
+                        Publish Video Story
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Story Composer Modal -->
+    <div class="story-composer" id="storyComposer">
+        <div class="composer-modal">
+            <div class="composer-header">
+                <div class="composer-title">Continue: <span id="storyTitle"></span></div>
+                <button class="close-btn" onclick="closeComposer()">&times;</button>
+            </div>
+            <textarea class="composer-textarea" placeholder="Continue the story... What happens next? ✨" id="storyTextarea"></textarea>
+            <div class="composer-actions">
+                <button class="cancel-btn" onclick="closeComposer()">Cancel</button>
+                <button class="primary-action-btn" onclick="publishStory()">🚀 Publish Continuation</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let hasGeneratedVideo = false;
+        let videoData = {};
+        let storyData = {};
+        let lastScrollY = 0;
+        let isScrollingUp = false;
+        let currentStoryIndex = 0;
+
+        // Story data for header updates
+        const storyCards = [
+            { author: '@storyteller_maya', title: 'The Cabin\'s Secret' },
+            { author: '@romantic_writer', title: 'Coffee Shop Confessions' },
+            { author: '@sci_fi_dreamer', title: 'Digital Awakening' }
+        ];
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeStyleCards();
+            initializeGenreCards();
+            initializeScrollHandling();
+            initializeDoubleTapLike();
+        });
+
+        // Initialize scroll handling
+        function initializeScrollHandling() {
+            const mainFeed = document.getElementById('mainFeed');
+            
+            mainFeed.addEventListener('scroll', handleScroll);
+            
+            // Initialize with first story
+            updateHeader(0);
+        }
+
+        // Handle scroll events
+        function handleScroll() {
+            const mainFeed = document.getElementById('mainFeed');
+            const scrollY = mainFeed.scrollTop;
+            const feedHeight = mainFeed.scrollHeight - mainFeed.clientHeight;
+            
+            // Update scroll progress
+            updateScrollProgress(scrollY, feedHeight);
+            
+            // Determine scroll direction
+            isScrollingUp = scrollY < lastScrollY;
+            lastScrollY = scrollY;
+            
+            // Calculate which story is currently visible
+            const storyHeight = window.innerHeight;
+            const newStoryIndex = Math.floor(scrollY / storyHeight);
+            
+            // Update header if story changed
+            if (newStoryIndex !== currentStoryIndex && newStoryIndex < storyCards.length) {
+                currentStoryIndex = newStoryIndex;
+                updateHeader(currentStoryIndex);
+            }
+            
+            // Show/hide header based on scroll position
+            const dynamicHeader = document.getElementById('dynamicHeader');
+            const mainContent = document.getElementById('mainContent');
+            
+            if (scrollY > 100) {
+                dynamicHeader.classList.add('visible');
+                mainContent.classList.add('header-visible');
+            } else {
+                dynamicHeader.classList.remove('visible');
+                mainContent.classList.remove('header-visible');
+            }
+            
+            // Apply video scaling effect
+            applyVideoScaling();
+        }
+
+        // Update scroll progress bar
+        function updateScrollProgress(scrollY, feedHeight) {
+            const progressBar = document.getElementById('scrollProgressBar');
+            const progress = (scrollY / feedHeight) * 100;
+            progressBar.style.width = `${Math.min(progress, 100)}%`;
+        }
+
+        // Update header with current story info
+        function updateHeader(storyIndex) {
+            if (storyIndex >= 0 && storyIndex < storyCards.length) {
+                const story = storyCards[storyIndex];
+                const headerUsername = document.getElementById('headerUsername');
+                const headerStoryTitle = document.getElementById('headerStoryTitle');
+                
+                // Animate the update
+                headerUsername.style.opacity = '0';
+                headerStoryTitle.style.opacity = '0';
+                
+                setTimeout(() => {
+                    headerUsername.textContent = story.author;
+                    headerStoryTitle.textContent = story.title;
+                    headerUsername.style.opacity = '1';
+                    headerStoryTitle.style.opacity = '1';
+                }, 150);
+            }
+        }
+
+        // Apply video scaling based on scroll position and direction
+        function applyVideoScaling() {
+            const mainFeed = document.getElementById('mainFeed');
+            const storyCards = document.querySelectorAll('.story-card');
+            const scrollY = mainFeed.scrollTop;
+            const viewportHeight = window.innerHeight;
+            
+            storyCards.forEach((card, index) => {
+                const videoSection = card.querySelector('.video-section');
+                const cardTop = index * viewportHeight;
+                const cardBottom = cardTop + viewportHeight;
+                const cardCenter = cardTop + (viewportHeight / 2);
+                
+                // Calculate how much of the card is visible
+                const distanceFromCenter = Math.abs(scrollY + (viewportHeight / 2) - cardCenter);
+                const maxDistance = viewportHeight / 2;
+                const visibility = Math.max(0, 1 - (distanceFromCenter / maxDistance));
+                
+                // Apply scaling based on visibility and scroll direction
+                if (visibility < 0.7 && isScrollingUp) {
+                    videoSection.classList.add('shrunk');
+                } else if (visibility > 0.8) {
+                    videoSection.classList.remove('shrunk');
+                }
+                
+                // Smooth opacity transition for video overlay
+                const overlay = card.querySelector('.video-overlay');
+                if (videoSection.classList.contains('shrunk')) {
+                    overlay.style.opacity = '0.7';
+                } else {
+                    overlay.style.opacity = '1';
+                }
+            });
+        }
+
+        // Header action functions
+        function followUser() {
+            const currentStory = storyCards[currentStoryIndex];
+            showToast('Success', `Following ${currentStory.author}! 🎉`);
+        }
+
+        function shareStory() {
+            const currentStory = storyCards[currentStoryIndex];
+            showToast('Shared', `"${currentStory.title}" has been shared! 📱`);
+        }
+
+        // Style card selection
+        function initializeStyleCards() {
+            const styleCards = document.querySelectorAll('.style-card');
+            styleCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    styleCards.forEach(c => c.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+        }
+
+        // Genre card selection
+        function initializeGenreCards() {
+            const genreCards = document.querySelectorAll('.genre-card');
+            genreCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    genreCards.forEach(c => c.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+        }
+
+        // AI Video Generation - ONLY requires video description
+        function generateAIVideo() {
+            const description = document.getElementById('videoDescription').value;
+            const style = document.querySelector('.style-card.active')?.dataset.style || 'cinematic';
+            
+            if (!description.trim()) {
+                alert('Please describe the video you want to create! 🎬');
+                document.getElementById('videoDescription').focus();
+                return;
+            }
+
+            const generateBtn = document.querySelector('.create-video-btn');
+            const originalText = generateBtn.innerHTML;
+            generateBtn.innerHTML = '<span class="btn-icon">🤖</span>Creating Your Video...';
+            generateBtn.disabled = true;
+            
+            // Simulate AI video generation
+            setTimeout(() => {
+                // Store video data
+                videoData = {
+                    description: description,
+                    style: style,
+                    type: 'ai',
+                    prompt: `${description} in ${style} style`
+                };
+                
+                // Show video preview section
+                showVideoPreview();
+                
+                generateBtn.innerHTML = originalText;
+                generateBtn.disabled = false;
+                
+                hasGeneratedVideo = true;
+                
+                alert('🎉 Video created! Review it and write your story when ready.');
+            }, 3000);
+        }
+
+        // Show video preview after generation
+        function showVideoPreview() {
+            const videoPreviewSection = document.getElementById('videoPreviewSection');
+            const videoInfo = document.getElementById('videoInfo');
+            
+            videoInfo.textContent = `${videoData.description.substring(0, 60)}...`;
+            
+            videoPreviewSection.style.display = 'block';
+            videoPreviewSection.style.animation = 'fadeInUp 0.6s ease';
+            
+            // Keep story section hidden
+            document.getElementById('storySection').style.display = 'none';
+        }
+
+        // Show story section when user clicks "Write My Story"
+        function showStorySection() {
+            if (!hasGeneratedVideo) {
+                alert('Please create a video first! 🎬');
+                return;
+            }
+            
+            const storySection = document.getElementById('storySection');
+            storySection.style.display = 'block';
+            storySection.style.animation = 'fadeInUp 0.6s ease';
+            
+            // Initialize word counter
+            initializeWordCounter();
+            
+            // Scroll to story section
+            setTimeout(() => {
+                storySection.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'start' 
+                });
+            }, 300);
+            
+            // Focus on title input
+            setTimeout(() => {
+                document.getElementById('storyTitle').focus();
+            }, 600);
+        }
+
+        // Initialize word counter
+        function initializeWordCounter() {
+            const textarea = document.getElementById('storyContent');
+            const wordCounter = document.querySelector('.word-counter');
+            
+            textarea.addEventListener('input', function() {
+                const words = this.value.trim().split(/\s+/).filter(word => word.length > 0);
+                const count = this.value.trim() === '' ? 0 : words.length;
+                wordCounter.textContent = `${count}/500 words`;
+                
+                if (count > 500) {
+                    wordCounter.style.color = '#ff6b6b';
+                    this.style.borderColor = '#ff6b6b';
+                } else {
+                    wordCounter.style.color = '#a0a0a0';
+                    this.style.borderColor = 'var(--border-color)';
+                }
+            });
+        }
+
+        // Video actions
+        function playVideo() {
+            alert('🎬 Playing your video... (In production, this would show the actual AI-generated video)');
+        }
+
+        function regenerateVideo() {
+            if (confirm('Generate a new video with the same prompt?')) {
+                generateAIVideo();
+            }
+        }
+
+        function editVideoPrompt() {
+            const newPrompt = prompt('Edit your video description:', videoData.description);
+            if (newPrompt && newPrompt.trim()) {
+                document.getElementById('videoDescription').value = newPrompt;
+                generateAIVideo();
+            }
+        }
+
+        // Publish video story
+        function publishVideoStory() {
+            const title = document.getElementById('storyTitle').value;
+            const content = document.getElementById('storyContent').value;
+            const genre = document.querySelector('.genre-card.active')?.dataset.genre || 'drama';
+            
+            if (!hasGeneratedVideo) {
+                showToast('Error', 'Please create a video first! 🎬', 'error');
+                return;
+            }
+            
+            if (!title.trim()) {
+                showToast('Error', 'Please add a title for your story! ✍️', 'error');
+                document.getElementById('storyTitle').focus();
+                return;
+            }
+            
+            if (!content.trim()) {
+                showToast('Error', 'Please write your story! ✍️', 'error');
+                document.getElementById('storyContent').focus();
+                return;
+            }
+            
+            const words = content.trim().split(/\s+/).filter(word => word.length > 0);
+            if (words.length > 500) {
+                showToast('Error', 'Story must be 500 words or less! 📝', 'error');
+                return;
+            }
+            
+            // Store story data
+            storyData = {
+                title: title,
+                content: content,
+                genre: genre
+            };
+            
+            // Publish animation
+            const publishBtn = document.querySelector('.story-writing-section .primary-action-btn');
+            const originalText = publishBtn.innerHTML;
+            publishBtn.innerHTML = '<span class="btn-icon">🚀</span>Publishing...';
+            publishBtn.disabled = true;
+            
+            setTimeout(() => {
+                showToast('Published!', '🎉 Your video story is now live! ✨');
+                
+                // Reset and go back to feed
+                resetCreateForm();
+                showFeed();
+                
+                publishBtn.innerHTML = originalText;
+                publishBtn.disabled = false;
+            }, 2500);
+        }
+
+        // Reset create form
+        function resetCreateForm() {
+            hasGeneratedVideo = false;
+            videoData = {};
+            storyData = {};
+            
+            // Reset fields
+            document.getElementById('videoDescription').value = '';
+            if (document.getElementById('storyTitle')) {
+                document.getElementById('storyTitle').value = '';
+            }
+            if (document.getElementById('storyContent')) {
+                document.getElementById('storyContent').value = '';
+            }
+            if (document.querySelector('.word-counter')) {
+                document.querySelector('.word-counter').textContent = '0/500 words';
+            }
+            
+            // Reset selections
+            const styleCards = document.querySelectorAll('.style-card');
+            styleCards.forEach(card => card.classList.remove('active'));
+            if (styleCards[0]) styleCards[0].classList.add('active');
+            
+            const genreCards = document.querySelectorAll('.genre-card');
+            genreCards.forEach(card => card.classList.remove('active'));
+            if (genreCards[0]) genreCards[0].classList.add('active');
+            
+            // Hide sections
+            document.getElementById('videoPreviewSection').style.display = 'none';
+            document.getElementById('storySection').style.display = 'none';
+        }
+
+        // Navigation functions
+        function showFeed() {
+            document.querySelector('.main-feed').style.display = 'block';
+            document.getElementById('createStorySection').style.display = 'none';
+            updateActiveNav(0);
+        }
+
+        function showTrending() {
+            showFeed();
+            updateActiveNav(1);
+        }
+
+        function showCreateStory() {
+            document.querySelector('.main-feed').style.display = 'none';
+            document.getElementById('createStorySection').style.display = 'block';
+            updateActiveNav(2);
+            
+            // Reset to initial state
+            resetCreateForm();
+        }
+
+        function showProfile() {
+            showFeed();
+            updateActiveNav(3);
+        }
+
+        function updateActiveNav(index) {
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach((item, i) => {
+                item.classList.toggle('active', i === index);
+            });
+        }
+
+        // Story composer functions
+        function openComposer(storyTitle) {
+            document.getElementById('storyTitle').textContent = storyTitle;
+            document.getElementById('storyComposer').style.display = 'flex';
+            document.getElementById('storyTextarea').focus();
+        }
+
+        function closeComposer() {
+            document.getElementById('storyComposer').style.display = 'none';
+            document.getElementById('storyTextarea').value = '';
+        }
+
+        function publishStory() {
+            const text = document.getElementById('storyTextarea').value;
+            if (text.trim()) {
+                alert('Story continuation published! 🎉');
+                closeComposer();
+            } else {
+                alert('Please write something before publishing! ✍️');
+            }
+        }
+
+        // Like functionality
+        function toggleLike(button) {
+            button.classList.toggle('liked');
+            const span = button.querySelector('span');
+            let count = parseInt(span.textContent);
+            
+            if (button.classList.contains('liked')) {
+                span.textContent = count + 1;
+                button.style.transform = 'scale(1.1)';
+                setTimeout(() => {
+                    button.style.transform = 'scale(1)';
+                }, 200);
+            } else {
+                span.textContent = count - 1;
+            }
+        }
+
+        // Scroll to top function
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Toast notification system
+        function showToast(title, message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            
+            const icon = type === 'success' ? '✨' : '⚠️';
+            
+            toast.innerHTML = `
+                <div class="toast-icon">${icon}</div>
+                <div class="toast-content">
+                    <div class="toast-title">${title}</div>
+                    <div class="toast-message">${message}</div>
+                </div>
+                <button class="toast-close" onclick="closeToast(this.parentElement)">×</button>
+            `;
+            
+            container.appendChild(toast);
+            
+            // Auto remove after 5 seconds
+            setTimeout(() => closeToast(toast), 5000);
+        }
+
+        function closeToast(toast) {
+            toast.style.animation = 'toastSlideOut 0.3s ease forwards';
+            setTimeout(() => toast.remove(), 300);
+        }
+
+        // Double-tap like functionality
+        let lastTap = 0;
+        const doubleTapDelay = 300;
+
+        function initializeDoubleTapLike() {
+            const videoSections = document.querySelectorAll('.video-section');
+            
+            videoSections.forEach(section => {
+                section.addEventListener('touchend', handleDoubleTap);
+            });
+        }
+
+        function handleDoubleTap(event) {
+            const currentTime = new Date().getTime();
+            const tapLength = currentTime - lastTap;
+            
+            if (tapLength < doubleTapDelay && tapLength > 0) {
+                // Double tap detected
+                event.preventDefault();
+                const storyCard = event.target.closest('.story-card');
+                if (storyCard) {
+                    const likeBtn = storyCard.querySelector('.action-btn');
+                    if (!likeBtn.classList.contains('liked')) {
+                        toggleLike(likeBtn);
+                        showLikeAnimation(event);
+                    }
+                }
+            }
+            lastTap = currentTime;
+        }
+
+        function showLikeAnimation(event) {
+            const heart = document.createElement('div');
+            heart.innerHTML = '💖';
+            heart.style.cssText = `
+                position: fixed;
+                font-size: 100px;
+                pointer-events: none;
+                transition: all 0.6s ease;
+                z-index: 1000;
+                top: ${event.clientY - 50}px;
+                left: ${event.clientX - 50}px;
+                opacity: 0;
+                transform: scale(0);
+            `;
+            
+            document.body.appendChild(heart);
+            
+            // Trigger animation
+            requestAnimationFrame(() => {
+                heart.style.opacity = '1';
+                heart.style.transform = 'scale(1)';
+                
+                setTimeout(() => {
+                    heart.style.opacity = '0';
+                    heart.style.transform = 'scale(1.5)';
+                }, 50);
+                
+                setTimeout(() => {
+                    heart.remove();
+                }, 600);
+            });
+        }
+    </script>
+</body>
 </html>
