@@ -14,15 +14,25 @@
         }
 
         :root {
-            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            --dark-bg: #0a0a0a;
-            --card-bg: rgba(20, 20, 20, 0.8);
-            --glass-bg: rgba(255, 255, 255, 0.1);
-            --text-primary: #ffffff;
-            --text-secondary: #a0a0a0;
-            --border-color: rgba(255, 255, 255, 0.1);
+            --dark-bg: #0A0B0E;  /* Deeper, richer black */
+            --card-bg: rgba(16, 17, 22, 0.85);  /* Slightly blue-tinted dark */
+            --glass-bg: rgba(255, 255, 255, 0.08);  /* More subtle glass effect */
+            
+            /* Modern gradients */
+            --primary-gradient: linear-gradient(135deg, #6366F1 0%, #4F46E5 100%);  /* Electric indigo */
+            --secondary-gradient: linear-gradient(135deg, #EC4899 0%, #F43F5E 100%);  /* Modern pink to red */
+            --accent-gradient: linear-gradient(135deg, #10B981 0%, #059669 100%);  /* Fresh mint */
+            
+            /* Text colors */
+            --text-primary: #F9FAFB;  /* Crisp white */
+            --text-secondary: #9CA3AF;  /* Subtle gray */
+            --border-color: rgba(255, 255, 255, 0.08);  /* More subtle borders */
+
+            /* Additional modern accents */
+            --success-color: #10B981;  /* Mint green */
+            --error-color: #EF4444;    /* Bright red */
+            --warning-color: #F59E0B;  /* Warm amber */
+            --info-color: #3B82F6;     /* Electric blue */
         }
 
         body {
@@ -31,8 +41,9 @@
             color: var(--text-primary);
             overflow-x: hidden;
             background-image: 
-                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.1) 0%, transparent 50%);
+                radial-gradient(circle at 0% 0%, rgba(99, 102, 241, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 100% 0%, rgba(236, 72, 153, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 50% 100%, rgba(16, 185, 129, 0.03) 0%, transparent 50%);
         }
 
         /* DYNAMIC HEADER */
@@ -283,7 +294,9 @@
             display: flex;
             scroll-snap-align: start;
             position: relative;
-            background: var(--dark-bg);
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
             transition: all 0.3s ease;
         }
 
@@ -513,6 +526,7 @@
             color: var(--text-primary);
             background: var(--glass-bg);
             transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.15);
         }
 
         .action-btn.liked {
@@ -531,12 +545,12 @@
             cursor: pointer;
             margin-top: 12px;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.3);
         }
 
         .continue-story-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(99, 102, 241, 0.4);
         }
 
         /* CREATE PAGE STYLES - VIDEO FIRST */
@@ -625,8 +639,8 @@
 
         .video-description-input:focus {
             outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            border-color: #6366F1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
         }
 
         .style-grid {
@@ -677,7 +691,7 @@
             font-size: 16px;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.3);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -686,8 +700,8 @@
         }
 
         .create-video-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(99, 102, 241, 0.4);
         }
 
         /* VIDEO PREVIEW SECTION - HIDDEN INITIALLY */
@@ -839,7 +853,7 @@
             font-size: 15px;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.3);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -848,7 +862,7 @@
 
         .primary-action-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 24px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 8px 32px rgba(99, 102, 241, 0.4);
         }
 
         /* STORY SECTION - COMPLETELY HIDDEN UNTIL USER READY */
@@ -892,8 +906,8 @@
 
         .story-title-input:focus {
             outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            border-color: #6366F1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
         }
 
         .genre-grid {
@@ -958,8 +972,8 @@
 
         .story-input:focus {
             outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            border-color: #6366F1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
         }
 
         /* MOBILE STYLES */
@@ -1218,8 +1232,8 @@
 
         .composer-textarea:focus {
             outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            border-color: #6366F1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
         }
 
         .composer-actions {
@@ -1390,114 +1404,42 @@
             }
         }
 
-        /* TOAST NOTIFICATIONS */
-        .toast-container {
-            position: fixed;
-            top: 24px;
-            right: 24px;
-            z-index: 2000;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            pointer-events: none;
-        }
-
-        .toast {
-            background: var(--card-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 16px 20px;
-            min-width: 300px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            animation: toastSlideIn 0.3s ease forwards;
-            pointer-events: auto;
-        }
-
+        /* Update toast colors */
         .toast.success {
-            border-left: 4px solid #4ecdc4;
+            border-left: 4px solid var(--success-color);
         }
 
         .toast.error {
-            border-left: 4px solid #ff6b6b;
+            border-left: 4px solid var(--error-color);
         }
 
-        .toast-icon {
-            font-size: 20px;
+        /* Update button hover states */
+        .action-btn:hover {
+            background: var(--glass-bg);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.15);
         }
 
-        .toast-content {
-            flex: 1;
+        .primary-action-btn {
+            background: var(--primary-gradient);
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.3);
         }
 
-        .toast-title {
-            font-weight: 600;
-            font-size: 14px;
-            margin-bottom: 4px;
-            color: var(--text-primary);
+        .primary-action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(99, 102, 241, 0.4);
         }
 
-        .toast-message {
-            font-size: 13px;
-            color: var(--text-secondary);
-        }
-
-        .toast-close {
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            cursor: pointer;
-            font-size: 18px;
-            padding: 4px;
-            transition: all 0.2s ease;
-        }
-
-        .toast-close:hover {
-            color: var(--text-primary);
-        }
-
-        @keyframes toastSlideIn {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-
-        @keyframes toastSlideOut {
-            from {
-                transform: translateX(0);
-                opacity: 1;
-            }
-            to {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .toast-container {
-                top: auto;
-                bottom: 90px;
-                left: 16px;
-                right: 16px;
-            }
-
-            .toast {
-                min-width: auto;
-                width: 100%;
-            }
+        /* Update input styles */
+        .video-description-input:focus,
+        .story-title-input:focus,
+        .story-input:focus {
+            border-color: #6366F1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
         }
     </style>
 </head>
 <body>
-    <div class="toast-container" id="toastContainer"></div>
     <button class="scroll-to-top" id="scrollTopBtn" onclick="scrollToTop()">↑</button>
     <div class="app-container">
         <!-- Dynamic Header -->
@@ -1919,7 +1861,6 @@ Describe what you see and bring it to life with your words!"
             initializeStyleCards();
             initializeGenreCards();
             initializeScrollHandling();
-            initializeDoubleTapLike();
         });
 
         // Initialize scroll handling
@@ -2036,12 +1977,12 @@ Describe what you see and bring it to life with your words!"
         // Header action functions
         function followUser() {
             const currentStory = storyCards[currentStoryIndex];
-            showToast('Success', `Following ${currentStory.author}! 🎉`);
+            alert(`Following ${currentStory.author}! 🎉`);
         }
 
         function shareStory() {
             const currentStory = storyCards[currentStoryIndex];
-            showToast('Shared', `"${currentStory.title}" has been shared! 📱`);
+            alert(`Sharing "${currentStory.title}" by ${currentStory.author}! 📱`);
         }
 
         // Style card selection
@@ -2192,25 +2133,25 @@ Describe what you see and bring it to life with your words!"
             const genre = document.querySelector('.genre-card.active')?.dataset.genre || 'drama';
             
             if (!hasGeneratedVideo) {
-                showToast('Error', 'Please create a video first! 🎬', 'error');
+                alert('Please create a video first! 🎬');
                 return;
             }
             
             if (!title.trim()) {
-                showToast('Error', 'Please add a title for your story! ✍️', 'error');
+                alert('Please add a title for your story! ✍️');
                 document.getElementById('storyTitle').focus();
                 return;
             }
             
             if (!content.trim()) {
-                showToast('Error', 'Please write your story! ✍️', 'error');
+                alert('Please write your story! ✍️');
                 document.getElementById('storyContent').focus();
                 return;
             }
             
             const words = content.trim().split(/\s+/).filter(word => word.length > 0);
             if (words.length > 500) {
-                showToast('Error', 'Story must be 500 words or less! 📝', 'error');
+                alert('Story must be 500 words or less! 📝');
                 return;
             }
             
@@ -2228,7 +2169,7 @@ Describe what you see and bring it to life with your words!"
             publishBtn.disabled = true;
             
             setTimeout(() => {
-                showToast('Published!', '🎉 Your video story is now live! ✨');
+                alert('🎉 Video story published successfully! Your content is now live! ✨');
                 
                 // Reset and go back to feed
                 resetCreateForm();
@@ -2346,98 +2287,6 @@ Describe what you see and bring it to life with your words!"
         // Scroll to top function
         function scrollToTop() {
             window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // Toast notification system
-        function showToast(title, message, type = 'success') {
-            const container = document.getElementById('toastContainer');
-            const toast = document.createElement('div');
-            toast.className = `toast ${type}`;
-            
-            const icon = type === 'success' ? '✨' : '⚠️';
-            
-            toast.innerHTML = `
-                <div class="toast-icon">${icon}</div>
-                <div class="toast-content">
-                    <div class="toast-title">${title}</div>
-                    <div class="toast-message">${message}</div>
-                </div>
-                <button class="toast-close" onclick="closeToast(this.parentElement)">×</button>
-            `;
-            
-            container.appendChild(toast);
-            
-            // Auto remove after 5 seconds
-            setTimeout(() => closeToast(toast), 5000);
-        }
-
-        function closeToast(toast) {
-            toast.style.animation = 'toastSlideOut 0.3s ease forwards';
-            setTimeout(() => toast.remove(), 300);
-        }
-
-        // Double-tap like functionality
-        let lastTap = 0;
-        const doubleTapDelay = 300;
-
-        function initializeDoubleTapLike() {
-            const videoSections = document.querySelectorAll('.video-section');
-            
-            videoSections.forEach(section => {
-                section.addEventListener('touchend', handleDoubleTap);
-            });
-        }
-
-        function handleDoubleTap(event) {
-            const currentTime = new Date().getTime();
-            const tapLength = currentTime - lastTap;
-            
-            if (tapLength < doubleTapDelay && tapLength > 0) {
-                // Double tap detected
-                event.preventDefault();
-                const storyCard = event.target.closest('.story-card');
-                if (storyCard) {
-                    const likeBtn = storyCard.querySelector('.action-btn');
-                    if (!likeBtn.classList.contains('liked')) {
-                        toggleLike(likeBtn);
-                        showLikeAnimation(event);
-                    }
-                }
-            }
-            lastTap = currentTime;
-        }
-
-        function showLikeAnimation(event) {
-            const heart = document.createElement('div');
-            heart.innerHTML = '💖';
-            heart.style.cssText = `
-                position: fixed;
-                font-size: 100px;
-                pointer-events: none;
-                transition: all 0.6s ease;
-                z-index: 1000;
-                top: ${event.clientY - 50}px;
-                left: ${event.clientX - 50}px;
-                opacity: 0;
-                transform: scale(0);
-            `;
-            
-            document.body.appendChild(heart);
-            
-            // Trigger animation
-            requestAnimationFrame(() => {
-                heart.style.opacity = '1';
-                heart.style.transform = 'scale(1)';
-                
-                setTimeout(() => {
-                    heart.style.opacity = '0';
-                    heart.style.transform = 'scale(1.5)';
-                }, 50);
-                
-                setTimeout(() => {
-                    heart.remove();
-                }, 600);
-            });
         }
     </script>
 </body>
