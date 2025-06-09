@@ -64,12 +64,12 @@ const Index = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       {/* Navigation */}
       <nav className="fixed top-0 w-full bg-background/95 backdrop-blur-sm border-b border-border z-50">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
           <div className="flex justify-between items-center h-16">
-            <div className="text-2xl font-bold text-primary">Alex Chen</div>
+            <div className="text-xl sm:text-2xl font-bold text-primary">Alex Chen</div>
             
             {/* Desktop Menu */}
             <div className="hidden md:flex space-x-8">
@@ -90,10 +90,10 @@ const Index = () => {
 
             {/* Mobile Menu Button */}
             <button
-              className="md:hidden"
+              className="md:hidden p-2"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
-              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
           </div>
 
@@ -104,7 +104,7 @@ const Index = () => {
                 <button
                   key={item}
                   onClick={() => scrollTo(item.toLowerCase())}
-                  className="block w-full text-left py-2 text-muted-foreground hover:text-foreground transition-colors"
+                  className="block w-full text-left py-3 px-2 text-muted-foreground hover:text-foreground transition-colors"
                 >
                   {item}
                 </button>
@@ -115,79 +115,81 @@ const Index = () => {
       </nav>
 
       {/* Hero Section */}
-      <section id="home" className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-16">
-        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-          <div className="space-y-8">
-            <div>
-              <p className="text-primary font-medium mb-2">Hello, I'm</p>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4">
-                Alex Chen
-              </h1>
-              <h2 className="text-2xl sm:text-3xl text-muted-foreground mb-6">
-                Full Stack Developer
-              </h2>
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                I create exceptional digital experiences that combine beautiful design 
-                with powerful functionality. Passionate about building scalable applications 
-                and solving complex problems.
-              </p>
-            </div>
-            
-            <div className="flex space-x-4">
-              <Button onClick={() => scrollTo('projects')} size="lg">
-                View My Work
-              </Button>
-              <Button variant="outline" onClick={() => scrollTo('contact')} size="lg">
-                Get In Touch
-              </Button>
-            </div>
-
-            <div className="flex space-x-6">
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
-                <Github size={24} />
-              </a>
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
-                <Linkedin size={24} />
-              </a>
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
-                <Mail size={24} />
-              </a>
-            </div>
-          </div>
-
-          <div className="flex justify-center">
-            <div className="relative">
-              <div className="w-80 h-80 rounded-full overflow-hidden border-4 border-primary/20 hover:border-primary/40 transition-colors duration-300">
-                <img
-                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face"
-                  alt="Alex Chen"
-                  className="w-full h-full object-cover"
-                />
+      <section id="home" className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-20">
+        <div className="w-full max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+            <div className="space-y-6 lg:space-y-8 text-center lg:text-left order-2 lg:order-1">
+              <div>
+                <p className="text-primary font-medium mb-2">Hello, I'm</p>
+                <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4">
+                  Alex Chen
+                </h1>
+                <h2 className="text-xl sm:text-2xl lg:text-3xl text-muted-foreground mb-6">
+                  Full Stack Developer
+                </h2>
+                <p className="text-base lg:text-lg text-muted-foreground leading-relaxed max-w-lg mx-auto lg:mx-0">
+                  I create exceptional digital experiences that combine beautiful design 
+                  with powerful functionality. Passionate about building scalable applications 
+                  and solving complex problems.
+                </p>
               </div>
-              <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-primary rounded-full flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-sm">5+ Years</span>
+              
+              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                <Button onClick={() => scrollTo('projects')} size="lg" className="w-full sm:w-auto">
+                  View My Work
+                </Button>
+                <Button variant="outline" onClick={() => scrollTo('contact')} size="lg" className="w-full sm:w-auto">
+                  Get In Touch
+                </Button>
+              </div>
+
+              <div className="flex space-x-6 justify-center lg:justify-start">
+                <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+                  <Github size={24} />
+                </a>
+                <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+                  <Linkedin size={24} />
+                </a>
+                <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+                  <Mail size={24} />
+                </a>
+              </div>
+            </div>
+
+            <div className="flex justify-center order-1 lg:order-2">
+              <div className="relative">
+                <div className="w-64 h-64 sm:w-80 sm:h-80 rounded-full overflow-hidden border-4 border-primary/20 hover:border-primary/40 transition-colors duration-300">
+                  <img
+                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face"
+                    alt="Alex Chen"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="absolute -bottom-4 -right-4 w-20 h-20 sm:w-24 sm:h-24 bg-primary rounded-full flex items-center justify-center">
+                  <span className="text-primary-foreground font-bold text-xs sm:text-sm">5+ Years</span>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 hidden lg:block">
           <ChevronDown size={24} className="text-muted-foreground animate-bounce" />
         </div>
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-20 px-4 sm:px-6 lg:px-8 bg-muted/30">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold mb-4">About Me</h2>
+      <section id="about" className="py-16 lg:py-20 px-4 sm:px-6 lg:px-8 bg-muted/30">
+        <div className="w-full max-w-6xl mx-auto">
+          <div className="text-center mb-12 lg:mb-16">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4">About Me</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               A passionate developer with 5+ years of experience creating digital solutions 
               that make a difference.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             <div className="space-y-6">
               <p className="text-muted-foreground leading-relaxed">
                 I'm a full-stack developer based in San Francisco, specializing in creating 
@@ -205,9 +207,9 @@ const Index = () => {
               </p>
             </div>
 
-            <Card className="p-8">
+            <Card className="p-6 lg:p-8">
               <CardContent className="p-0">
-                <h3 className="text-xl font-semibold mb-6">Skills & Technologies</h3>
+                <h3 className="text-lg lg:text-xl font-semibold mb-6">Skills & Technologies</h3>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                   {skills.map((skill) => (
                     <div
@@ -225,16 +227,16 @@ const Index = () => {
       </section>
 
       {/* Projects Section */}
-      <section id="projects" className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold mb-4">Featured Projects</h2>
+      <section id="projects" className="py-16 lg:py-20 px-4 sm:px-6 lg:px-8">
+        <div className="w-full max-w-6xl mx-auto">
+          <div className="text-center mb-12 lg:mb-16">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4">Featured Projects</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               Here are some of my recent projects that showcase my skills and passion for development.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
             {projects.map((project, index) => (
               <Card key={index} className="group overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
                 <div className="relative overflow-hidden">
@@ -253,7 +255,7 @@ const Index = () => {
                   </div>
                 </div>
                 <CardContent className="p-6">
-                  <h3 className="text-xl font-semibold mb-2">{project.title}</h3>
+                  <h3 className="text-lg lg:text-xl font-semibold mb-2">{project.title}</h3>
                   <p className="text-muted-foreground mb-4 text-sm leading-relaxed">
                     {project.description}
                   </p>
@@ -275,29 +277,29 @@ const Index = () => {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8 bg-muted/30">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4">Let's Work Together</h2>
+      <section id="contact" className="py-16 lg:py-20 px-4 sm:px-6 lg:px-8 bg-muted/30">
+        <div className="w-full max-w-4xl mx-auto text-center">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4">Let's Work Together</h2>
           <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
             I'm always interested in hearing about new opportunities and exciting projects. 
             Let's discuss how we can bring your ideas to life.
           </p>
 
-          <div className="grid sm:grid-cols-3 gap-8 mb-12">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mb-12">
             <div className="space-y-2">
               <Mail className="w-8 h-8 text-primary mx-auto" />
               <h3 className="font-semibold">Email</h3>
-              <p className="text-muted-foreground">alex@example.com</p>
+              <p className="text-muted-foreground text-sm">alex@example.com</p>
             </div>
             <div className="space-y-2">
               <Linkedin className="w-8 h-8 text-primary mx-auto" />
               <h3 className="font-semibold">LinkedIn</h3>
-              <p className="text-muted-foreground">in/alexchen</p>
+              <p className="text-muted-foreground text-sm">in/alexchen</p>
             </div>
             <div className="space-y-2">
               <Github className="w-8 h-8 text-primary mx-auto" />
               <h3 className="font-semibold">GitHub</h3>
-              <p className="text-muted-foreground">github.com/alexchen</p>
+              <p className="text-muted-foreground text-sm">github.com/alexchen</p>
             </div>
           </div>
 
@@ -309,8 +311,8 @@ const Index = () => {
 
       {/* Footer */}
       <footer className="py-8 px-4 sm:px-6 lg:px-8 border-t border-border">
-        <div className="max-w-6xl mx-auto text-center">
-          <p className="text-muted-foreground">
+        <div className="w-full max-w-6xl mx-auto text-center">
+          <p className="text-muted-foreground text-sm">
             © 2024 Alex Chen. All rights reserved. Built with React and Tailwind CSS.
           </p>
         </div>
