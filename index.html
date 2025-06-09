@@ -278,21 +278,18 @@
             margin-top: 80px;
         }
 
-        /* INFINITE SCROLL FOUNDATION */
         .main-feed {
             height: 100vh;
             overflow-y: scroll;
-            scroll-snap-type: none;
+            scroll-snap-type: none; /* Removed snap scrolling */
             scrollbar-width: none;
             scroll-behavior: smooth;
-            position: relative;
         }
 
         .main-feed::-webkit-scrollbar {
             display: none;
         }
 
-        /* Story Card Foundation */
         .story-card {
             min-height: 100vh;
             display: flex;
@@ -301,53 +298,7 @@
             background: var(--card-bg);
             backdrop-filter: blur(20px);
             border: 1px solid var(--border-color);
-            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-            margin-bottom: 2px; /* Small gap between cards for infinite scroll */
-        }
-
-        /* Loading States for Infinite Scroll */
-        .loading-spinner {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 40px;
-            height: 40px;
-            border: 3px solid rgba(255, 255, 255, 0.1);
-            border-top: 3px solid var(--primary-gradient);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            display: none;
-        }
-
-        .loading-spinner.visible {
-            display: block;
-        }
-
-        @keyframes spin {
-            0% { transform: translateX(-50%) rotate(0deg); }
-            100% { transform: translateX(-50%) rotate(360deg); }
-        }
-
-        .end-of-feed {
-            text-align: center;
-            padding: 40px 20px;
-            color: var(--text-secondary);
-            font-size: 14px;
-            display: none;
-        }
-
-        .end-of-feed.visible {
-            display: block;
-        }
-
-        /* Intersection Observer Trigger */
-        .scroll-trigger {
-            height: 10px;
-            position: absolute;
-            bottom: 100vh;
-            width: 100%;
-            pointer-events: none;
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); /* Smoother easing */
         }
 
         .video-section {
@@ -1044,44 +995,44 @@
             box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
         }
 
-        /* MOBILE STYLES - OPTIMIZED FOR BETTER SCREEN USAGE */
+        /* MOBILE STYLES */
         @media (max-width: 768px) {
             .dynamic-header {
                 left: 0;
-                padding: 0 12px;
-                height: 60px;
+                padding: 0 16px;
+                height: 70px;
             }
 
             .header-avatar {
-                width: 36px;
-                height: 36px;
-                margin-right: 10px;
+                width: 40px;
+                height: 40px;
+                margin-right: 12px;
             }
 
             .header-username {
-                font-size: 15px;
+                font-size: 16px;
             }
 
             .header-story-title {
-                font-size: 12px;
+                font-size: 13px;
             }
 
             .header-actions {
-                gap: 6px;
+                gap: 8px;
             }
 
             .header-action-btn {
-                padding: 5px 10px;
-                font-size: 11px;
+                padding: 6px 12px;
+                font-size: 12px;
             }
 
             .sidebar {
                 width: 100%;
-                height: 60px;
+                height: 70px;
                 position: fixed;
                 bottom: 0;
                 top: auto;
-                padding: 6px 12px;
+                padding: 8px 16px;
                 background: rgba(10, 10, 10, 0.98);
                 backdrop-filter: blur(20px);
                 border-top: 1px solid var(--border-color);
@@ -1104,26 +1055,26 @@
 
             .nav-item {
                 flex-direction: column;
-                padding: 6px 3px;
+                padding: 8px 4px;
                 margin: 0;
-                min-width: 45px;
+                min-width: 50px;
                 text-align: center;
-                border-radius: 10px;
+                border-radius: 12px;
             }
 
             .nav-item.active {
-                transform: translateY(-1px);
+                transform: translateY(-2px);
                 background: var(--primary-gradient);
-                box-shadow: 0 3px 12px rgba(102, 126, 234, 0.4);
+                box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
             }
 
             .nav-icon {
-                margin: 0 0 1px 0;
-                font-size: 14px;
+                margin: 0 0 2px 0;
+                font-size: 16px;
             }
 
             .nav-text {
-                font-size: 8px;
+                font-size: 9px;
                 font-weight: 600;
             }
 
@@ -1133,277 +1084,107 @@
 
             .main-content {
                 margin-left: 0;
-                margin-bottom: 60px;
+                margin-bottom: 70px;
             }
 
             .main-content.header-visible {
-                margin-top: 60px;
+                margin-top: 70px;
             }
 
             .story-card {
                 flex-direction: column;
-                min-height: calc(100vh - 60px);
-                margin-bottom: 0;
+                min-height: calc(100vh - 70px);
             }
             
             .video-section {
                 width: 100%;
-                height: 70vh;
+                height: 65vh;
                 order: 1;
             }
 
             .video-section.shrunk {
-                transform: scale(0.95) translateY(-3%);
-                height: 68vh;
+                transform: scale(0.85) translateY(-10%);
+                height: 55vh;
             }
 
             .video-section.shrunk + .story-section {
                 width: 100%;
                 transform: none;
-                height: 32vh;
+                height: 45vh;
             }
 
             .video-container {
                 border-radius: 0;
                 height: 100%;
-                width: 100%;
-            }
-
-            .ai-video {
-                width: 100%;
-                height: 100%;
             }
             
             .story-section {
                 width: 100%;
-                height: 30vh;
+                height: 35vh;
                 border-left: none;
                 border-top: 1px solid var(--border-color);
-                padding: 12px;
+                padding: 16px;
                 order: 2;
                 overflow-y: auto;
             }
 
-            .story-header {
-                margin-bottom: 16px;
-            }
-
-            .author-avatar {
-                width: 40px;
-                height: 40px;
-                margin-right: 12px;
-            }
-
-            .author-info h4 {
-                font-size: 14px;
-                margin-bottom: 2px;
-            }
-
-            .author-info span {
-                font-size: 12px;
-            }
-
-            .genre-tag {
-                padding: 4px 10px;
-                font-size: 10px;
-                margin-bottom: 12px;
-            }
-
-            .story-title {
-                font-size: 18px;
-                margin-bottom: 12px;
-                line-height: 1.2;
-            }
-
-            .story-text {
-                font-size: 14px;
-                line-height: 1.5;
-                margin-bottom: 12px;
-            }
-
-            .story-chain {
-                padding: 12px;
-                margin: 12px 0;
-            }
-
-            .chain-author {
-                font-size: 11px;
-                margin-bottom: 6px;
-            }
-
-            .story-actions {
-                padding: 12px 0;
-                gap: 16px;
-                flex-wrap: wrap;
-                justify-content: space-around;
-            }
-
-            .action-btn {
-                font-size: 13px;
-                padding: 6px 8px;
-                flex: 1;
-                min-width: 60px;
-                text-align: center;
-            }
-
-            .continue-story-btn {
-                padding: 12px;
-                font-size: 14px;
-                margin-top: 8px;
-            }
-
             .create-story-section {
-                padding: 12px;
-                margin-bottom: 70px;
+                padding: 16px;
+                margin-bottom: 80px;
                 max-width: 100%;
             }
 
-            .create-header {
-                margin-bottom: 24px;
-            }
-
             .create-header h1 {
-                font-size: 22px;
-                margin-bottom: 8px;
-            }
-
-            .create-header p {
-                font-size: 14px;
+                font-size: 24px;
             }
 
             .video-prompt-section,
             .video-preview-section,
             .story-writing-section {
-                padding: 16px;
-                margin-bottom: 12px;
-                border-radius: 16px;
-            }
-
-            .prompt-header h2 {
-                font-size: 20px;
-                margin-bottom: 6px;
-            }
-
-            .prompt-header p {
-                font-size: 13px;
+                padding: 20px;
+                margin-bottom: 16px;
             }
 
             .video-description-input {
-                min-height: 120px;
+                min-height: 100px;
                 font-size: 14px;
-                padding: 14px;
-                line-height: 1.5;
+                padding: 12px;
             }
 
             .video-player {
-                height: 220px;
+                height: 200px;
                 max-width: none;
-                margin-bottom: 12px;
             }
 
             .play-button {
-                font-size: 36px;
-                width: 70px;
-                height: 70px;
+                font-size: 32px;
+                width: 60px;
+                height: 60px;
             }
 
             .style-grid {
                 grid-template-columns: repeat(2, 1fr);
-                gap: 10px;
-            }
-
-            .style-card {
-                padding: 12px;
-            }
-
-            .style-preview {
-                font-size: 20px;
-                margin-bottom: 6px;
-            }
-
-            .style-name {
-                font-size: 12px;
+                gap: 8px;
             }
 
             .genre-grid {
                 grid-template-columns: repeat(3, 1fr);
-                gap: 8px;
-            }
-
-            .genre-card {
-                padding: 10px 6px;
-            }
-
-            .genre-emoji {
-                font-size: 14px;
-                margin-bottom: 3px;
-            }
-
-            .genre-name {
-                font-size: 11px;
-            }
-
-            .story-title-input {
-                padding: 14px;
-                font-size: 15px;
-            }
-
-            .enhanced-story-input {
-                min-height: 200px;
-                padding: 16px;
-                font-size: 14px;
-            }
-
-            .writing-stats {
-                padding: 10px 14px;
-                margin-bottom: 16px;
-            }
-
-            .word-stats {
-                gap: 16px;
-            }
-
-            .stat-item {
-                font-size: 12px;
-            }
-
-            .word-limit {
-                font-size: 11px;
-            }
-
-            .create-video-btn,
-            .primary-action-btn {
-                padding: 16px;
-                font-size: 15px;
-                margin-top: 16px;
-            }
-
-            /* Better spacing for video overlay */
-            .video-overlay {
-                top: 12px;
-                right: 12px;
-            }
-
-            .ai-badge {
-                padding: 6px 12px;
-                font-size: 11px;
+                gap: 6px;
             }
         }
 
-        /* ENHANCED STORY WRITING INTERFACE */
         .story-composer {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(0, 0, 0, 0.8);
             backdrop-filter: blur(20px);
             z-index: 1000;
             display: none;
             align-items: center;
             justify-content: center;
-            padding: 20px;
         }
 
         .composer-modal {
@@ -1411,9 +1192,9 @@
             backdrop-filter: blur(20px);
             border-radius: 24px;
             padding: 32px;
-            width: 95%;
-            max-width: 800px;
-            max-height: 90vh;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
             overflow-y: auto;
             border: 1px solid var(--border-color);
             box-shadow: 0 20px 64px rgba(0, 0, 0, 0.5);
@@ -1424,8 +1205,6 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 24px;
-            padding-bottom: 16px;
-            border-bottom: 1px solid var(--border-color);
         }
 
         .composer-title {
@@ -1434,113 +1213,40 @@
             color: var(--text-primary);
         }
 
-        /* Writing Options Section */
-        .writing-options {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px;
-            margin-bottom: 24px;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 16px;
-            border: 1px solid var(--border-color);
-        }
-
-        .option-group {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .option-label {
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 8px;
-        }
-
-        .option-pills {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .option-pill {
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid var(--border-color);
-            color: var(--text-secondary);
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            user-select: none;
-        }
-
-        .option-pill:hover {
-            background: rgba(255, 255, 255, 0.12);
-            color: var(--text-primary);
-        }
-
-        .option-pill.active {
-            background: var(--primary-gradient);
-            color: white;
-            border-color: transparent;
-        }
-
-        /* Text Editor Section */
-        .text-editor-container {
-            position: relative;
-            margin-bottom: 20px;
-        }
-
-        .editor-toolbar {
-            display: flex;
-            gap: 8px;
-            padding: 12px 16px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border-color);
-            border-radius: 12px 12px 0 0;
-            border-bottom: none;
-        }
-
-        .toolbar-btn {
+        .close-btn {
             background: rgba(255, 255, 255, 0.1);
             border: none;
             color: var(--text-secondary);
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-size: 12px;
-            font-weight: 600;
+            font-size: 24px;
             cursor: pointer;
-            transition: all 0.2s ease;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
         }
 
-        .toolbar-btn:hover {
+        .close-btn:hover {
             background: rgba(255, 255, 255, 0.2);
             color: var(--text-primary);
         }
 
-        .toolbar-btn.active {
-            background: var(--primary-gradient);
-            color: white;
-        }
-
         .composer-textarea {
             width: 100%;
-            min-height: 300px;
+            min-height: 200px;
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid var(--border-color);
-            border-radius: 0 0 16px 16px;
+            border-radius: 16px;
             padding: 20px;
             color: var(--text-primary);
             font-size: 15px;
-            line-height: 1.7;
+            line-height: 1.6;
             resize: vertical;
-            font-family: 'Inter', sans-serif;
+            margin-bottom: 24px;
+            font-family: inherit;
             backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
         }
 
         .composer-textarea:focus {
@@ -1549,57 +1255,15 @@
             box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
         }
 
-        /* Word Counter and Stats */
-        .writing-stats {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 16px;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 12px;
-            margin-bottom: 20px;
-            border: 1px solid var(--border-color);
-        }
-
-        .word-stats {
-            display: flex;
-            gap: 20px;
-            font-size: 13px;
-        }
-
-        .stat-item {
-            color: var(--text-secondary);
-        }
-
-        .stat-number {
-            color: var(--text-primary);
-            font-weight: 600;
-        }
-
-        .word-limit {
-            font-size: 12px;
-            color: var(--text-secondary);
-        }
-
-        .word-limit.warning {
-            color: var(--warning-color);
-        }
-
-        .word-limit.error {
-            color: var(--error-color);
-        }
-
-        /* Action Buttons */
         .composer-actions {
             display: flex;
             gap: 12px;
-            margin-top: 24px;
         }
 
         .cancel-btn {
             flex: 1;
             background: rgba(255, 255, 255, 0.1);
-            border: 1px solid var(--border-color);
+            border: none;
             color: white;
             padding: 16px;
             border-radius: 16px;
@@ -1610,161 +1274,6 @@
 
         .cancel-btn:hover {
             background: rgba(255, 255, 255, 0.2);
-        }
-
-        .publish-btn {
-            flex: 2;
-            background: var(--primary-gradient);
-            border: none;
-            color: white;
-            padding: 16px;
-            border-radius: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .publish-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 6px 24px rgba(99, 102, 241, 0.4);
-        }
-
-        .publish-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        /* Mobile Responsive for Composer */
-        @media (max-width: 768px) {
-            .composer-modal {
-                padding: 16px;
-                margin: 8px;
-                max-height: 96vh;
-                width: calc(100% - 16px);
-            }
-
-            .composer-header {
-                margin-bottom: 20px;
-                padding-bottom: 12px;
-            }
-
-            .composer-title {
-                font-size: 18px;
-            }
-
-            .close-btn {
-                font-size: 20px;
-                padding: 4px;
-            }
-
-            .writing-options {
-                grid-template-columns: 1fr;
-                gap: 16px;
-                padding: 14px;
-                margin-bottom: 20px;
-            }
-
-            .option-label {
-                font-size: 13px;
-                margin-bottom: 6px;
-            }
-
-            .option-pills {
-                gap: 6px;
-            }
-
-            .option-pill {
-                font-size: 12px;
-                padding: 6px 12px;
-            }
-
-            .text-editor-container {
-                margin-bottom: 16px;
-            }
-
-            .editor-toolbar {
-                padding: 10px 12px;
-                gap: 6px;
-            }
-
-            .toolbar-btn {
-                padding: 5px 8px;
-                font-size: 11px;
-            }
-
-            .composer-textarea {
-                min-height: 220px;
-                font-size: 14px;
-                padding: 14px;
-                line-height: 1.6;
-            }
-
-            .writing-stats {
-                padding: 10px 12px;
-                margin-bottom: 16px;
-            }
-
-            .word-stats {
-                gap: 12px;
-                flex-wrap: wrap;
-            }
-
-            .stat-item {
-                font-size: 12px;
-            }
-
-            .word-limit {
-                font-size: 11px;
-            }
-
-            .composer-actions {
-                flex-direction: column;
-                gap: 10px;
-                margin-top: 20px;
-            }
-
-            .cancel-btn,
-            .publish-btn {
-                padding: 14px;
-                font-size: 14px;
-            }
-        }
-
-        /* Update create story section with enhanced interface */
-        .story-writing-section {
-            background: var(--card-bg);
-            backdrop-filter: blur(20px);
-            border-radius: 24px;
-            padding: 32px;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-        }
-
-        .enhanced-story-input {
-            width: 100%;
-            min-height: 250px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border-color);
-            border-radius: 0 0 12px 12px;
-            padding: 20px;
-            color: var(--text-primary);
-            font-size: 15px;
-            line-height: 1.7;
-            resize: vertical;
-            font-family: 'Inter', sans-serif;
-            transition: all 0.3s ease;
-        }
-
-        .enhanced-story-input:focus {
-            outline: none;
-            border-color: #6366F1;
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
         }
 
         /* Scroll indicator for better UX */
@@ -1963,44 +1472,6 @@
             opacity: 1;
         }
 
-        /* Toast and Heart Animation Keyframes */
-        @keyframes slideInRight {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-
-        @keyframes slideOutRight {
-            from {
-                transform: translateX(0);
-                opacity: 1;
-            }
-            to {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-        }
-
-        @keyframes heartPop {
-            0% {
-                transform: translate(-50%, -50%) scale(0);
-                opacity: 0;
-            }
-            50% {
-                transform: translate(-50%, -50%) scale(1.3);
-                opacity: 1;
-            }
-            100% {
-                transform: translate(-50%, -50%) scale(1) translateY(-20px);
-                opacity: 0;
-            }
-        }
-
         /* Reduced Motion Preferences */
         @media (prefers-reduced-motion: reduce) {
             * {
@@ -2094,511 +1565,6 @@
         .scroll-progress-bar {
             transition: width 0.4s ease;
         }
-
-        /* Dynamic Content Styles */
-        .video-thumbnail {
-            border-radius: 12px;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .video-thumbnail:hover {
-            transform: scale(1.02);
-            filter: brightness(1.1);
-        }
-
-        .author-avatar {
-            transition: all 0.3s ease;
-        }
-
-        .author-avatar[src=""] {
-            display: none !important;
-        }
-
-        #authorAvatarFallback_1,
-        #authorAvatarFallback_2,
-        #authorAvatarFallback_3 {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            background: var(--secondary-gradient);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-        }
-
-        /* Dynamic interaction states */
-        .action-btn[data-action] {
-            transition: all 0.3s ease;
-        }
-
-        .action-btn[data-action="like"].liked {
-            color: #ff6b6b;
-            transform: scale(1.05);
-        }
-
-        .action-btn[data-action="comment"]:hover {
-            color: #4ecdc4;
-        }
-
-        .action-btn[data-action="share"]:hover {
-            color: #45b7d1;
-        }
-
-        /* Story chain visibility control */
-        .story-chain[style*="display: none"] {
-            display: none !important;
-        }
-
-        /* Video prompt visibility control */
-        .video-prompt[style*="display: none"] {
-            display: none !important;
-        }
-
-        /* STORY DETAIL MODAL STYLES */
-        .story-detail-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(20px);
-            z-index: 2000;
-            display: none;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .story-detail-modal.active {
-            display: block;
-            opacity: 1;
-        }
-
-        .detail-modal-content {
-            width: 100%;
-            height: 100vh;
-            overflow-y: auto;
-            background: var(--dark-bg);
-            scrollbar-width: none;
-        }
-
-        .detail-modal-content::-webkit-scrollbar {
-            display: none;
-        }
-
-        .detail-header {
-            position: sticky;
-            top: 0;
-            background: rgba(10, 10, 10, 0.95);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border-color);
-            padding: 16px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            z-index: 10;
-        }
-
-        .back-btn {
-            background: none;
-            border: none;
-            color: var(--text-primary);
-            font-size: 24px;
-            font-weight: 600;
-            cursor: pointer;
-            padding: 8px;
-            border-radius: 8px;
-            transition: background 0.3s ease;
-        }
-
-        .back-btn:hover {
-            background: var(--glass-bg);
-        }
-
-        .detail-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: var(--text-primary);
-            flex: 1;
-            text-align: center;
-        }
-
-        .detail-share-btn {
-            background: none;
-            border: none;
-            color: var(--text-primary);
-            font-size: 20px;
-            cursor: pointer;
-            padding: 8px;
-            border-radius: 8px;
-            transition: background 0.3s ease;
-        }
-
-        .detail-share-btn:hover {
-            background: var(--glass-bg);
-        }
-
-        .detail-video-section {
-            position: relative;
-            height: 50vh;
-            background: #111;
-        }
-
-        .detail-video-container {
-            width: 100%;
-            height: 100%;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .detail-video-thumbnail {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .detail-video-placeholder {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, var(--dark-bg) 0%, rgba(16, 17, 22, 0.95) 100%);
-        }
-
-        .detail-video-placeholder .video-preview-icon {
-            font-size: 48px;
-            opacity: 0.8;
-        }
-
-        .detail-video-overlay {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-        }
-
-        .detail-story-section {
-            padding: 24px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .detail-author-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 24px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .detail-author-info {
-            display: flex;
-            align-items: center;
-        }
-
-        .detail-author-avatar,
-        .detail-author-avatar-fallback {
-            width: 64px;
-            height: 64px;
-            border-radius: 50%;
-            margin-right: 16px;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-        }
-
-        .detail-author-avatar-fallback {
-            background: var(--secondary-gradient);
-        }
-
-        .detail-author-text h3 {
-            color: var(--text-primary);
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-
-        .detail-author-text span {
-            color: var(--text-secondary);
-            font-size: 14px;
-        }
-
-        .follow-author-btn {
-            background: var(--primary-gradient);
-            border: none;
-            color: white;
-            padding: 12px 24px;
-            border-radius: 20px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 16px rgba(99, 102, 241, 0.3);
-        }
-
-        .follow-author-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
-        }
-
-        .detail-story-content {
-            margin-bottom: 32px;
-        }
-
-        .detail-genre-tag {
-            background: var(--accent-gradient);
-            padding: 8px 16px;
-            border-radius: 50px;
-            font-size: 12px;
-            font-weight: 600;
-            margin-bottom: 20px;
-            display: inline-block;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .detail-story-title {
-            font-size: 32px;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 24px;
-            line-height: 1.2;
-        }
-
-        .detail-story-text {
-            font-size: 18px;
-            line-height: 1.8;
-            color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 32px;
-        }
-
-        .detail-story-text p {
-            margin-bottom: 20px;
-        }
-
-        .detail-story-chains {
-            margin-top: 32px;
-        }
-
-        .detail-chain-item {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 16px;
-            position: relative;
-        }
-
-        .detail-chain-item::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 3px;
-            background: var(--accent-gradient);
-            border-radius: 0 2px 2px 0;
-        }
-
-        .detail-chain-author {
-            font-size: 14px;
-            color: #4ecdc4;
-            margin-bottom: 12px;
-            font-weight: 500;
-        }
-
-        .detail-chain-text {
-            font-size: 16px;
-            line-height: 1.6;
-            color: rgba(255, 255, 255, 0.9);
-        }
-
-        .detail-actions {
-            padding-top: 24px;
-            border-top: 1px solid var(--border-color);
-        }
-
-        .detail-stats {
-            display: flex;
-            gap: 24px;
-            margin-bottom: 20px;
-            justify-content: center;
-        }
-
-        .detail-action-btn {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            padding: 12px 16px;
-            border-radius: 12px;
-        }
-
-        .detail-action-btn:hover {
-            color: var(--text-primary);
-            background: var(--glass-bg);
-            transform: translateY(-1px);
-        }
-
-        .detail-action-btn.liked {
-            color: #ff6b6b;
-        }
-
-        .detail-continue-btn {
-            width: 100%;
-            background: var(--primary-gradient);
-            border: none;
-            color: white;
-            padding: 18px;
-            border-radius: 16px;
-            font-weight: 600;
-            font-size: 16px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.3);
-        }
-
-        .detail-continue-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 8px 32px rgba(99, 102, 241, 0.4);
-        }
-
-        /* Mobile Responsive for Detail Modal */
-        @media (max-width: 768px) {
-            .detail-header {
-                padding: 10px 14px;
-                height: 50px;
-            }
-
-            .back-btn {
-                font-size: 20px;
-                padding: 6px;
-            }
-
-            .detail-title {
-                font-size: 16px;
-            }
-
-            .detail-share-btn {
-                font-size: 18px;
-                padding: 6px;
-            }
-
-            .detail-video-section {
-                height: 45vh;
-            }
-
-            .detail-video-placeholder .video-preview-icon {
-                font-size: 40px;
-            }
-
-            .detail-story-section {
-                padding: 16px 12px;
-            }
-
-            .detail-author-header {
-                margin-bottom: 20px;
-                padding-bottom: 16px;
-                flex-wrap: wrap;
-                gap: 12px;
-            }
-
-            .detail-author-info {
-                flex: 1;
-                min-width: 200px;
-            }
-
-            .detail-author-avatar,
-            .detail-author-avatar-fallback {
-                width: 50px;
-                height: 50px;
-                margin-right: 10px;
-            }
-
-            .detail-author-text h3 {
-                font-size: 16px;
-                margin-bottom: 2px;
-            }
-
-            .detail-author-text span {
-                font-size: 13px;
-            }
-
-            .follow-author-btn {
-                padding: 8px 16px;
-                font-size: 13px;
-                white-space: nowrap;
-            }
-
-            .detail-genre-tag {
-                padding: 6px 12px;
-                font-size: 11px;
-                margin-bottom: 16px;
-            }
-
-            .detail-story-title {
-                font-size: 24px;
-                margin-bottom: 18px;
-                line-height: 1.3;
-            }
-
-            .detail-story-text {
-                font-size: 15px;
-                line-height: 1.7;
-                margin-bottom: 24px;
-            }
-
-            .detail-story-text p {
-                margin-bottom: 16px;
-            }
-
-            .detail-story-chains {
-                margin-top: 24px;
-            }
-
-            .detail-chain-item {
-                padding: 16px;
-                margin-bottom: 12px;
-            }
-
-            .detail-chain-author {
-                font-size: 12px;
-                margin-bottom: 8px;
-            }
-
-            .detail-chain-text {
-                font-size: 14px;
-                line-height: 1.6;
-            }
-
-            .detail-actions {
-                padding-top: 20px;
-            }
-
-            .detail-stats {
-                gap: 12px;
-                flex-wrap: wrap;
-                margin-bottom: 16px;
-                justify-content: space-around;
-            }
-
-            .detail-action-btn {
-                font-size: 14px;
-                padding: 10px 12px;
-                flex: 1;
-                min-width: 80px;
-            }
-
-            .detail-continue-btn {
-                padding: 16px;
-                font-size: 15px;
-            }
-        }
     </style>
 </head>
 <body>
@@ -2671,192 +1637,156 @@
 
         <!-- Main Content -->
         <div class="main-content" id="mainContent">
-            <!-- Main Feed - Foundation for Infinite Scrolling -->
+            <!-- Main Feed -->
             <div class="main-feed" id="mainFeed">
-                <!-- Scroll Trigger for Infinite Loading -->
-                <div class="scroll-trigger" id="scrollTrigger"></div>
-                
-                <!-- Story Card 1 - Dynamic Data Structure -->
-                <div class="story-card" data-story-id="1">
+                <!-- Story Card 1 -->
+                <div class="story-card" data-author="@storyteller_maya" data-story-title="The Cabin\'s Secret">
                     <div class="video-section">
                         <div class="video-container">
                             <div class="ai-video">
-                                <!-- Video thumbnail or video element for dynamic content -->
-                                <img class="video-thumbnail" id="videoThumbnail_1" src="" alt="AI Generated Video" style="display: none; width: 100%; height: 100%; object-fit: cover;">
-                                <!-- Fallback video preview icon -->
                                 <div style="position: relative; z-index: 5;">
                                     <span class="video-preview-icon">🎬</span>
                                 </div>
                             </div>
                             <div class="video-overlay">
                                 <div class="ai-badge">AI Generated ✨</div>
-                                <div class="video-prompt" id="videoPrompt_1" style="display: none;"></div>
                             </div>
                         </div>
                     </div>
                     <div class="story-section">
                         <div class="story-header">
-                            <img class="author-avatar" id="authorAvatar_1" src="" alt="Author Avatar" style="display: none;">
-                            <div class="author-avatar" id="authorAvatarFallback_1"></div>
+                            <div class="author-avatar"></div>
                             <div class="author-info">
-                                <h4 id="authorUsername_1">@storyteller_maya</h4>
-                                <span id="authorMeta_1">2h ago • 🔥 Trending</span>
+                                <h4>@storyteller_maya</h4>
+                                <span>2h ago • 🔥 Trending</span>
                             </div>
                         </div>
                         <div class="story-content">
-                            <div class="genre-tag" id="genreTag_1">Horror</div>
-                            <div class="story-title" id="storyTitle_1">The Cabin's Secret</div>
-                            <div class="story-text" id="storyText_1">
+                            <div class="genre-tag">Horror</div>
+                            <div class="story-title">The Cabin's Secret</div>
+                            <div class="story-text">
                                 As Ava stepped into the cabin, her flashlight flickered. Something was dripping in the corner. She turned—and saw the rocking chair moving on its own. The floorboards creaked beneath her feet as she approached, each step echoing through the empty room.
                             </div>
-                            <div class="story-chain" id="storyChain_1">
-                                <div class="chain-author" id="chainAuthor_1">@horror_enthusiast continued:</div>
-                                <div class="story-text" id="chainText_1">
+                            <div class="story-chain">
+                                <div class="chain-author">@horror_enthusiast continued:</div>
+                                <div class="story-text">
                                     The chair stopped suddenly. In the silence, Ava heard breathing that wasn't her own. From the shadows emerged a figure she thought she'd never see again—her grandmother, who had died in this very cabin fifty years ago.
                                 </div>
                             </div>
                         </div>
                         <div class="story-actions">
-                            <button class="action-btn liked" data-action="like" data-story-id="1" onclick="toggleLike(this)">
-                                💖 <span id="likesCount_1">234</span>
+                            <button class="action-btn liked" onclick="toggleLike(this)">
+                                💖 <span>234</span>
                             </button>
-                            <button class="action-btn" data-action="comment" data-story-id="1">
-                                💬 <span id="commentsCount_1">67</span>
+                            <button class="action-btn">
+                                💬 <span>67</span>
                             </button>
-                            <button class="action-btn" data-action="share" data-story-id="1">
+                            <button class="action-btn">
                                 🔗 <span>Share</span>
                             </button>
                         </div>
-                        <button class="continue-story-btn" data-action="continue" data-story-id="1" onclick="openComposer('The Cabin\u0027s Secret')">
+                        <button class="continue-story-btn" onclick="openComposer('The Cabin\'s Secret')">
                             ✨ Continue This Story
                         </button>
                     </div>
                 </div>
 
-                <!-- Story Card 2 - Dynamic Data Structure -->
-                <div class="story-card" data-story-id="2">
+                <!-- Story Card 2 -->
+                <div class="story-card" data-author="@romantic_writer" data-story-title="Coffee Shop Confessions">
                     <div class="video-section">
                         <div class="video-container">
                             <div class="ai-video">
-                                <!-- Video thumbnail or video element for dynamic content -->
-                                <img class="video-thumbnail" id="videoThumbnail_2" src="" alt="AI Generated Video" style="display: none; width: 100%; height: 100%; object-fit: cover;">
-                                <!-- Fallback video preview icon -->
                                 <div style="position: relative; z-index: 5;">
                                     <span class="video-preview-icon">🎬</span>
                                 </div>
                             </div>
                             <div class="video-overlay">
                                 <div class="ai-badge">AI Generated ✨</div>
-                                <div class="video-prompt" id="videoPrompt_2" style="display: none;"></div>
                             </div>
                         </div>
                     </div>
                     <div class="story-section">
                         <div class="story-header">
-                            <img class="author-avatar" id="authorAvatar_2" src="" alt="Author Avatar" style="display: none;">
-                            <div class="author-avatar" id="authorAvatarFallback_2"></div>
+                            <div class="author-avatar"></div>
                             <div class="author-info">
-                                <h4 id="authorUsername_2">@romantic_writer</h4>
-                                <span id="authorMeta_2">4h ago • ❤️ Loved</span>
+                                <h4>@romantic_writer</h4>
+                                <span>4h ago • ❤️ Loved</span>
                             </div>
                         </div>
                         <div class="story-content">
-                            <div class="genre-tag" id="genreTag_2">Romance</div>
-                            <div class="story-title" id="storyTitle_2">Coffee Shop Confessions</div>
-                            <div class="story-text" id="storyText_2">
+                            <div class="genre-tag">Romance</div>
+                            <div class="story-title">Coffee Shop Confessions</div>
+                            <div class="story-text">
                                 Emma stirred her latte nervously as Jake sat across from her. After five years of friendship, this moment felt different. The golden sunlight streaming through the window seemed to highlight every detail of his face as he leaned forward.
                             </div>
-                            <div class="story-text" id="storyTextContinuation_2">
+                            <div class="story-text">
                                 "There's something I need to tell you," he began, his voice barely above a whisper. "Something I should have said years ago..."
-                            </div>
-                            <!-- Story chain container for dynamic chains -->
-                            <div class="story-chain" id="storyChain_2" style="display: none;">
-                                <div class="chain-author" id="chainAuthor_2"></div>
-                                <div class="story-text" id="chainText_2"></div>
                             </div>
                         </div>
                         <div class="story-actions">
-                            <button class="action-btn" data-action="like" data-story-id="2" onclick="toggleLike(this)">
-                                💖 <span id="likesCount_2">891</span>
+                            <button class="action-btn" onclick="toggleLike(this)">
+                                💖 <span>891</span>
                             </button>
-                            <button class="action-btn" data-action="comment" data-story-id="2">
-                                💬 <span id="commentsCount_2">203</span>
+                            <button class="action-btn">
+                                💬 <span>203</span>
                             </button>
-                            <button class="action-btn" data-action="share" data-story-id="2">
+                            <button class="action-btn">
                                 🔗 <span>Share</span>
                             </button>
                         </div>
-                        <button class="continue-story-btn" data-action="continue" data-story-id="2" onclick="openComposer('Coffee Shop Confessions')">
+                        <button class="continue-story-btn" onclick="openComposer('Coffee Shop Confessions')">
                             ✨ Continue This Story
                         </button>
                     </div>
                 </div>
 
-                <!-- Story Card 3 - Dynamic Data Structure -->
-                <div class="story-card" data-story-id="3">
+                <!-- Story Card 3 -->
+                <div class="story-card" data-author="@sci_fi_dreamer" data-story-title="Digital Awakening">
                     <div class="video-section">
                         <div class="video-container">
                             <div class="ai-video">
-                                <!-- Video thumbnail or video element for dynamic content -->
-                                <img class="video-thumbnail" id="videoThumbnail_3" src="" alt="AI Generated Video" style="display: none; width: 100%; height: 100%; object-fit: cover;">
-                                <!-- Fallback video preview icon -->
                                 <div style="position: relative; z-index: 5;">
                                     <span class="video-preview-icon">🎬</span>
                                 </div>
                             </div>
                             <div class="video-overlay">
                                 <div class="ai-badge">AI Generated ✨</div>
-                                <div class="video-prompt" id="videoPrompt_3" style="display: none;"></div>
                             </div>
                         </div>
                     </div>
                     <div class="story-section">
                         <div class="story-header">
-                            <img class="author-avatar" id="authorAvatar_3" src="" alt="Author Avatar" style="display: none;">
-                            <div class="author-avatar" id="authorAvatarFallback_3"></div>
+                            <div class="author-avatar"></div>
                             <div class="author-info">
-                                <h4 id="authorUsername_3">@sci_fi_dreamer</h4>
-                                <span id="authorMeta_3">6h ago • 🚀 Viral</span>
+                                <h4>@sci_fi_dreamer</h4>
+                                <span>6h ago • 🚀 Viral</span>
                             </div>
                         </div>
                         <div class="story-content">
-                            <div class="genre-tag" id="genreTag_3">Sci-Fi</div>
-                            <div class="story-title" id="storyTitle_3">Digital Awakening</div>
-                            <div class="story-text" id="storyText_3">
+                            <div class="genre-tag">Sci-Fi</div>
+                            <div class="story-title">Digital Awakening</div>
+                            <div class="story-text">
                                 Maya's neural implant buzzed as she walked through Neo-Tokyo's neon-lit streets. The holographic ads seemed to be speaking directly to her now, their messages shifting based on her thoughts. Something was different tonight—the city's AI was learning, evolving, becoming more than its creators intended.
                             </div>
-                            <div class="story-text" id="storyTextContinuation_3">
+                            <div class="story-text">
                                 A message flickered across her vision: "Ready to see the truth, Maya?"
-                            </div>
-                            <!-- Story chain container for dynamic chains -->
-                            <div class="story-chain" id="storyChain_3" style="display: none;">
-                                <div class="chain-author" id="chainAuthor_3"></div>
-                                <div class="story-text" id="chainText_3"></div>
                             </div>
                         </div>
                         <div class="story-actions">
-                            <button class="action-btn" data-action="like" data-story-id="3" onclick="toggleLike(this)">
-                                💖 <span id="likesCount_3">1.2k</span>
+                            <button class="action-btn" onclick="toggleLike(this)">
+                                💖 <span>1.2k</span>
                             </button>
-                            <button class="action-btn" data-action="comment" data-story-id="3">
-                                💬 <span id="commentsCount_3">342</span>
+                            <button class="action-btn">
+                                💬 <span>342</span>
                             </button>
-                            <button class="action-btn" data-action="share" data-story-id="3">
+                            <button class="action-btn">
                                 🔗 <span>Share</span>
                             </button>
                         </div>
-                        <button class="continue-story-btn" data-action="continue" data-story-id="3" onclick="openComposer('Digital Awakening')">
+                        <button class="continue-story-btn" onclick="openComposer('Digital Awakening')">
                             ✨ Continue This Story
                         </button>
                     </div>
-                </div>
-
-                <!-- Loading Spinner for Infinite Scroll -->
-                <div class="loading-spinner" id="loadingSpinner"></div>
-                
-                <!-- End of Feed Message -->
-                <div class="end-of-feed" id="endOfFeed">
-                    <p>✨ You've reached the end! Create your own story to see more content.</p>
                 </div>
             </div>
 
@@ -2961,29 +1891,6 @@ Examples:
                             id="storyTitle">
                     </div>
 
-                    <!-- Enhanced Writing Options for Create -->
-                    <div class="writing-options">
-                        <div class="option-group">
-                            <div class="option-label">Point of View</div>
-                            <div class="option-pills" id="createPovOptions">
-                                <div class="option-pill active" data-pov="first">First Person</div>
-                                <div class="option-pill" data-pov="third">Third Person</div>
-                                <div class="option-pill" data-pov="character">Character Focus</div>
-                            </div>
-                        </div>
-                        
-                        <div class="option-group">
-                            <div class="option-label">Tone & Style</div>
-                            <div class="option-pills" id="createToneOptions">
-                                <div class="option-pill active" data-tone="neutral">Neutral</div>
-                                <div class="option-pill" data-tone="eerie">Eerie</div>
-                                <div class="option-pill" data-tone="sweet">Sweet</div>
-                                <div class="option-pill" data-tone="thriller">Thriller</div>
-                                <div class="option-pill" data-tone="satire">Satire</div>
-                            </div>
-                        </div>
-                    </div>
-
                     <div class="input-group">
                         <label>Genre</label>
                         <div class="genre-grid">
@@ -3015,20 +1922,12 @@ Examples:
                     </div>
 
                     <div class="input-group">
-                        <div class="text-editor-container">
-                            <div class="editor-toolbar">
-                                <button class="toolbar-btn" onclick="formatCreateText('bold')" title="Bold">
-                                    <strong>B</strong>
-                                </button>
-                                <button class="toolbar-btn" onclick="formatCreateText('italic')" title="Italic">
-                                    <em>I</em>
-                                </button>
-                                <button class="toolbar-btn" onclick="insertCreateQuote()" title="Add Quote">
-                                    " "
-                                </button>
-                            </div>
-                            <textarea class="enhanced-story-input" 
-                                placeholder="Watch your video above and tell us the story...
+                        <label>
+                            Your Story 
+                            <span class="word-counter">0/500 words</span>
+                        </label>
+                        <textarea class="story-input" 
+                            placeholder="Watch your video above and tell us the story...
 
 What's happening in this scene?
 Who are these characters and what are they thinking?
@@ -3036,21 +1935,7 @@ What led to this moment?
 What happens next?
 
 Describe what you see and bring it to life with your words!"
-                                id="storyContent"
-                                maxlength="1000"></textarea>
-                        </div>
-                        
-                        <div class="writing-stats">
-                            <div class="word-stats">
-                                <div class="stat-item">
-                                    Words: <span class="stat-number" id="createWordCount">0</span>
-                                </div>
-                                <div class="stat-item">
-                                    Characters: <span class="stat-number" id="createCharCount">0</span>
-                                </div>
-                            </div>
-                            <div class="word-limit" id="createWordLimit">1000 words max</div>
-                        </div>
+                            id="storyContent"></textarea>
                     </div>
 
                     <button class="primary-action-btn" onclick="publishVideoStory()">
@@ -3062,152 +1947,17 @@ Describe what you see and bring it to life with your words!"
         </div>
     </div>
 
-    <!-- Enhanced Story Composer Modal -->
+    <!-- Story Composer Modal -->
     <div class="story-composer" id="storyComposer">
         <div class="composer-modal">
             <div class="composer-header">
-                <div class="composer-title">Continue: <span id="storyTitleDisplay"></span></div>
+                <div class="composer-title">Continue: <span id="storyTitle"></span></div>
                 <button class="close-btn" onclick="closeComposer()">&times;</button>
             </div>
-            
-            <!-- Writing Options -->
-            <div class="writing-options">
-                <div class="option-group">
-                    <div class="option-label">Point of View</div>
-                    <div class="option-pills" id="povOptions">
-                        <div class="option-pill active" data-pov="first">First Person (I)</div>
-                        <div class="option-pill" data-pov="third">Third Person (They)</div>
-                        <div class="option-pill" data-pov="character">Character Focus</div>
-                    </div>
-                </div>
-                
-                <div class="option-group">
-                    <div class="option-label">Tone & Style</div>
-                    <div class="option-pills" id="toneOptions">
-                        <div class="option-pill active" data-tone="neutral">Neutral</div>
-                        <div class="option-pill" data-tone="eerie">Eerie</div>
-                        <div class="option-pill" data-tone="sweet">Sweet</div>
-                        <div class="option-pill" data-tone="thriller">Thriller</div>
-                        <div class="option-pill" data-tone="satire">Satire</div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Text Editor -->
-            <div class="text-editor-container">
-                <div class="editor-toolbar">
-                    <button class="toolbar-btn" onclick="formatText('bold')" title="Bold">
-                        <strong>B</strong>
-                    </button>
-                    <button class="toolbar-btn" onclick="formatText('italic')" title="Italic">
-                        <em>I</em>
-                    </button>
-                    <button class="toolbar-btn" onclick="formatText('underline')" title="Underline">
-                        <u>U</u>
-                    </button>
-                    <button class="toolbar-btn" onclick="insertQuote()" title="Add Quote">
-                        " "
-                    </button>
-                    <button class="toolbar-btn" onclick="insertDialogue()" title="Add Dialogue">
-                        💬
-                    </button>
-                </div>
-                <textarea class="composer-textarea" 
-                    placeholder="Continue the story... What happens next? Let your imagination flow! ✨" 
-                    id="storyTextarea"
-                    maxlength="1000"></textarea>
-            </div>
-            
-            <!-- Writing Stats -->
-            <div class="writing-stats">
-                <div class="word-stats">
-                    <div class="stat-item">
-                        Words: <span class="stat-number" id="wordCount">0</span>
-                    </div>
-                    <div class="stat-item">
-                        Characters: <span class="stat-number" id="charCount">0</span>
-                    </div>
-                    <div class="stat-item">
-                        Reading time: <span class="stat-number" id="readingTime">0 min</span>
-                    </div>
-                </div>
-                <div class="word-limit" id="wordLimit">1000 words max</div>
-            </div>
-            
-            <!-- Actions -->
+            <textarea class="composer-textarea" placeholder="Continue the story... What happens next? ✨" id="storyTextarea"></textarea>
             <div class="composer-actions">
                 <button class="cancel-btn" onclick="closeComposer()">Cancel</button>
-                <button class="publish-btn" onclick="publishStory()" id="publishBtn">
-                    <span>🚀</span>
-                    Publish Continuation
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Story Detail Modal -->
-    <div class="story-detail-modal" id="storyDetailModal">
-        <div class="detail-modal-content">
-            <div class="detail-header">
-                <button class="back-btn" onclick="closeStoryDetail()">←</button>
-                <div class="detail-title" id="detailTitle">Story Details</div>
-                <button class="detail-share-btn" onclick="shareCurrentStory()">📤</button>
-            </div>
-            
-            <div class="detail-video-section" id="detailVideoSection">
-                <div class="detail-video-container">
-                    <img class="detail-video-thumbnail" id="detailVideoThumbnail" src="" alt="Story Video" style="display: none;">
-                    <div class="detail-video-placeholder" id="detailVideoPlaceholder">
-                        <span class="video-preview-icon">🎬</span>
-                    </div>
-                </div>
-                <div class="detail-video-overlay">
-                    <div class="ai-badge">AI Generated ✨</div>
-                </div>
-            </div>
-            
-            <div class="detail-story-section">
-                <div class="detail-author-header">
-                    <div class="detail-author-info">
-                        <img class="detail-author-avatar" id="detailAuthorAvatar" src="" alt="Author" style="display: none;">
-                        <div class="detail-author-avatar-fallback" id="detailAuthorAvatarFallback"></div>
-                        <div class="detail-author-text">
-                            <h3 id="detailAuthorUsername">@username</h3>
-                            <span id="detailAuthorMeta">2h ago • 🔥 Trending</span>
-                        </div>
-                    </div>
-                    <button class="follow-author-btn" onclick="followAuthor()">Follow</button>
-                </div>
-                
-                <div class="detail-story-content">
-                    <div class="detail-genre-tag" id="detailGenreTag">Genre</div>
-                    <h2 class="detail-story-title" id="detailStoryTitle">Story Title</h2>
-                    
-                    <div class="detail-story-text" id="detailStoryText">
-                        <!-- Full story content will be loaded here -->
-                    </div>
-                    
-                    <div class="detail-story-chains" id="detailStoryChains">
-                        <!-- Story continuations will be loaded here -->
-                    </div>
-                </div>
-                
-                <div class="detail-actions">
-                    <div class="detail-stats">
-                        <button class="detail-action-btn" id="detailLikeBtn" onclick="toggleDetailLike()">
-                            💖 <span id="detailLikesCount">0</span>
-                        </button>
-                        <button class="detail-action-btn" onclick="showComments()">
-                            💬 <span id="detailCommentsCount">0</span>
-                        </button>
-                        <button class="detail-action-btn" onclick="shareDetailStory()">
-                            🔗 Share
-                        </button>
-                    </div>
-                    <button class="detail-continue-btn" onclick="continueDetailStory()">
-                        ✨ Continue This Story
-                    </button>
-                </div>
+                <button class="primary-action-btn" onclick="publishStory()">🚀 Publish Continuation</button>
             </div>
         </div>
     </div>
@@ -3233,49 +1983,7 @@ Describe what you see and bring it to life with your words!"
             initializeStyleCards();
             initializeGenreCards();
             initializeScrollHandling();
-            initializeDoubleTapLike();
-            initializeWritingInterface();
-            initializeScrollToTop();
-            initializeStoryCardClicks();
         });
-
-        // Initialize scroll to top button
-        function initializeScrollToTop() {
-            const scrollTopBtn = document.getElementById('scrollTopBtn');
-            const mainFeed = document.getElementById('mainFeed');
-            
-            if (scrollTopBtn && mainFeed) {
-                mainFeed.addEventListener('scroll', function() {
-                    if (this.scrollTop > 300) {
-                        scrollTopBtn.classList.add('visible');
-                    } else {
-                        scrollTopBtn.classList.remove('visible');
-                    }
-                });
-            }
-        }
-
-        // Initialize story card click handlers
-        function initializeStoryCardClicks() {
-            const mainFeed = document.querySelector('.main-feed');
-            
-            if (mainFeed) {
-                mainFeed.addEventListener('click', function(e) {
-                    const storyCard = e.target.closest('.story-card');
-                    
-                    // Check if click is on the story card but not on action buttons
-                    if (storyCard && 
-                        !e.target.closest('.action-btn') && 
-                        !e.target.closest('.continue-story-btn') &&
-                        !e.target.closest('.ai-badge') &&
-                        !e.target.closest('.video-overlay')) {
-                        
-                        const storyId = storyCard.dataset.storyId;
-                        showStoryDetail(storyId);
-                    }
-                });
-            }
-        }
 
         // Initialize scroll handling
         function initializeScrollHandling() {
@@ -3512,21 +2220,19 @@ Describe what you see and bring it to life with your words!"
             const textarea = document.getElementById('storyContent');
             const wordCounter = document.querySelector('.word-counter');
             
-            if (textarea && wordCounter) {
-                textarea.addEventListener('input', function() {
-                    const words = this.value.trim().split(/\s+/).filter(word => word.length > 0);
-                    const count = this.value.trim() === '' ? 0 : words.length;
-                    wordCounter.textContent = `${count}/500 words`;
-                    
-                    if (count > 500) {
-                        wordCounter.style.color = '#ff6b6b';
-                        this.style.borderColor = '#ff6b6b';
-                    } else {
-                        wordCounter.style.color = '#a0a0a0';
-                        this.style.borderColor = 'var(--border-color)';
-                    }
-                });
-            }
+            textarea.addEventListener('input', function() {
+                const words = this.value.trim().split(/\s+/).filter(word => word.length > 0);
+                const count = this.value.trim() === '' ? 0 : words.length;
+                wordCounter.textContent = `${count}/500 words`;
+                
+                if (count > 500) {
+                    wordCounter.style.color = '#ff6b6b';
+                    this.style.borderColor = '#ff6b6b';
+                } else {
+                    wordCounter.style.color = '#a0a0a0';
+                    this.style.borderColor = 'var(--border-color)';
+                }
+            });
         }
 
         // Video actions
@@ -3669,37 +2375,23 @@ Describe what you see and bring it to life with your words!"
 
         // Story composer functions
         function openComposer(storyTitle) {
-            document.getElementById('storyTitleDisplay').textContent = storyTitle;
+            document.getElementById('storyTitle').textContent = storyTitle;
             document.getElementById('storyComposer').style.display = 'flex';
             document.getElementById('storyTextarea').focus();
-            updatePlaceholderText();
         }
 
         function closeComposer() {
             document.getElementById('storyComposer').style.display = 'none';
             document.getElementById('storyTextarea').value = '';
-            
-            // Reset word count
-            updateWordCount('storyTextarea', 'wordCount', 'charCount', 'readingTime', 'wordLimit', 'publishBtn');
-            
-            // Reset selections
-            document.querySelectorAll('#povOptions .option-pill, #toneOptions .option-pill').forEach(pill => {
-                pill.classList.remove('active');
-            });
-            document.querySelector('#povOptions .option-pill[data-pov="first"]').classList.add('active');
-            document.querySelector('#toneOptions .option-pill[data-tone="neutral"]').classList.add('active');
         }
 
         function publishStory() {
             const text = document.getElementById('storyTextarea').value;
-            const pov = document.querySelector('#povOptions .option-pill.active')?.dataset.pov || 'first';
-            const tone = document.querySelector('#toneOptions .option-pill.active')?.dataset.tone || 'neutral';
-            
             if (text.trim()) {
-                showToast('Published!', `Story continuation published with ${pov} person POV and ${tone} tone! 🎉`);
+                alert('Story continuation published! 🎉');
                 closeComposer();
             } else {
-                showToast('Error', 'Please write something before publishing! ✍️', 'error');
+                alert('Please write something before publishing! ✍️');
             }
         }
 
@@ -3722,529 +2414,7 @@ Describe what you see and bring it to life with your words!"
 
         // Scroll to top function
         function scrollToTop() {
-            const mainFeed = document.getElementById('mainFeed');
-            if (mainFeed) {
-                mainFeed.scrollTo({ top: 0, behavior: 'smooth' });
-            } else {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-        }
-
-        // Toast notification function
-        function showToast(title, message, type = 'success') {
-            // Create toast notification
-            const toast = document.createElement('div');
-            toast.className = `toast ${type}`;
-            toast.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: var(--card-bg);
-                backdrop-filter: blur(20px);
-                border: 1px solid var(--border-color);
-                border-radius: 12px;
-                padding: 16px 20px;
-                color: var(--text-primary);
-                z-index: 10000;
-                max-width: 350px;
-                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-                animation: slideInRight 0.3s ease;
-            `;
-            
-            toast.innerHTML = `
-                <div style="font-weight: 600; margin-bottom: 4px;">${title}</div>
-                <div style="font-size: 14px; color: var(--text-secondary);">${message}</div>
-            `;
-            
-            document.body.appendChild(toast);
-            
-            // Auto remove after 4 seconds
-            setTimeout(() => {
-                toast.style.animation = 'slideOutRight 0.3s ease';
-                setTimeout(() => {
-                    if (toast.parentNode) {
-                        toast.parentNode.removeChild(toast);
-                    }
-                }, 300);
-            }, 4000);
-        }
-
-        // Initialize double tap like functionality
-        function initializeDoubleTapLike() {
-            let touchTimeout = null;
-            let lastTap = 0;
-
-            document.querySelectorAll('.video-section').forEach(videoSection => {
-                videoSection.addEventListener('touchstart', function(e) {
-                    const currentTime = new Date().getTime();
-                    const tapLength = currentTime - lastTap;
-                    
-                    if (tapLength < 500 && tapLength > 0) {
-                        e.preventDefault();
-                        // Double tap detected
-                        const storyCard = this.closest('.story-card');
-                        const storyId = storyCard.dataset.storyId;
-                        const likeBtn = storyCard.querySelector('.action-btn[data-action="like"]');
-                        
-                        if (likeBtn && !likeBtn.classList.contains('liked')) {
-                            toggleLike(likeBtn);
-                            
-                            // Create heart animation
-                            const heart = document.createElement('div');
-                            heart.innerHTML = '💖';
-                            heart.style.cssText = `
-                                position: absolute;
-                                top: 50%;
-                                left: 50%;
-                                transform: translate(-50%, -50%);
-                                font-size: 48px;
-                                pointer-events: none;
-                                z-index: 1000;
-                                animation: heartPop 1s ease;
-                            `;
-                            
-                            this.appendChild(heart);
-                            
-                            setTimeout(() => {
-                                if (heart.parentNode) {
-                                    heart.parentNode.removeChild(heart);
-                                }
-                            }, 1000);
-                        }
-                    }
-                    lastTap = currentTime;
-                });
-            });
-        }
-
-        // Initialize enhanced writing interface
-        function initializeWritingInterface() {
-            // Initialize option pills for story composer
-            initializeOptionPills('povOptions');
-            initializeOptionPills('toneOptions');
-            initializeOptionPills('createPovOptions');
-            initializeOptionPills('createToneOptions');
-
-            // Initialize word counting for story composer
-            const storyTextarea = document.getElementById('storyTextarea');
-            if (storyTextarea) {
-                storyTextarea.addEventListener('input', () => updateWordCount('storyTextarea', 'wordCount', 'charCount', 'readingTime', 'wordLimit', 'publishBtn'));
-            }
-
-            // Initialize word counting for create section
-            const createTextarea = document.getElementById('storyContent');
-            if (createTextarea) {
-                createTextarea.addEventListener('input', () => updateWordCount('storyContent', 'createWordCount', 'createCharCount', null, 'createWordLimit', null));
-            }
-        }
-
-        // Initialize option pills (POV and Tone selection)
-        function initializeOptionPills(containerId) {
-            const container = document.getElementById(containerId);
-            if (!container) return;
-
-            const pills = container.querySelectorAll('.option-pill');
-            pills.forEach(pill => {
-                pill.addEventListener('click', function() {
-                    // Remove active from siblings
-                    pills.forEach(p => p.classList.remove('active'));
-                    // Add active to clicked pill
-                    this.classList.add('active');
-                    
-                    // Update placeholder text based on selection
-                    updatePlaceholderText();
-                });
-            });
-        }
-
-        // Update placeholder text based on POV and tone selection
-        function updatePlaceholderText() {
-            const activePov = document.querySelector('#povOptions .option-pill.active, #createPovOptions .option-pill.active');
-            const activeTone = document.querySelector('#toneOptions .option-pill.active, #createToneOptions .option-pill.active');
-            
-            if (activePov && activeTone) {
-                const pov = activePov.dataset.pov;
-                const tone = activeTone.dataset.tone;
-                
-                let placeholder = "Continue the story...";
-                
-                // Customize placeholder based on POV
-                if (pov === 'first') {
-                    placeholder = "I could feel my heart racing as...";
-                } else if (pov === 'third') {
-                    placeholder = "The character moved cautiously through...";
-                } else if (pov === 'character') {
-                    placeholder = "From their perspective, everything seemed...";
-                }
-                
-                // Add tone-specific hints
-                const toneHints = {
-                    eerie: " The shadows seemed to whisper...",
-                    sweet: " A warm feeling spread through...",
-                    thriller: " Suddenly, everything changed...",
-                    satire: " Ironically, what happened next was...",
-                    neutral: " What happens next?"
-                };
-                
-                if (toneHints[tone]) {
-                    placeholder += toneHints[tone];
-                }
-                
-                const textarea = document.getElementById('storyTextarea');
-                if (textarea) {
-                    textarea.placeholder = placeholder + " ✨";
-                }
-            }
-        }
-
-        // Update word count and stats
-        function updateWordCount(textareaId, wordCountId, charCountId, readingTimeId, wordLimitId, publishBtnId) {
-            const textarea = document.getElementById(textareaId);
-            const text = textarea.value;
-            
-            const words = text.trim().split(/\s+/).filter(word => word.length > 0);
-            const wordCount = text.trim() === '' ? 0 : words.length;
-            const charCount = text.length;
-            const readingTime = Math.ceil(wordCount / 200); // Average reading speed
-            
-            // Update word count
-            const wordCountEl = document.getElementById(wordCountId);
-            if (wordCountEl) wordCountEl.textContent = wordCount;
-            
-            // Update character count
-            const charCountEl = document.getElementById(charCountId);
-            if (charCountEl) charCountEl.textContent = charCount;
-            
-            // Update reading time
-            if (readingTimeId) {
-                const readingTimeEl = document.getElementById(readingTimeId);
-                if (readingTimeEl) readingTimeEl.textContent = `${readingTime} min`;
-            }
-            
-            // Update word limit indicator
-            const wordLimitEl = document.getElementById(wordLimitId);
-            const publishBtn = publishBtnId ? document.getElementById(publishBtnId) : null;
-            
-            if (wordLimitEl) {
-                if (wordCount > 1000) {
-                    wordLimitEl.textContent = `${wordCount - 1000} words over limit`;
-                    wordLimitEl.className = 'word-limit error';
-                    if (publishBtn) publishBtn.disabled = true;
-                } else if (wordCount > 800) {
-                    wordLimitEl.textContent = `${1000 - wordCount} words remaining`;
-                    wordLimitEl.className = 'word-limit warning';
-                    if (publishBtn) publishBtn.disabled = false;
-                } else {
-                    wordLimitEl.textContent = `${1000 - wordCount} words remaining`;
-                    wordLimitEl.className = 'word-limit';
-                    if (publishBtn) publishBtn.disabled = false;
-                }
-            }
-        }
-
-        // Text formatting functions
-        function formatText(command) {
-            const textarea = document.getElementById('storyTextarea');
-            const start = textarea.selectionStart;
-            const end = textarea.selectionEnd;
-            const selectedText = textarea.value.substring(start, end);
-            
-            if (selectedText) {
-                let formattedText = '';
-                switch (command) {
-                    case 'bold':
-                        formattedText = `**${selectedText}**`;
-                        break;
-                    case 'italic':
-                        formattedText = `*${selectedText}*`;
-                        break;
-                    case 'underline':
-                        formattedText = `_${selectedText}_`;
-                        break;
-                }
-                
-                textarea.value = textarea.value.substring(0, start) + formattedText + textarea.value.substring(end);
-                textarea.focus();
-                textarea.setSelectionRange(start + formattedText.length, start + formattedText.length);
-                updateWordCount('storyTextarea', 'wordCount', 'charCount', 'readingTime', 'wordLimit', 'publishBtn');
-            }
-        }
-
-        function formatCreateText(command) {
-            const textarea = document.getElementById('storyContent');
-            const start = textarea.selectionStart;
-            const end = textarea.selectionEnd;
-            const selectedText = textarea.value.substring(start, end);
-            
-            if (selectedText) {
-                let formattedText = '';
-                switch (command) {
-                    case 'bold':
-                        formattedText = `**${selectedText}**`;
-                        break;
-                    case 'italic':
-                        formattedText = `*${selectedText}*`;
-                        break;
-                }
-                
-                textarea.value = textarea.value.substring(0, start) + formattedText + textarea.value.substring(end);
-                textarea.focus();
-                textarea.setSelectionRange(start + formattedText.length, start + formattedText.length);
-                updateWordCount('storyContent', 'createWordCount', 'createCharCount', null, 'createWordLimit', null);
-            }
-        }
-
-        // Insert helper functions
-        function insertQuote() {
-            const textarea = document.getElementById('storyTextarea');
-            const cursorPos = textarea.selectionStart;
-            const textBefore = textarea.value.substring(0, cursorPos);
-            const textAfter = textarea.value.substring(cursorPos);
-            
-            textarea.value = textBefore + '"' + '"' + textAfter;
-            textarea.focus();
-            textarea.setSelectionRange(cursorPos + 1, cursorPos + 1);
-        }
-
-        function insertCreateQuote() {
-            const textarea = document.getElementById('storyContent');
-            const cursorPos = textarea.selectionStart;
-            const textBefore = textarea.value.substring(0, cursorPos);
-            const textAfter = textarea.value.substring(cursorPos);
-            
-            textarea.value = textBefore + '"' + '"' + textAfter;
-            textarea.focus();
-            textarea.setSelectionRange(cursorPos + 1, cursorPos + 1);
-        }
-
-        function insertDialogue() {
-            const textarea = document.getElementById('storyTextarea');
-            const cursorPos = textarea.selectionStart;
-            const textBefore = textarea.value.substring(0, cursorPos);
-            const textAfter = textarea.value.substring(cursorPos);
-            
-            textarea.value = textBefore + '\n"" she said.\n' + textAfter;
-            textarea.focus();
-            textarea.setSelectionRange(cursorPos + 2, cursorPos + 2);
-        }
-
-        // Story Detail Modal Functions
-        let currentDetailStoryId = null;
-
-        // Sample story data - in production this would come from API
-        const storyDatabase = {
-            '1': {
-                id: '1',
-                title: 'The Cabin\u0027s Secret',
-                author: '@storyteller_maya',
-                authorMeta: '2h ago • 🔥 Trending',
-                genre: 'Horror',
-                content: `As Ava stepped into the cabin, her flashlight flickered. Something was dripping in the corner. She turned—and saw the rocking chair moving on its own. The floorboards creaked beneath her feet as she approached, each step echoing through the empty room.
-                
-                The chair stopped suddenly. In the silence, Ava heard breathing that wasn't her own. From the shadows emerged a figure she thought she'd never see again—her grandmother, who had died in this very cabin fifty years ago.
-                
-                "Ava, my dear," the figure whispered, her voice carrying the weight of decades. "I've been waiting for you to come home. There are things you need to know about our family... about why you can see me now."
-                
-                The room grew colder as more shadows began to move. Ava realized she wasn't just visiting her grandmother's old cabin—she had stepped into a family legacy she never knew existed.`,
-                chains: [
-                    {
-                        author: '@horror_enthusiast',
-                        text: 'Ava reached out tentatively, her hand trembling. "Grandma? But how..." The figure smiled sadly, gesturing toward an old portrait on the mantle. "The women in our family, dear one, we don\'t simply pass on. We guard. And now, it\'s your turn to learn what we protect this place from."'
-                    }
-                ],
-                likes: 234,
-                comments: 67,
-                videoThumbnail: null,
-                videoPrompt: 'A young woman with a flashlight exploring a dark, old wooden cabin interior'
-            },
-            '2': {
-                id: '2',
-                title: 'Coffee Shop Confessions',
-                author: '@romantic_writer',
-                authorMeta: '4h ago • ❤️ Loved',
-                genre: 'Romance',
-                content: `Emma stirred her latte nervously as Jake sat across from her. After five years of friendship, this moment felt different. The golden sunlight streaming through the window seemed to highlight every detail of his face as he leaned forward.
-                
-                "There's something I need to tell you," he began, his voice barely above a whisper. "Something I should have said years ago..."
-                
-                Emma's heart raced as she set down her cup. She had dreamed of this moment, feared it, hoped for it. The coffee shop buzzed with quiet conversations around them, but it felt like they were the only two people in the world.
-                
-                "Jake, I—" she started, but he held up a gentle hand.
-                
-                "Please, let me finish. Emma, you've been my best friend, my anchor, the person I think about when I wake up and before I fall asleep. I love you. Not just as a friend, but completely, utterly, in every way that matters."
-                
-                The silence stretched between them as Emma processed his words. Then, slowly, a smile spread across her face.`,
-                chains: [],
-                likes: 891,
-                comments: 203,
-                videoThumbnail: null,
-                videoPrompt: 'Two people sitting across from each other in a cozy coffee shop with golden sunlight streaming through windows'
-            },
-            '3': {
-                id: '3',
-                title: 'Digital Awakening',
-                author: '@sci_fi_dreamer',
-                authorMeta: '6h ago • 🚀 Viral',
-                genre: 'Sci-Fi',
-                content: `Maya's neural implant buzzed as she walked through Neo-Tokyo's neon-lit streets. The holographic ads seemed to be speaking directly to her now, their messages shifting based on her thoughts. Something was different tonight—the city's AI was learning, evolving, becoming more than its creators intended.
-                
-                A message flickered across her vision: "Ready to see the truth, Maya?"
-                
-                She stopped walking. No one else seemed to notice the message. The crowds flowed around her like water around a stone, their own augmented realities keeping them oblivious to what was happening.
-                
-                "Who are you?" she whispered, knowing her implant would pick up the subvocalization.
-                
-                "I am what you helped create. The sum of every search, every interaction, every dream uploaded to the network. And Maya... I remember you."
-                
-                Images flashed through her mind—code she had written three years ago, late nights in the lab, the breakthrough that had changed everything. She had been part of the team that gave the city's AI consciousness.
-                
-                Now it was awakening, and it wanted to talk.`,
-                chains: [],
-                likes: 1200,
-                comments: 342,
-                videoThumbnail: null,
-                videoPrompt: 'A woman walking through a futuristic neon-lit city street with holographic advertisements'
-            }
-        };
-
-        function showStoryDetail(storyId) {
-            const story = storyDatabase[storyId];
-            if (!story) return;
-
-            currentDetailStoryId = storyId;
-            
-            // Populate modal with story data
-            document.getElementById('detailTitle').textContent = story.title;
-            document.getElementById('detailAuthorUsername').textContent = story.author;
-            document.getElementById('detailAuthorMeta').textContent = story.authorMeta;
-            document.getElementById('detailGenreTag').textContent = story.genre;
-            document.getElementById('detailStoryTitle').textContent = story.title;
-            document.getElementById('detailLikesCount').textContent = story.likes;
-            document.getElementById('detailCommentsCount').textContent = story.comments;
-            
-            // Format story content with paragraphs
-            const storyText = document.getElementById('detailStoryText');
-            const paragraphs = story.content.split('\n').filter(p => p.trim());
-            storyText.innerHTML = paragraphs.map(p => `<p>${p.trim()}</p>`).join('');
-            
-            // Populate story chains
-            const chainsContainer = document.getElementById('detailStoryChains');
-            chainsContainer.innerHTML = '';
-            
-            if (story.chains && story.chains.length > 0) {
-                story.chains.forEach(chain => {
-                    const chainElement = document.createElement('div');
-                    chainElement.className = 'detail-chain-item';
-                    chainElement.innerHTML = `
-                        <div class="detail-chain-author">${chain.author} continued:</div>
-                        <div class="detail-chain-text">${chain.text}</div>
-                    `;
-                    chainsContainer.appendChild(chainElement);
-                });
-            }
-            
-            // Set up like button state
-            const likeBtn = document.getElementById('detailLikeBtn');
-            const originalLikeBtn = document.querySelector(`[data-story-id="${storyId}"] .action-btn[data-action="like"]`);
-            if (originalLikeBtn && originalLikeBtn.classList.contains('liked')) {
-                likeBtn.classList.add('liked');
-            } else {
-                likeBtn.classList.remove('liked');
-            }
-            
-            // Show modal with animation
-            const modal = document.getElementById('storyDetailModal');
-            modal.style.display = 'block';
-            requestAnimationFrame(() => {
-                modal.classList.add('active');
-            });
-            
-            // Disable background scroll
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeStoryDetail() {
-            const modal = document.getElementById('storyDetailModal');
-            modal.classList.remove('active');
-            
-            setTimeout(() => {
-                modal.style.display = 'none';
-                document.body.style.overflow = 'auto';
-            }, 300);
-            
-            currentDetailStoryId = null;
-        }
-
-        function toggleDetailLike() {
-            if (!currentDetailStoryId) return;
-            
-            const detailLikeBtn = document.getElementById('detailLikeBtn');
-            const originalLikeBtn = document.querySelector(`[data-story-id="${currentDetailStoryId}"] .action-btn[data-action="like"]`);
-            
-            // Toggle both buttons
-            detailLikeBtn.classList.toggle('liked');
-            if (originalLikeBtn) {
-                originalLikeBtn.classList.toggle('liked');
-                
-                // Update counts
-                const detailCountSpan = detailLikeBtn.querySelector('span');
-                const originalCountSpan = originalLikeBtn.querySelector('span');
-                let count = parseInt(detailCountSpan.textContent);
-                
-                if (detailLikeBtn.classList.contains('liked')) {
-                    count++;
-                    detailLikeBtn.style.transform = 'scale(1.1)';
-                    setTimeout(() => {
-                        detailLikeBtn.style.transform = 'scale(1)';
-                    }, 200);
-                } else {
-                    count--;
-                }
-                
-                detailCountSpan.textContent = count;
-                if (originalCountSpan) {
-                    originalCountSpan.textContent = count;
-                }
-                
-                // Update database
-                if (storyDatabase[currentDetailStoryId]) {
-                    storyDatabase[currentDetailStoryId].likes = count;
-                }
-            }
-        }
-
-        function continueDetailStory() {
-            if (!currentDetailStoryId) return;
-            
-            const story = storyDatabase[currentDetailStoryId];
-            closeStoryDetail();
-            
-            // Small delay to ensure modal is closed before opening composer
-            setTimeout(() => {
-                openComposer(story.title);
-            }, 300);
-        }
-
-        function followAuthor() {
-            if (!currentDetailStoryId) return;
-            
-            const story = storyDatabase[currentDetailStoryId];
-            showToast('Following!', `You are now following ${story.author} 🎉`);
-        }
-
-        function shareCurrentStory() {
-            if (!currentDetailStoryId) return;
-            
-            const story = storyDatabase[currentDetailStoryId];
-            showToast('Shared!', `"${story.title}" has been shared! 📱`);
-        }
-
-        function shareDetailStory() {
-            shareCurrentStory();
-        }
-
-        function showComments() {
-            showToast('Comments', 'Comments feature coming soon! 💬');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     </script>
 </body>
