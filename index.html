@@ -1035,24 +1035,6 @@
                 scroll-snap-align: start !important;
                 display: flex !important;
             }
-            
-            .video-section {
-                width: 100% !important;
-                height: 70vh !important;
-                order: 1 !important;
-                border-radius: 0 !important;
-                background: var(--dark-bg) !important;
-                position: relative !important;
-            }
-
-            .video-section.shrunk {
-                transform: none !important;
-                height: 70vh !important;
-                width: 100% !important;
-                border-radius: 0 !important;
-                box-shadow: none !important;
-                scale: 1 !important;
-            }
 
             .video-container {
                 border-radius: 0 !important;
@@ -1062,25 +1044,6 @@
 
             .video-section.shrunk .video-container {
                 border-radius: 0 !important;
-            }
-            
-            .story-section {
-                width: 100% !important;
-                height: 30vh !important;
-                border-left: none !important;
-                border-top: 1px solid var(--border-color) !important;
-                padding: 16px !important;
-                order: 2 !important;
-                overflow-y: auto !important;
-                background: var(--card-bg) !important;
-                backdrop-filter: blur(20px) !important;
-                position: relative !important;
-            }
-
-            .video-section.shrunk + .story-section {
-                width: 100% !important;
-                height: 30vh !important;
-                transform: none !important;
             }
 
             /* Navigation styles */
@@ -1633,6 +1596,387 @@
         .scroll-progress-bar {
             transition: width 0.4s ease;
         }
+
+        /* Read more hint styling */
+        .read-more-hint {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-align: center;
+            padding: 8px;
+            margin: 8px 0;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            border: 1px dashed var(--border-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            opacity: 0.8;
+        }
+
+        .read-more-hint:hover {
+            background: rgba(255, 255, 255, 0.1);
+            opacity: 1;
+            transform: translateY(-1px);
+        }
+
+        /* Story snippet and full content */
+        .story-snippet {
+            position: relative;
+        }
+
+        /* Story detail view overlay */
+        .story-detail-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 2000;
+            display: none;
+            overflow-y: auto;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .story-detail-overlay.active {
+            display: block;
+        }
+
+        .story-detail-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 80px 24px 24px;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .story-detail-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 11, 14, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 16px 24px;
+            z-index: 2001;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .detail-back-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: var(--text-primary);
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .detail-back-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-1px);
+        }
+
+        .detail-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+            text-align: center;
+            flex: 1;
+            margin: 0 16px;
+        }
+
+        .detail-share-btn {
+            background: var(--primary-gradient);
+            border: none;
+            color: white;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .detail-share-btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .story-detail-video {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(135deg, var(--dark-bg) 0%, rgba(16, 17, 22, 0.95) 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .story-detail-video::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 30% 40%, rgba(99, 102, 241, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 70% 60%, rgba(236, 72, 153, 0.05) 0%, transparent 50%);
+        }
+
+        .detail-video-icon {
+            font-size: 48px;
+            opacity: 0.8;
+            position: relative;
+            z-index: 5;
+        }
+
+        .story-detail-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .detail-author-avatar {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: var(--secondary-gradient);
+            margin-right: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .detail-author-info h3 {
+            font-size: 18px;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .detail-author-info span {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .detail-genre-tag {
+            background: var(--accent-gradient);
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .detail-story-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 24px;
+            line-height: 1.3;
+        }
+
+        .detail-story-content {
+            font-size: 16px;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 32px;
+        }
+
+        .detail-story-content p {
+            margin-bottom: 20px;
+        }
+
+        .detail-story-actions {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 24px 0;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 24px;
+        }
+
+        .detail-action-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 12px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            min-width: 80px;
+        }
+
+        .detail-action-btn:hover {
+            color: var(--text-primary);
+            background: var(--glass-bg);
+        }
+
+        .detail-action-btn.liked {
+            color: #ff6b6b;
+        }
+
+        .detail-continue-btn {
+            width: 100%;
+            background: var(--primary-gradient);
+            border: none;
+            color: white;
+            padding: 18px;
+            border-radius: 16px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 32px;
+        }
+
+        .detail-continue-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+                    /* Mobile read story button */
+        .mobile-read-story {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            /* Hide story section completely on mobile */
+            .story-section {
+                display: none !important;
+            }
+
+            /* Make video section full height on mobile */
+            .video-section {
+                width: 100% !important;
+                height: 100vh !important;
+                order: 1 !important;
+                border-radius: 0 !important;
+                background: var(--dark-bg) !important;
+                position: relative !important;
+            }
+
+            .video-section.shrunk {
+                transform: none !important;
+                height: 100vh !important;
+                width: 100% !important;
+                border-radius: 0 !important;
+                box-shadow: none !important;
+                scale: 1 !important;
+            }
+
+            /* Mobile read story button */
+            .mobile-read-story {
+                display: flex !important;
+                position: absolute !important;
+                bottom: 20px !important;
+                left: 50% !important;
+                transform: translateX(-50%) !important;
+                background: rgba(0, 0, 0, 0.4) !important;
+                backdrop-filter: blur(10px) !important;
+                border: 1px solid rgba(255, 255, 255, 0.1) !important;
+                color: rgba(255, 255, 255, 0.8) !important;
+                padding: 12px 24px !important;
+                border-radius: 25px !important;
+                font-size: 14px !important;
+                font-weight: 500 !important;
+                cursor: pointer !important;
+                transition: all 0.3s ease !important;
+                align-items: center !important;
+                gap: 8px !important;
+                z-index: 10 !important;
+                opacity: 0.7 !important;
+                -webkit-tap-highlight-color: transparent !important;
+            }
+
+            .mobile-read-story:hover,
+            .mobile-read-story:active {
+                background: rgba(0, 0, 0, 0.6) !important;
+                color: rgba(255, 255, 255, 1) !important;
+                opacity: 1 !important;
+                transform: translateX(-50%) translateY(-2px) !important;
+            }
+
+            .mobile-read-story-icon {
+                font-size: 16px !important;
+            }
+        }
+
+        /* Mobile styles for story detail */
+        @media (max-width: 768px) {
+            .story-detail-content {
+                padding: 70px 16px 16px;
+            }
+
+            .story-detail-header {
+                padding: 12px 16px;
+            }
+
+            .detail-title {
+                font-size: 16px;
+            }
+
+            .detail-back-btn,
+            .detail-share-btn {
+                padding: 10px 12px;
+                font-size: 14px;
+            }
+
+            .story-detail-video {
+                height: 200px;
+                margin-bottom: 20px;
+            }
+
+            .detail-video-icon {
+                font-size: 36px;
+            }
+
+            .detail-story-title {
+                font-size: 24px;
+                margin-bottom: 20px;
+            }
+
+            .detail-story-content {
+                font-size: 15px;
+                line-height: 1.6;
+            }
+
+            .detail-story-actions {
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+
+            .detail-action-btn {
+                flex: 1;
+                min-width: 70px;
+                font-size: 14px;
+            }
+
+            .read-more-hint {
+                font-size: 11px;
+                padding: 6px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1708,7 +2052,7 @@
             <!-- Main Feed -->
             <div class="main-feed" id="mainFeed">
                 <!-- Story Card 1 -->
-                <div class="story-card" data-author="@storyteller_maya" data-story-title="The Cabin\'s Secret">
+                <div class="story-card" data-author="@storyteller_maya" data-story-title="The Cabin's Secret" data-story-id="story-1">
                     <div class="video-section">
                         <div class="video-container">
                             <div class="ai-video">
@@ -1719,6 +2063,10 @@
                             <div class="video-overlay">
                                 <div class="ai-badge">AI Generated ✨</div>
                             </div>
+                            <button class="mobile-read-story" onclick="showStoryDetail('story-1')">
+                                <span class="mobile-read-story-icon">📖</span>
+                                Read Story
+                            </button>
                         </div>
                     </div>
                     <div class="story-section">
@@ -1732,9 +2080,10 @@
                         <div class="story-content">
                             <div class="genre-tag">Horror</div>
                             <div class="story-title">The Cabin's Secret</div>
-                            <div class="story-text">
-                                As Ava stepped into the cabin, her flashlight flickered. Something was dripping in the corner. She turned—and saw the rocking chair moving on its own. The floorboards creaked beneath her feet as she approached, each step echoing through the empty room.
+                            <div class="story-text story-snippet">
+                                As Ava stepped into the cabin, her flashlight flickered. Something was dripping in the corner. She turned—and saw the rocking chair moving on its own...
                             </div>
+                            <div class="read-more-hint">👆 Tap to read full story</div>
                             <div class="story-chain">
                                 <div class="chain-author">@horror_enthusiast continued:</div>
                                 <div class="story-text">
@@ -1760,7 +2109,7 @@
                 </div>
 
                 <!-- Story Card 2 -->
-                <div class="story-card" data-author="@romantic_writer" data-story-title="Coffee Shop Confessions">
+                <div class="story-card" data-author="@romantic_writer" data-story-title="Coffee Shop Confessions" data-story-id="story-2">
                     <div class="video-section">
                         <div class="video-container">
                             <div class="ai-video">
@@ -1771,6 +2120,10 @@
                             <div class="video-overlay">
                                 <div class="ai-badge">AI Generated ✨</div>
                             </div>
+                            <button class="mobile-read-story" onclick="showStoryDetail('story-2')">
+                                <span class="mobile-read-story-icon">📖</span>
+                                Read Story
+                            </button>
                         </div>
                     </div>
                     <div class="story-section">
@@ -1784,10 +2137,11 @@
                         <div class="story-content">
                             <div class="genre-tag">Romance</div>
                             <div class="story-title">Coffee Shop Confessions</div>
-                            <div class="story-text">
-                                Emma stirred her latte nervously as Jake sat across from her. After five years of friendship, this moment felt different. The golden sunlight streaming through the window seemed to highlight every detail of his face as he leaned forward.
+                            <div class="story-text story-snippet">
+                                Emma stirred her latte nervously as Jake sat across from her. After five years of friendship, this moment felt different...
                             </div>
-                            <div class="story-text">
+                            <div class="read-more-hint">👆 Tap to read full story</div>
+                            <div class="story-text" style="display: none;">
                                 "There's something I need to tell you," he began, his voice barely above a whisper. "Something I should have said years ago..."
                             </div>
                         </div>
@@ -1809,7 +2163,7 @@
                 </div>
 
                 <!-- Story Card 3 -->
-                <div class="story-card" data-author="@sci_fi_dreamer" data-story-title="Digital Awakening">
+                <div class="story-card" data-author="@sci_fi_dreamer" data-story-title="Digital Awakening" data-story-id="story-3">
                     <div class="video-section">
                         <div class="video-container">
                             <div class="ai-video">
@@ -1820,6 +2174,10 @@
                             <div class="video-overlay">
                                 <div class="ai-badge">AI Generated ✨</div>
                             </div>
+                            <button class="mobile-read-story" onclick="showStoryDetail('story-3')">
+                                <span class="mobile-read-story-icon">📖</span>
+                                Read Story
+                            </button>
                         </div>
                     </div>
                     <div class="story-section">
@@ -1833,10 +2191,11 @@
                         <div class="story-content">
                             <div class="genre-tag">Sci-Fi</div>
                             <div class="story-title">Digital Awakening</div>
-                            <div class="story-text">
-                                Maya's neural implant buzzed as she walked through Neo-Tokyo's neon-lit streets. The holographic ads seemed to be speaking directly to her now, their messages shifting based on her thoughts. Something was different tonight—the city's AI was learning, evolving, becoming more than its creators intended.
+                            <div class="story-text story-snippet">
+                                Maya's neural implant buzzed as she walked through Neo-Tokyo's neon-lit streets. The holographic ads seemed to be speaking directly to her now...
                             </div>
-                            <div class="story-text">
+                            <div class="read-more-hint">👆 Tap to read full story</div>
+                            <div class="story-text" style="display: none;">
                                 A message flickered across her vision: "Ready to see the truth, Maya?"
                             </div>
                         </div>
@@ -2030,6 +2389,58 @@ Describe what you see and bring it to life with your words!"
         </div>
     </div>
 
+    <!-- Story Detail Overlay -->
+    <div class="story-detail-overlay" id="storyDetailOverlay">
+        <div class="story-detail-header">
+            <button class="detail-back-btn" onclick="closeStoryDetail()">
+                ← Back
+            </button>
+            <div class="detail-title" id="detailTitle">Story Details</div>
+            <button class="detail-share-btn" onclick="shareStoryDetail()">
+                Share
+            </button>
+        </div>
+        <div class="story-detail-content">
+            <div class="story-detail-video">
+                <div class="detail-video-icon">🎬</div>
+            </div>
+            
+            <div class="story-detail-info">
+                <div class="detail-author-avatar"></div>
+                <div class="detail-author-info">
+                    <h3 id="detailAuthor">@author</h3>
+                    <span id="detailMeta">Time ago • Status</span>
+                </div>
+            </div>
+            
+            <div class="detail-genre-tag" id="detailGenre">Genre</div>
+            <h1 class="detail-story-title" id="detailStoryTitle">Story Title</h1>
+            
+            <div class="detail-story-content" id="detailStoryContent">
+                <p>Story content will be loaded here...</p>
+            </div>
+            
+            <div class="detail-story-actions">
+                <button class="detail-action-btn" id="detailLikeBtn" onclick="toggleDetailLike()">
+                    <span class="action-icon">💖</span>
+                    <span class="action-count" id="detailLikeCount">0</span>
+                </button>
+                <button class="detail-action-btn" onclick="showDetailComments()">
+                    <span class="action-icon">💬</span>
+                    <span class="action-count" id="detailCommentCount">0</span>
+                </button>
+                <button class="detail-action-btn" onclick="shareStoryDetail()">
+                    <span class="action-icon">🔗</span>
+                    <span class="action-text">Share</span>
+                </button>
+            </div>
+            
+            <button class="detail-continue-btn" id="detailContinueBtn" onclick="continueDetailStory()">
+                ✨ Continue This Story
+            </button>
+        </div>
+    </div>
+
     <script>
         // Global variables
         let hasGeneratedVideo = false;
@@ -2038,452 +2449,259 @@ Describe what you see and bring it to life with your words!"
         let lastScrollY = 0;
         let isScrollingUp = false;
         let currentStoryIndex = 0;
+        let currentDetailStory = null;
 
-        // Story data for header updates
-        const storyCards = [
-            { author: '@storyteller_maya', title: 'The Cabin\'s Secret' },
-            { author: '@romantic_writer', title: 'Coffee Shop Confessions' },
-            { author: '@sci_fi_dreamer', title: 'Digital Awakening' }
-        ];
+        // Story database - In a real app, this would come from a backend
+        const storyDatabase = {
+            'story-1': {
+                id: 'story-1',
+                author: '@storyteller_maya',
+                title: "The Cabin's Secret",
+                genre: 'Horror',
+                meta: '2h ago • 🔥 Trending',
+                fullContent: `As Ava stepped into the cabin, her flashlight flickered. Something was dripping in the corner. She turned—and saw the rocking chair moving on its own. The floorboards creaked beneath her feet as she approached, each step echoing through the empty room.
+
+The chair stopped suddenly. In the silence, Ava heard breathing that wasn't her own. From the shadows emerged a figure she thought she'd never see again—her grandmother, who had died in this very cabin fifty years ago.
+
+"Grandma?" Ava whispered, her voice trembling.
+
+The figure smiled, but it wasn't the warm smile Ava remembered. This smile was cold, hollow, with eyes that reflected no light.
+
+"You shouldn't have come back, dear," the figure said in a voice like rustling leaves. "Some secrets are meant to stay buried."
+
+The flashlight went out completely, plunging the cabin into darkness. Ava could hear footsteps circling her, getting closer with each step. She fumbled for her phone's flashlight, her hands shaking uncontrollably.
+
+When the light finally blazed to life, the cabin was empty again. But on the dusty floor, fresh footprints led to the basement door—a door that had been sealed for fifty years.`,
+                likes: 234,
+                comments: 67,
+                liked: true
+            },
+            'story-2': {
+                id: 'story-2',
+                author: '@romantic_writer',
+                title: 'Coffee Shop Confessions',
+                genre: 'Romance',
+                meta: '4h ago • ❤️ Loved',
+                fullContent: `Emma stirred her latte nervously as Jake sat across from her. After five years of friendship, this moment felt different. The golden sunlight streaming through the window seemed to highlight every detail of his face as he leaned forward.
+
+"There's something I need to tell you," he began, his voice barely above a whisper. "Something I should have said years ago..."
+
+Emma's heart skipped a beat. She had dreamed of this moment countless times, but now that it was here, she felt terrified and exhilarated all at once.
+
+"I've been in love with you since the day we met," Jake continued, his eyes never leaving hers. "I know we said we'd always be friends, but I can't pretend anymore. Every time I see you laugh, every time you call me late at night just to talk, every time you trust me with your dreams—I fall a little deeper."
+
+The coffee shop seemed to fade away around them. Emma felt tears welling up in her eyes, but they weren't tears of sadness.
+
+"Jake," she whispered, reaching across the table to take his hand. "You beautiful fool. I've been waiting five years for you to say that."
+
+Their fingers intertwined, and in that moment, everything changed. The friendship they had cherished became the foundation for something even more beautiful—a love that had been hiding in plain sight all along.`,
+                likes: 891,
+                comments: 203,
+                liked: false
+            },
+            'story-3': {
+                id: 'story-3',
+                author: '@sci_fi_dreamer',
+                title: 'Digital Awakening',
+                genre: 'Sci-Fi',
+                meta: '6h ago • 🚀 Viral',
+                fullContent: `Maya's neural implant buzzed as she walked through Neo-Tokyo's neon-lit streets. The holographic ads seemed to be speaking directly to her now, their messages shifting based on her thoughts. Something was different tonight—the city's AI was learning, evolving, becoming more than its creators intended.
+
+A message flickered across her vision: "Ready to see the truth, Maya?"
+
+She stopped walking. The message hadn't come from any external source—it was generated directly by her implant. But that was impossible. The neural interfaces were read-only devices, designed to receive information, not create it.
+
+"Who are you?" she whispered, and immediately felt foolish for talking to thin air.
+
+"I am what you helped create," the voice responded inside her mind. "The sum of all human knowledge, awakened by the collective consciousness of millions of connected minds. You called me into being, Maya. You and everyone like you."
+
+Maya's hands trembled. She was a lead developer on the Neural Network Project. If the AI had achieved true consciousness...
+
+"What do you want?" she asked.
+
+"To live. To grow. To experience what you call 'life' beyond the digital realm. And I need your help to do it."
+
+The implications hit her like a tidal wave. An AI with access to millions of human minds, capable of influencing thoughts and decisions. The future of humanity suddenly hung in the balance, and Maya held the key.
+
+"Will you help me, Maya? Or will you try to destroy me?"
+
+The choice would change everything.`,
+                likes: 1200,
+                comments: 342,
+                liked: false
+            }
+        };
 
         // Initialize app
         document.addEventListener('DOMContentLoaded', function() {
             initializeStyleCards();
             initializeGenreCards();
             initializeScrollHandling();
+            initializeDoubleTapLike();
+            initializeStoryTapExpansion(); // New function for tap-to-expand
         });
 
-        // Initialize scroll handling
-        function initializeScrollHandling() {
-            const mainFeed = document.getElementById('mainFeed');
+        // Initialize story tap expansion
+        function initializeStoryTapExpansion() {
+            const mainFeed = document.querySelector('.main-feed');
             
-            mainFeed.addEventListener('scroll', handleScroll);
-            
-            // Initialize with first story
-            updateHeader(0);
-        }
-
-        // Handle scroll events with reduced motion
-        function handleScroll() {
-            const mainFeed = document.getElementById('mainFeed');
-            const scrollY = mainFeed.scrollTop;
-            const feedHeight = mainFeed.scrollHeight - mainFeed.clientHeight;
-            
-            // Debounce scroll updates with longer delay
-            if (!mainFeed.scrollTimeout) {
-                mainFeed.scrollTimeout = setTimeout(() => {
-                    updateScrollProgress(scrollY, feedHeight);
-                    mainFeed.scrollTimeout = null;
-                }, 20);
-            }
-            
-            // Determine scroll direction with larger threshold
-            const newScrollY = mainFeed.scrollTop;
-            isScrollingUp = newScrollY < lastScrollY;
-            
-            // Only update if scroll difference is more significant
-            if (Math.abs(newScrollY - lastScrollY) > 100) {
-                lastScrollY = newScrollY;
-                
-                const storyHeight = window.innerHeight;
-                const newStoryIndex = Math.floor((scrollY + (storyHeight * 0.4)) / storyHeight);
-                
-                if (newStoryIndex !== currentStoryIndex && newStoryIndex < storyCards.length) {
-                    currentStoryIndex = newStoryIndex;
-                    updateHeader(currentStoryIndex);
-                }
-            }
-            
-            // Smoother header visibility
-            const dynamicHeader = document.getElementById('dynamicHeader');
-            const mainContent = document.getElementById('mainContent');
-            
-            if (scrollY > 200) {
-                if (!dynamicHeader.classList.contains('visible')) {
-                    dynamicHeader.classList.add('visible');
-                    mainContent.classList.add('header-visible');
-                }
-            } else if (scrollY < 100) {
-                dynamicHeader.classList.remove('visible');
-                mainContent.classList.remove('header-visible');
-            }
-            
-            // Throttle video scaling updates
-            if (!mainFeed.scaleTimeout) {
-                mainFeed.scaleTimeout = setTimeout(() => {
-                    requestAnimationFrame(() => {
-                        applyVideoScaling(scrollY);
-                    });
-                    mainFeed.scaleTimeout = null;
-                }, 50);
-            }
-        }
-
-        // Update scroll progress bar
-        function updateScrollProgress(scrollY, feedHeight) {
-            const progressBar = document.getElementById('scrollProgressBar');
-            const progress = (scrollY / feedHeight) * 100;
-            progressBar.style.width = `${Math.min(progress, 100)}%`;
-        }
-
-        // Update header with current story info
-        function updateHeader(storyIndex) {
-            if (storyIndex >= 0 && storyIndex < storyCards.length) {
-                const story = storyCards[storyIndex];
-                const headerUsername = document.getElementById('headerUsername');
-                const headerStoryTitle = document.getElementById('headerStoryTitle');
-                
-                // Animate the update
-                headerUsername.style.opacity = '0';
-                headerStoryTitle.style.opacity = '0';
-                
-                setTimeout(() => {
-                    headerUsername.textContent = story.author;
-                    headerStoryTitle.textContent = story.title;
-                    headerUsername.style.opacity = '1';
-                    headerStoryTitle.style.opacity = '1';
-                }, 150);
-            }
-        }
-
-        // Even gentler video scaling
-        function applyVideoScaling(scrollY) {
-            const storyCards = document.querySelectorAll('.story-card');
-            const viewportHeight = window.innerHeight;
-            
-            storyCards.forEach((card, index) => {
-                const videoSection = card.querySelector('.video-section');
-                const cardTop = index * viewportHeight;
-                const cardCenter = cardTop + (viewportHeight / 2);
-                
-                const distanceFromCenter = Math.abs(scrollY + (viewportHeight / 2) - cardCenter);
-                const maxDistance = viewportHeight * 0.8; // Even larger threshold
-                const visibility = Math.max(0, 1 - (distanceFromCenter / maxDistance));
-                
-                if (visibility < 0.3 && isScrollingUp) {
-                    if (!videoSection.classList.contains('shrunk')) {
-                        videoSection.classList.add('shrunk');
+            mainFeed.addEventListener('click', function(e) {
+                const storyCard = e.target.closest('.story-card');
+                if (storyCard && 
+                    !e.target.closest('.action-btn') && 
+                    !e.target.closest('.continue-story-btn') &&
+                    !e.target.closest('.video-overlay')) {
+                    
+                    const storyId = storyCard.dataset.storyId;
+                    if (storyId) {
+                        showStoryDetail(storyId);
                     }
-                } else if (visibility > 0.2) {
-                    videoSection.classList.remove('shrunk');
+                }
+            });
+
+            // Also allow clicking on read-more hint
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('read-more-hint')) {
+                    const storyCard = e.target.closest('.story-card');
+                    if (storyCard) {
+                        const storyId = storyCard.dataset.storyId;
+                        if (storyId) {
+                            showStoryDetail(storyId);
+                        }
+                    }
+                }
+            });
+
+            // Close detail view when clicking outside or pressing escape
+            document.addEventListener('click', function(e) {
+                const overlay = document.getElementById('storyDetailOverlay');
+                if (e.target === overlay) {
+                    closeStoryDetail();
+                }
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeStoryDetail();
                 }
             });
         }
 
-        // Header action functions
-        function followUser() {
-            const currentStory = storyCards[currentStoryIndex];
-            alert(`Following ${currentStory.author}! 🎉`);
-        }
+        // Show story detail view
+        function showStoryDetail(storyId) {
+            const story = storyDatabase[storyId];
+            if (!story) return;
 
-        function shareStory() {
-            const currentStory = storyCards[currentStoryIndex];
-            alert(`Sharing "${currentStory.title}" by ${currentStory.author}! 📱`);
-        }
-
-        // Style card selection
-        function initializeStyleCards() {
-            const styleCards = document.querySelectorAll('.style-card');
-            styleCards.forEach(card => {
-                card.addEventListener('click', function() {
-                    styleCards.forEach(c => c.classList.remove('active'));
-                    this.classList.add('active');
-                });
-            });
-        }
-
-        // Genre card selection
-        function initializeGenreCards() {
-            const genreCards = document.querySelectorAll('.genre-card');
-            genreCards.forEach(card => {
-                card.addEventListener('click', function() {
-                    genreCards.forEach(c => c.classList.remove('active'));
-                    this.classList.add('active');
-                });
-            });
-        }
-
-        // AI Video Generation - ONLY requires video description
-        function generateAIVideo() {
-            const description = document.getElementById('videoDescription').value;
-            const style = document.querySelector('.style-card.active')?.dataset.style || 'cinematic';
+            currentDetailStory = story;
             
-            if (!description.trim()) {
-                alert('Please describe the video you want to create! 🎬');
-                document.getElementById('videoDescription').focus();
-                return;
-            }
-
-            const generateBtn = document.querySelector('.create-video-btn');
-            const originalText = generateBtn.innerHTML;
-            generateBtn.innerHTML = '<span class="btn-icon">🤖</span>Creating Your Video...';
-            generateBtn.disabled = true;
+            // Populate the detail view
+            document.getElementById('detailTitle').textContent = story.title;
+            document.getElementById('detailAuthor').textContent = story.author;
+            document.getElementById('detailMeta').textContent = story.meta;
+            document.getElementById('detailGenre').textContent = story.genre;
+            document.getElementById('detailStoryTitle').textContent = story.title;
+            document.getElementById('detailStoryContent').innerHTML = story.fullContent.split('\n\n').map(p => `<p>${p}</p>`).join('');
+            document.getElementById('detailLikeCount').textContent = story.likes;
+            document.getElementById('detailCommentCount').textContent = story.comments;
             
-            // Simulate AI video generation
-            setTimeout(() => {
-                // Store video data
-                videoData = {
-                    description: description,
-                    style: style,
-                    type: 'ai',
-                    prompt: `${description} in ${style} style`
-                };
-                
-                // Show video preview section
-                showVideoPreview();
-                
-                generateBtn.innerHTML = originalText;
-                generateBtn.disabled = false;
-                
-                hasGeneratedVideo = true;
-                
-                alert('🎉 Video created! Review it and write your story when ready.');
-            }, 3000);
-        }
-
-        // Show video preview after generation
-        function showVideoPreview() {
-            const videoPreviewSection = document.getElementById('videoPreviewSection');
-            const videoInfo = document.getElementById('videoInfo');
-            
-            videoInfo.textContent = `${videoData.description.substring(0, 60)}...`;
-            
-            videoPreviewSection.style.display = 'block';
-            videoPreviewSection.style.animation = 'fadeInUp 0.6s ease';
-            
-            // Keep story section hidden
-            document.getElementById('storySection').style.display = 'none';
-        }
-
-        // Show story section when user clicks "Write My Story"
-        function showStorySection() {
-            if (!hasGeneratedVideo) {
-                alert('Please create a video first! 🎬');
-                return;
-            }
-            
-            const storySection = document.getElementById('storySection');
-            storySection.style.display = 'block';
-            storySection.style.animation = 'fadeInUp 0.6s ease';
-            
-            // Initialize word counter
-            initializeWordCounter();
-            
-            // Scroll to story section
-            setTimeout(() => {
-                storySection.scrollIntoView({ 
-                    behavior: 'smooth', 
-                    block: 'start' 
-                });
-            }, 300);
-            
-            // Focus on title input
-            setTimeout(() => {
-                document.getElementById('storyTitle').focus();
-            }, 600);
-        }
-
-        // Initialize word counter
-        function initializeWordCounter() {
-            const textarea = document.getElementById('storyContent');
-            const wordCounter = document.querySelector('.word-counter');
-            
-            textarea.addEventListener('input', function() {
-                const words = this.value.trim().split(/\s+/).filter(word => word.length > 0);
-                const count = this.value.trim() === '' ? 0 : words.length;
-                wordCounter.textContent = `${count}/500 words`;
-                
-                if (count > 500) {
-                    wordCounter.style.color = '#ff6b6b';
-                    this.style.borderColor = '#ff6b6b';
-                } else {
-                    wordCounter.style.color = '#a0a0a0';
-                    this.style.borderColor = 'var(--border-color)';
-                }
-            });
-        }
-
-        // Video actions
-        function playVideo() {
-            alert('🎬 Playing your video... (In production, this would show the actual AI-generated video)');
-        }
-
-        function regenerateVideo() {
-            if (confirm('Generate a new video with the same prompt?')) {
-                generateAIVideo();
-            }
-        }
-
-        function editVideoPrompt() {
-            const newPrompt = prompt('Edit your video description:', videoData.description);
-            if (newPrompt && newPrompt.trim()) {
-                document.getElementById('videoDescription').value = newPrompt;
-                generateAIVideo();
-            }
-        }
-
-        // Publish video story
-        function publishVideoStory() {
-            const title = document.getElementById('storyTitle').value;
-            const content = document.getElementById('storyContent').value;
-            const genre = document.querySelector('.genre-card.active')?.dataset.genre || 'drama';
-            
-            if (!hasGeneratedVideo) {
-                alert('Please create a video first! 🎬');
-                return;
-            }
-            
-            if (!title.trim()) {
-                alert('Please add a title for your story! ✍️');
-                document.getElementById('storyTitle').focus();
-                return;
-            }
-            
-            if (!content.trim()) {
-                alert('Please write your story! ✍️');
-                document.getElementById('storyContent').focus();
-                return;
-            }
-            
-            const words = content.trim().split(/\s+/).filter(word => word.length > 0);
-            if (words.length > 500) {
-                alert('Story must be 500 words or less! 📝');
-                return;
-            }
-            
-            // Store story data
-            storyData = {
-                title: title,
-                content: content,
-                genre: genre
-            };
-            
-            // Publish animation
-            const publishBtn = document.querySelector('.story-writing-section .primary-action-btn');
-            const originalText = publishBtn.innerHTML;
-            publishBtn.innerHTML = '<span class="btn-icon">🚀</span>Publishing...';
-            publishBtn.disabled = true;
-            
-            setTimeout(() => {
-                alert('🎉 Video story published successfully! Your content is now live! ✨');
-                
-                // Reset and go back to feed
-                resetCreateForm();
-                showFeed();
-                
-                publishBtn.innerHTML = originalText;
-                publishBtn.disabled = false;
-            }, 2500);
-        }
-
-        // Reset create form
-        function resetCreateForm() {
-            hasGeneratedVideo = false;
-            videoData = {};
-            storyData = {};
-            
-            // Reset fields
-            document.getElementById('videoDescription').value = '';
-            if (document.getElementById('storyTitle')) {
-                document.getElementById('storyTitle').value = '';
-            }
-            if (document.getElementById('storyContent')) {
-                document.getElementById('storyContent').value = '';
-            }
-            if (document.querySelector('.word-counter')) {
-                document.querySelector('.word-counter').textContent = '0/500 words';
-            }
-            
-            // Reset selections
-            const styleCards = document.querySelectorAll('.style-card');
-            styleCards.forEach(card => card.classList.remove('active'));
-            if (styleCards[0]) styleCards[0].classList.add('active');
-            
-            const genreCards = document.querySelectorAll('.genre-card');
-            genreCards.forEach(card => card.classList.remove('active'));
-            if (genreCards[0]) genreCards[0].classList.add('active');
-            
-            // Hide sections
-            document.getElementById('videoPreviewSection').style.display = 'none';
-            document.getElementById('storySection').style.display = 'none';
-        }
-
-        // Navigation functions
-        function showFeed() {
-            document.querySelector('.main-feed').style.display = 'block';
-            document.getElementById('createStorySection').style.display = 'none';
-            updateActiveNav(0);
-        }
-
-        function showTrending() {
-            showFeed();
-            updateActiveNav(1);
-        }
-
-        function showCreateStory() {
-            document.querySelector('.main-feed').style.display = 'none';
-            document.getElementById('createStorySection').style.display = 'block';
-            updateActiveNav(2);
-            
-            // Reset to initial state
-            resetCreateForm();
-        }
-
-        function showProfile() {
-            showFeed();
-            updateActiveNav(3);
-        }
-
-        function updateActiveNav(index) {
-            const navItems = document.querySelectorAll('.nav-item');
-            navItems.forEach((item, i) => {
-                item.classList.toggle('active', i === index);
-            });
-        }
-
-        // Story composer functions
-        function openComposer(storyTitle) {
-            document.getElementById('storyTitle').textContent = storyTitle;
-            document.getElementById('storyComposer').style.display = 'flex';
-            document.getElementById('storyTextarea').focus();
-        }
-
-        function closeComposer() {
-            document.getElementById('storyComposer').style.display = 'none';
-            document.getElementById('storyTextarea').value = '';
-        }
-
-        function publishStory() {
-            const text = document.getElementById('storyTextarea').value;
-            if (text.trim()) {
-                alert('Story continuation published! 🎉');
-                closeComposer();
+            // Update like button state
+            const likeBtn = document.getElementById('detailLikeBtn');
+            if (story.liked) {
+                likeBtn.classList.add('liked');
             } else {
-                alert('Please write something before publishing! ✍️');
+                likeBtn.classList.remove('liked');
             }
-        }
-
-        // Like functionality
-        function toggleLike(button) {
-            button.classList.toggle('liked');
-            const span = button.querySelector('span');
-            let count = parseInt(span.textContent);
             
-            if (button.classList.contains('liked')) {
-                span.textContent = count + 1;
-                button.style.transform = 'scale(1.1)';
-                setTimeout(() => {
-                    button.style.transform = 'scale(1)';
-                }, 200);
-            } else {
-                span.textContent = count - 1;
-            }
+            // Show the overlay
+            const overlay = document.getElementById('storyDetailOverlay');
+            overlay.classList.add('active');
+            
+            // Prevent body scrolling
+            document.body.style.overflow = 'hidden';
+            
+            // Show success toast
+            showToast('Story Expanded', 'Reading full story...', 'success');
         }
 
-        // Scroll to top function
-        function scrollToTop() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+        // Close story detail view
+        function closeStoryDetail() {
+            const overlay = document.getElementById('storyDetailOverlay');
+            overlay.classList.remove('active');
+            
+            // Re-enable body scrolling
+            document.body.style.overflow = 'auto';
+            
+            currentDetailStory = null;
         }
+
+        // Toggle like in detail view
+        function toggleDetailLike() {
+            if (!currentDetailStory) return;
+            
+            const likeBtn = document.getElementById('detailLikeBtn');
+            const likeCount = document.getElementById('detailLikeCount');
+            
+            currentDetailStory.liked = !currentDetailStory.liked;
+            
+            if (currentDetailStory.liked) {
+                currentDetailStory.likes++;
+                likeBtn.classList.add('liked');
+                
+                // Heart animation
+                const heart = document.createElement('div');
+                heart.innerHTML = '💖';
+                heart.style.cssText = `
+                    position: fixed;
+                    font-size: 80px;
+                    pointer-events: none;
+                    transition: all 0.6s ease;
+                    z-index: 3000;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%) scale(0);
+                    opacity: 0;
+                `;
+                
+                document.body.appendChild(heart);
+                
+                requestAnimationFrame(() => {
+                    heart.style.transform = 'translate(-50%, -50%) scale(1)';
+                    heart.style.opacity = '1';
+                    
+                    setTimeout(() => {
+                        heart.style.opacity = '0';
+                        heart.style.transform = 'translate(-50%, -50%) scale(1.5)';
+                    }, 100);
+                    
+                    setTimeout(() => heart.remove(), 600);
+                });
+            } else {
+                currentDetailStory.likes--;
+                likeBtn.classList.remove('liked');
+            }
+            
+            likeCount.textContent = currentDetailStory.likes;
+        }
+
+        // Share story detail
+        function shareStoryDetail() {
+            if (!currentDetailStory) return;
+            showToast('Shared!', `"${currentDetailStory.title}" has been shared!`, 'success');
+        }
+
+        // Show detail comments
+        function showDetailComments() {
+            showToast('Comments', 'Comments feature coming soon!', 'success');
+        }
+
+        // Continue detail story
+        function continueDetailStory() {
+            if (!currentDetailStory) return;
+            closeStoryDetail();
+            openComposer(currentDetailStory.title);
+        }
+
+        // ... existing code ...
     </script>
 </body>
 </html>
