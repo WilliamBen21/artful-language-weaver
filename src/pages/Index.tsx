@@ -64,9 +64,9 @@ const Index = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background text-foreground">
       {/* Navigation */}
-      <nav className="fixed top-0 w-full bg-background/80 backdrop-blur-sm border-b border-border z-50">
+      <nav className="fixed top-0 w-full bg-background/95 backdrop-blur-sm border-b border-border z-50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="text-2xl font-bold text-primary">Alex Chen</div>
@@ -99,7 +99,7 @@ const Index = () => {
 
           {/* Mobile Menu */}
           {isMenuOpen && (
-            <div className="md:hidden py-4 border-t border-border animate-fade-in">
+            <div className="md:hidden py-4 border-t border-border">
               {['Home', 'About', 'Projects', 'Contact'].map((item) => (
                 <button
                   key={item}
@@ -115,9 +115,9 @@ const Index = () => {
       </nav>
 
       {/* Hero Section */}
-      <section id="home" className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8">
+      <section id="home" className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-16">
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-          <div className="space-y-8 animate-fade-in">
+          <div className="space-y-8">
             <div>
               <p className="text-primary font-medium mb-2">Hello, I'm</p>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4">
@@ -155,7 +155,7 @@ const Index = () => {
             </div>
           </div>
 
-          <div className="flex justify-center animate-scale-in">
+          <div className="flex justify-center">
             <div className="relative">
               <div className="w-80 h-80 rounded-full overflow-hidden border-4 border-primary/20 hover:border-primary/40 transition-colors duration-300">
                 <img
@@ -171,8 +171,8 @@ const Index = () => {
           </div>
         </div>
 
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <ChevronDown size={24} className="text-muted-foreground" />
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+          <ChevronDown size={24} className="text-muted-foreground animate-bounce" />
         </div>
       </section>
 
