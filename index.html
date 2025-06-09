@@ -1000,21 +1000,21 @@
             .dynamic-header {
                 left: 0;
                 padding: 0 16px;
-                height: 70px;
+                height: 60px; /* Reduced header height */
             }
 
             .header-avatar {
-                width: 40px;
-                height: 40px;
+                width: 36px;
+                height: 36px;
                 margin-right: 12px;
             }
 
             .header-username {
-                font-size: 16px;
+                font-size: 15px;
             }
 
             .header-story-title {
-                font-size: 13px;
+                font-size: 12px;
             }
 
             .header-actions {
@@ -1028,12 +1028,12 @@
 
             .sidebar {
                 width: 100%;
-                height: 70px;
+                height: 60px; /* Reduced navigation height */
                 position: fixed;
                 bottom: 0;
                 top: auto;
                 padding: 8px 16px;
-                background: rgba(10, 10, 10, 0.98);
+                background: rgba(10, 10, 20, 0.98);
                 backdrop-filter: blur(20px);
                 border-top: 1px solid var(--border-color);
                 border-right: none;
@@ -1055,11 +1055,11 @@
 
             .nav-item {
                 flex-direction: column;
-                padding: 8px 4px;
+                padding: 6px 4px;
                 margin: 0;
                 min-width: 50px;
                 text-align: center;
-                border-radius: 12px;
+                border-radius: 10px;
             }
 
             .nav-item.active {
@@ -1084,58 +1084,151 @@
 
             .main-content {
                 margin-left: 0;
-                margin-bottom: 70px;
+                margin-bottom: 60px; /* Adjusted for smaller nav */
             }
 
             .main-content.header-visible {
-                margin-top: 70px;
+                margin-top: 60px; /* Adjusted for smaller header */
             }
 
             .story-card {
                 flex-direction: column;
-                min-height: calc(100vh - 70px);
+                min-height: calc(100vh - 60px); /* Account for nav bar */
+                scroll-snap-align: start;
             }
             
             .video-section {
                 width: 100%;
-                height: 65vh;
+                height: 75vh; /* Video takes 75% of viewport */
                 order: 1;
+                border-radius: 0;
+                background: var(--dark-bg);
             }
 
             .video-section.shrunk {
-                transform: scale(0.85) translateY(-10%);
-                height: 55vh;
-            }
-
-            .video-section.shrunk + .story-section {
-                width: 100%;
-                transform: none;
-                height: 45vh;
+                transform: none; /* Disable shrinking on mobile */
+                height: 75vh;
+                border-radius: 0;
+                box-shadow: none;
             }
 
             .video-container {
                 border-radius: 0;
                 height: 100%;
             }
+
+            .video-section.shrunk .video-container {
+                border-radius: 0;
+            }
             
             .story-section {
                 width: 100%;
-                height: 35vh;
+                height: 25vh; /* Story takes 25% of viewport */
                 border-left: none;
                 border-top: 1px solid var(--border-color);
                 padding: 16px;
                 order: 2;
                 overflow-y: auto;
+                background: var(--card-bg);
+                backdrop-filter: blur(20px);
             }
 
+            .video-section.shrunk + .story-section {
+                width: 100%;
+                height: 25vh;
+                transform: none;
+            }
+
+            /* Optimize story content for mobile */
+            .story-header {
+                margin-bottom: 16px;
+            }
+
+            .author-avatar {
+                width: 40px;
+                height: 40px;
+                margin-right: 12px;
+            }
+
+            .author-info h4 {
+                font-size: 14px;
+                margin-bottom: 2px;
+            }
+
+            .author-info span {
+                font-size: 12px;
+            }
+
+            .genre-tag {
+                font-size: 10px;
+                padding: 4px 8px;
+                margin-bottom: 12px;
+            }
+
+            .story-title {
+                font-size: 18px;
+                margin-bottom: 12px;
+            }
+
+            .story-text {
+                font-size: 14px;
+                line-height: 1.5;
+                margin-bottom: 12px;
+            }
+
+            .story-chain {
+                padding: 12px;
+                margin: 12px 0;
+            }
+
+            .chain-author {
+                font-size: 11px;
+                margin-bottom: 6px;
+            }
+
+            .story-actions {
+                padding: 12px 0;
+                gap: 16px;
+            }
+
+            .action-btn {
+                font-size: 13px;
+                padding: 6px 10px;
+            }
+
+            .continue-story-btn {
+                padding: 12px;
+                font-size: 14px;
+                margin-top: 8px;
+            }
+
+            /* Video overlay adjustments for mobile */
+            .video-overlay {
+                top: 16px;
+                right: 16px;
+            }
+
+            .ai-badge {
+                font-size: 11px;
+                padding: 6px 12px;
+            }
+
+            /* Create page mobile adjustments */
             .create-story-section {
                 padding: 16px;
-                margin-bottom: 80px;
+                margin-bottom: 70px;
                 max-width: 100%;
+                height: calc(100vh - 70px);
+                overflow-y: auto;
             }
 
             .create-header h1 {
                 font-size: 24px;
+                margin-bottom: 8px;
+            }
+
+            .create-header p {
+                font-size: 15px;
             }
 
             .video-prompt-section,
@@ -1143,6 +1236,7 @@
             .story-writing-section {
                 padding: 20px;
                 margin-bottom: 16px;
+                border-radius: 16px;
             }
 
             .video-description-input {
@@ -1170,6 +1264,70 @@
             .genre-grid {
                 grid-template-columns: repeat(3, 1fr);
                 gap: 6px;
+            }
+
+            /* Scroll to top button mobile */
+            .scroll-to-top {
+                bottom: 70px;
+                right: 16px;
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
+
+            /* Toast notifications mobile */
+            .toast-container {
+                top: auto;
+                bottom: 70px;
+                left: 16px;
+                right: 16px;
+            }
+
+            .toast {
+                min-width: auto;
+                width: 100%;
+            }
+
+            /* Scroll progress mobile */
+            .scroll-progress {
+                left: 0;
+                height: 2px;
+            }
+
+            /* Better touch targets */
+            .nav-item {
+                min-height: 44px; /* Apple's recommended touch target */
+            }
+
+            .action-btn {
+                min-height: 44px;
+                min-width: 44px;
+            }
+
+            .header-action-btn {
+                min-height: 36px;
+            }
+
+            /* Improved video interaction for mobile */
+            .video-preview-icon {
+                font-size: 28px;
+            }
+
+            .ai-video {
+                cursor: pointer;
+                -webkit-tap-highlight-color: transparent;
+            }
+
+            /* Story composer mobile */
+            .composer-modal {
+                width: 95%;
+                max-height: 85vh;
+                padding: 24px;
+            }
+
+            .composer-textarea {
+                min-height: 150px;
+                font-size: 14px;
             }
         }
 
