@@ -6,8 +6,9 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Heart, MessageCircle, Share } from 'lucide-react';
+import { Heart, MessageCircle, Share, X } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import ImageGenerator from '@/components/ImageGenerator';
 
 interface Post {
   id: string;
@@ -15,6 +16,7 @@ interface Post {
   like_count: number;
   comment_count: number;
   created_at: string;
+  image_urls: string[];
   profiles: {
     username: string;
     display_name: string;
@@ -26,6 +28,7 @@ const Feed = () => {
   const { user, signOut } = useAuth();
   const [posts, setPosts] = useState<Post[]>([]);
   const [newPost, setNewPost] = useState('');
+  const [generatedImages, setGeneratedImages] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
 
@@ -42,6 +45,7 @@ const Feed = () => {
         like_count,
         comment_count,
         created_at,
+        image_urls,
         profiles (
           username,
           display_name,
@@ -59,7 +63,7 @@ const Feed = () => {
   };
 
   const createPost = async () => {
-    if (!newPost.trim()) return;
+    if (!newPost.trim() && generatedImages.length === 0) return;
     
     setLoading(true);
     const { error } = await supabase
@@ -67,7 +71,8 @@ const Feed = () => {
       .insert([
         {
           content: newPost,
-          user_id: user?.id
+          user_id: user?.id,
+          image_urls: generatedImages
         }
       ]);
 
@@ -79,6 +84,7 @@ const Feed = () => {
       });
     } else {
       setNewPost('');
+      setGeneratedImages([]);
       fetchPosts();
       toast({
         title: "Post created!",
@@ -105,6 +111,14 @@ const Feed = () => {
     }
   };
 
+  const handleImageGenerated = (imageUrl: string) => {
+    setGeneratedImages(prev => [...prev, imageUrl]);
+  };
+
+  const removeGeneratedImage = (index: number) => {
+    setGeneratedImages(prev => prev.filter((_, i) => i !== index));
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       <header className="bg-white shadow-sm border-b">
@@ -129,9 +143,40 @@ const Feed = () => {
               onChange={(e) => setNewPost(e.target.value)}
               rows={3}
             />
+            
+            {/* AI Image Generation */}
+            <div className="border-t pt-4">
+              <h3 className="text-sm font-medium mb-2">Generate AI Image</h3>
+              <ImageGenerator onImageGenerated={handleImageGenerated} />
+            </div>
+
+            {/* Generated Images Preview */}
+            {generatedImages.length > 0 && (
+              <div className="space-y-2">
+                <h4 className="text-sm font-medium">Generated Images:</h4>
+                <div className="flex flex-wrap gap-2">
+                  {generatedImages.map((imageUrl, index) => (
+                    <div key={index} className="relative">
+                      <img 
+                        src={imageUrl} 
+                        alt={`Generated ${index + 1}`}
+                        className="w-20 h-20 object-cover rounded-md"
+                      />
+                      <button
+                        onClick={() => removeGeneratedImage(index)}
+                        className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full p-1 hover:bg-red-600"
+                      >
+                        <X className="w-3 h-3" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
             <Button 
               onClick={createPost} 
-              disabled={loading || !newPost.trim()}
+              disabled={loading || (!newPost.trim() && generatedImages.length === 0)}
               className="w-full"
             >
               {loading ? 'Posting...' : 'Share Story'}
@@ -158,7 +203,22 @@ const Feed = () => {
                 </div>
               </CardHeader>
               <CardContent className="pt-0">
-                <p className="text-gray-800 mb-4">{post.content}</p>
+                {post.content && <p className="text-gray-800 mb-4">{post.content}</p>}
+                
+                {/* Post Images */}
+                {post.image_urls && post.image_urls.length > 0 && (
+                  <div className="mb-4 grid grid-cols-1 gap-2">
+                    {post.image_urls.map((imageUrl, index) => (
+                      <img 
+                        key={index}
+                        src={imageUrl} 
+                        alt={`Post image ${index + 1}`}
+                        className="w-full rounded-lg max-h-96 object-cover"
+                      />
+                    ))}
+                  </div>
+                )}
+
                 <div className="flex items-center space-x-6 text-gray-500">
                   <button
                     onClick={() => likePost(post.id)}
