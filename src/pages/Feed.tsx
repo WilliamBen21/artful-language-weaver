@@ -9,6 +9,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Heart, MessageCircle, Share, X } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import ImageGenerator from '@/components/ImageGenerator';
+import type { Json } from '@/integrations/supabase/types';
 
 interface Post {
   id: string;
@@ -16,7 +17,7 @@ interface Post {
   like_count: number;
   comment_count: number;
   created_at: string;
-  image_urls: string[];
+  image_urls: Json;
   profiles: {
     username: string;
     display_name: string;
@@ -119,6 +120,14 @@ const Feed = () => {
     setGeneratedImages(prev => prev.filter((_, i) => i !== index));
   };
 
+  // Helper function to safely parse image URLs
+  const getImageUrls = (imageUrls: Json): string[] => {
+    if (Array.isArray(imageUrls)) {
+      return imageUrls.filter((url): url is string => typeof url === 'string');
+    }
+    return [];
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       <header className="bg-white shadow-sm border-b">
@@ -186,58 +195,62 @@ const Feed = () => {
 
         {/* Posts Feed */}
         <div className="space-y-6">
-          {posts.map((post) => (
-            <Card key={post.id}>
-              <CardHeader className="pb-3">
-                <div className="flex items-center space-x-3">
-                  <Avatar>
-                    <AvatarImage src={post.profiles.profile_picture_url} />
-                    <AvatarFallback>
-                      {post.profiles.display_name?.charAt(0)?.toUpperCase() || 'U'}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div>
-                    <p className="font-semibold">{post.profiles.display_name}</p>
-                    <p className="text-sm text-gray-500">@{post.profiles.username}</p>
+          {posts.map((post) => {
+            const imageUrls = getImageUrls(post.image_urls);
+            
+            return (
+              <Card key={post.id}>
+                <CardHeader className="pb-3">
+                  <div className="flex items-center space-x-3">
+                    <Avatar>
+                      <AvatarImage src={post.profiles.profile_picture_url} />
+                      <AvatarFallback>
+                        {post.profiles.display_name?.charAt(0)?.toUpperCase() || 'U'}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div>
+                      <p className="font-semibold">{post.profiles.display_name}</p>
+                      <p className="text-sm text-gray-500">@{post.profiles.username}</p>
+                    </div>
                   </div>
-                </div>
-              </CardHeader>
-              <CardContent className="pt-0">
-                {post.content && <p className="text-gray-800 mb-4">{post.content}</p>}
-                
-                {/* Post Images */}
-                {post.image_urls && post.image_urls.length > 0 && (
-                  <div className="mb-4 grid grid-cols-1 gap-2">
-                    {post.image_urls.map((imageUrl, index) => (
-                      <img 
-                        key={index}
-                        src={imageUrl} 
-                        alt={`Post image ${index + 1}`}
-                        className="w-full rounded-lg max-h-96 object-cover"
-                      />
-                    ))}
-                  </div>
-                )}
+                </CardHeader>
+                <CardContent className="pt-0">
+                  {post.content && <p className="text-gray-800 mb-4">{post.content}</p>}
+                  
+                  {/* Post Images */}
+                  {imageUrls.length > 0 && (
+                    <div className="mb-4 grid grid-cols-1 gap-2">
+                      {imageUrls.map((imageUrl, index) => (
+                        <img 
+                          key={index}
+                          src={imageUrl} 
+                          alt={`Post image ${index + 1}`}
+                          className="w-full rounded-lg max-h-96 object-cover"
+                        />
+                      ))}
+                    </div>
+                  )}
 
-                <div className="flex items-center space-x-6 text-gray-500">
-                  <button
-                    onClick={() => likePost(post.id)}
-                    className="flex items-center space-x-1 hover:text-red-500 transition-colors"
-                  >
-                    <Heart className="w-5 h-5" />
-                    <span>{post.like_count}</span>
-                  </button>
-                  <div className="flex items-center space-x-1">
-                    <MessageCircle className="w-5 h-5" />
-                    <span>{post.comment_count}</span>
+                  <div className="flex items-center space-x-6 text-gray-500">
+                    <button
+                      onClick={() => likePost(post.id)}
+                      className="flex items-center space-x-1 hover:text-red-500 transition-colors"
+                    >
+                      <Heart className="w-5 h-5" />
+                      <span>{post.like_count}</span>
+                    </button>
+                    <div className="flex items-center space-x-1">
+                      <MessageCircle className="w-5 h-5" />
+                      <span>{post.comment_count}</span>
+                    </div>
+                    <button className="flex items-center space-x-1 hover:text-blue-500 transition-colors">
+                      <Share className="w-5 h-5" />
+                    </button>
                   </div>
-                  <button className="flex items-center space-x-1 hover:text-blue-500 transition-colors">
-                    <Share className="w-5 h-5" />
-                  </button>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+                </CardContent>
+              </Card>
+            );
+          })}
         </div>
       </main>
     </div>
