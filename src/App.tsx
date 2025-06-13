@@ -15,18 +15,18 @@ const queryClient = new QueryClient();
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { user, loading } = useAuth();
   
-  console.log('ProtectedRoute - user:', user, 'loading:', loading);
+  console.log('ProtectedRoute - user:', user?.email || 'None', 'loading:', loading);
   
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-lg">Loading...</div>
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
+        <div className="text-lg text-gray-600">Loading...</div>
       </div>
     );
   }
   
   if (!user) {
-    console.log('ProtectedRoute - redirecting to /auth');
+    console.log('ProtectedRoute - no user, redirecting to /auth');
     return <Navigate to="/auth" replace />;
   }
   
@@ -36,18 +36,18 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
 const PublicRoute = ({ children }: { children: React.ReactNode }) => {
   const { user, loading } = useAuth();
   
-  console.log('PublicRoute - user:', user, 'loading:', loading);
+  console.log('PublicRoute - user:', user?.email || 'None', 'loading:', loading);
   
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-lg">Loading...</div>
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
+        <div className="text-lg text-gray-600">Loading...</div>
       </div>
     );
   }
   
   if (user) {
-    console.log('PublicRoute - redirecting to /feed');
+    console.log('PublicRoute - user authenticated, redirecting to /feed');
     return <Navigate to="/feed" replace />;
   }
   
