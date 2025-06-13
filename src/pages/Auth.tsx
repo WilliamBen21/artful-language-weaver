@@ -32,23 +32,47 @@ const Auth = () => {
       return;
     }
     
-    setLoading(true);
-    const { error } = await signUp(email, password, username);
-    
-    if (error) {
-      console.error('Sign up error:', error);
+    if (!email.trim() || !password.trim()) {
       toast({
-        title: "Error signing up",
-        description: error.message,
+        title: "Missing information",
+        description: "Please fill in all fields",
         variant: "destructive"
       });
-    } else {
-      console.log('Sign up successful');
+      return;
+    }
+    
+    setLoading(true);
+    
+    try {
+      const { error } = await signUp(email, password, username);
+      
+      if (error) {
+        console.error('Sign up error:', error);
+        toast({
+          title: "Error signing up",
+          description: error.message || "Something went wrong",
+          variant: "destructive"
+        });
+      } else {
+        console.log('Sign up successful');
+        toast({
+          title: "Check your email",
+          description: "We've sent you a confirmation link"
+        });
+        // Clear form
+        setEmail('');
+        setPassword('');
+        setUsername('');
+      }
+    } catch (error) {
+      console.error('Sign up exception:', error);
       toast({
-        title: "Check your email",
-        description: "We've sent you a confirmation link"
+        title: "Error signing up",
+        description: "An unexpected error occurred",
+        variant: "destructive"
       });
     }
+    
     setLoading(false);
   };
 
@@ -56,20 +80,40 @@ const Auth = () => {
     e.preventDefault();
     console.log('Sign in attempt with:', { email });
     
-    setLoading(true);
-    const { error } = await signIn(email, password);
-    
-    if (error) {
-      console.error('Sign in error:', error);
+    if (!email.trim() || !password.trim()) {
       toast({
-        title: "Error signing in",
-        description: error.message,
+        title: "Missing information",
+        description: "Please enter both email and password",
         variant: "destructive"
       });
-    } else {
-      console.log('Sign in successful, navigating to /');
-      navigate('/');
+      return;
     }
+    
+    setLoading(true);
+    
+    try {
+      const { error } = await signIn(email, password);
+      
+      if (error) {
+        console.error('Sign in error:', error);
+        toast({
+          title: "Error signing in",
+          description: error.message || "Invalid credentials",
+          variant: "destructive"
+        });
+      } else {
+        console.log('Sign in successful, navigating to /feed');
+        navigate('/feed');
+      }
+    } catch (error) {
+      console.error('Sign in exception:', error);
+      toast({
+        title: "Error signing in",
+        description: "An unexpected error occurred",
+        variant: "destructive"
+      });
+    }
+    
     setLoading(false);
   };
 
@@ -140,6 +184,7 @@ const Auth = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
+                    minLength={6}
                   />
                 </div>
                 <Button type="submit" className="w-full" disabled={loading}>
