@@ -9,6 +9,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useToast } from '@/hooks/use-toast';
 
 const Auth = () => {
+  console.log('Auth component rendering');
+  
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
@@ -19,6 +21,8 @@ const Auth = () => {
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log('Sign up attempt with:', { email, username });
+    
     if (!username.trim()) {
       toast({
         title: "Username required",
@@ -32,12 +36,14 @@ const Auth = () => {
     const { error } = await signUp(email, password, username);
     
     if (error) {
+      console.error('Sign up error:', error);
       toast({
         title: "Error signing up",
         description: error.message,
         variant: "destructive"
       });
     } else {
+      console.log('Sign up successful');
       toast({
         title: "Check your email",
         description: "We've sent you a confirmation link"
@@ -48,16 +54,20 @@ const Auth = () => {
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log('Sign in attempt with:', { email });
+    
     setLoading(true);
     const { error } = await signIn(email, password);
     
     if (error) {
+      console.error('Sign in error:', error);
       toast({
         title: "Error signing in",
         description: error.message,
         variant: "destructive"
       });
     } else {
+      console.log('Sign in successful, navigating to /');
       navigate('/');
     }
     setLoading(false);
