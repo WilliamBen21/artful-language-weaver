@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
@@ -7,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useToast } from '@/hooks/use-toast';
-import { MessageCircle, Users, Heart } from 'lucide-react';
+import { MessageCircle, Users, Heart, LogOut } from 'lucide-react';
 
 const Auth = () => {
   console.log('Auth component rendering');
@@ -16,9 +15,26 @@ const Auth = () => {
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
   const [loading, setLoading] = useState(false);
-  const { signUp, signIn } = useAuth();
+  const { signUp, signIn, signOut, user } = useAuth();
   const { toast } = useToast();
   const navigate = useNavigate();
+
+  const handleSignOut = async () => {
+    try {
+      await signOut();
+      toast({
+        title: "Signed out successfully",
+        description: "You have been logged out"
+      });
+    } catch (error) {
+      console.error('Sign out error:', error);
+      toast({
+        title: "Error signing out",
+        description: "Something went wrong",
+        variant: "destructive"
+      });
+    }
+  };
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -117,6 +133,17 @@ const Auth = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center px-4">
+      {/* Add sign out button if user is logged in */}
+      {user && (
+        <div className="absolute top-4 right-4">
+          <Button onClick={handleSignOut} variant="outline" size="sm">
+            <LogOut className="w-4 h-4 mr-2" />
+            Sign Out
+          </Button>
+        </div>
+      )}
+      
+      {/* Left side - Branding */}
       <div className="w-full max-w-4xl mx-auto grid md:grid-cols-2 gap-8 items-center">
         {/* Left side - Branding */}
         <div className="text-center md:text-left space-y-6">
