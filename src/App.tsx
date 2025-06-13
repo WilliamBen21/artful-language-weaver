@@ -65,16 +65,8 @@ const App = () => {
         <BrowserRouter>
           <AuthProvider>
             <Routes>
-              <Route path="/" element={
-                <PublicRoute>
-                  <Index />
-                </PublicRoute>
-              } />
-              <Route path="/auth" element={
-                <PublicRoute>
-                  <Auth />
-                </PublicRoute>
-              } />
+              <Route path="/" element={<Index />} />
+              <Route path="/auth" element={<Auth />} />
               <Route path="/feed" element={
                 <ProtectedRoute>
                   <Feed />
